@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/">
+    
+    
+    <title>如何实现微信5.0的滑动效果 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="微信滑动效果">
+    <meta name="description" content="作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5.0版本过后的滑动效果，查阅官方文档以及借鉴网上大神的经验之后我们也顺利得到了一点思路。虽然我另外一个伙伴已经实现了此功能，但我总觉得有些许的冗杂，经过研究学习之后现在已经得到了优化，详见下文。">
+<meta name="keywords" content="微信滑动效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何实现微信5.0的滑动效果">
+<meta property="og:url" content="http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5.0版本过后的滑动效果，查阅官方文档以及借鉴网上大神的经验之后我们也顺利得到了一点思路。虽然我另外一个伙伴已经实现了此功能，但我总觉得有些许的冗杂，经过研究学习之后现在已经得到了优化，详见下文。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160410161503062-1179134914.gif">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何实现微信5.0的滑动效果">
+<meta name="twitter:description" content="作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5.0版本过后的滑动效果，查阅官方文档以及借鉴网上大神的经验之后我们也顺利得到了一点思路。虽然我另外一个伙伴已经实现了此功能，但我总觉得有些许的冗杂，经过研究学习之后现在已经得到了优化，详见下文。">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160410161503062-1179134914.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">如何实现微信5.0的滑动效果</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">如何实现微信5.0的滑动效果</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-10T08:21:04.000Z" itemprop="datePublished" class="page-time">
+  2016-04-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、关于android-support-v4"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、关于android.support.v4</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、具体实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、具体实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、具体效果"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、具体效果</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-如何实现微信5.0的滑动效果" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">如何实现微信5.0的滑动效果</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-10 16:21:04" datetime="2016-04-10T08:21:04.000Z" itemprop="datePublished">2016-04-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5.0版本过后的滑动效果，查阅官方文档以及借鉴网上大神的经验之后我们也顺利得到了一点思路。虽然我另外一个伙伴已经实现了此功能，但我总觉得有些许的冗杂，经过研究学习之后现在已经得到了优化，详见下文。<br><a id="more"></a></p>
+<h2 id="1、关于android-support-v4"><a href="#1、关于android-support-v4" class="headerlink" title="1、关于android.support.v4"></a>1、关于android.support.v4</h2><p>google提供了Android Support Library package 系列的包来保证来高版本sdk开发的向下兼容性，其中v4包是为了照顾1.6及更高版本而设计的，这个包是使用最广泛的，eclipse新建工程时，都默认带有了。但是我一开始在开发中一直指不到该包的源代码，一番搜索之后找到了解决方法：1、首先为工程build path，找到路径：android-sdk-windows\extras\android\support\v4\android-support-v4.jar；2、导入该包并不能正确的找到源代码，需要在java bulid path –&gt;Order and Export下找到刚刚导入的support\v4\android-support-v4.jar，并将其选择到top位置；3、点击apply之后就可以顺利的查到源代码。</p>
+<p>该包下比较常用的类有Fragment以及ViewPager，我的伙伴在实现该功能时使用的是Fragment+ViewPager，这也是官方一直推荐的，但是因为觉得有些许的冗杂，所以这里我只是用ViewPager来实现。关于该包下的这两个常用的类以及其他关键的UI效果的类大家可以查看文档了解，这里就不赘述。</p>
+<h2 id="2、具体实现"><a href="#2、具体实现" class="headerlink" title="2、具体实现"></a>2、具体实现</h2><p>为了美观，这里只显示关键代码，工程的整体代码可以到<a href="http://120.198.244.55:9999/files.cnblogs.com/files/ghylzwsb/scroll.rar" target="_blank" rel="noopener">我的博客中下载</a>：</p>
+<ul>
+<li>MainActivity关键代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (mViewList.get(position).getParent() != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    container.removeView(mViewList.get(position));</span><br><span class="line">                &#125;</span><br><span class="line">                container.addView(mViewList.get(position));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> mViewList.get(position);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</span><br><span class="line">                container.removeView(mViewList.get(position));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> mViewList.size();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        mViewPager.setOnPageChangeListener(<span class="keyword">new</span> OnPageChangeListener() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span></span>&#123;</span><br><span class="line">                <span class="keyword">int</span> x = (<span class="keyword">int</span>)((position + positionOffset) * mTextView.getWidth());</span><br><span class="line">                ((View)mTextView.getParent()).scrollTo(-x, mTextView.getScrollY());                </span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> position)</span></span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(position == <span class="number">0</span>)&#123;</span><br><span class="line">                    radioButton1.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position == <span class="number">1</span>)&#123;</span><br><span class="line">                    radioButton2.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position == <span class="number">2</span>)&#123;</span><br><span class="line">                    radioButton3.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position == <span class="number">3</span>)&#123;                    </span><br><span class="line">                    radioButton4.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> tmpState = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dip2px</span><span class="params">(<span class="keyword">float</span> dipValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">float</span> scale = getResources().getDisplayMetrics().density;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) (dipValue * scale + <span class="number">0.5f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">px2dip</span><span class="params">(<span class="keyword">float</span> pxValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">float</span> scale = getResources().getDisplayMetrics().density;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) (pxValue / scale + <span class="number">0.5f</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>activity_main.xml</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    android:background=&quot;#FFFFFFFF&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot; &gt;</span><br><span class="line"></span><br><span class="line">    &lt;RadioGroup</span><br><span class="line">        android:id=&quot;@+id/radioGroup&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:gravity=&quot;center&quot;</span><br><span class="line">        android:orientation=&quot;horizontal&quot; &gt;</span><br><span class="line"></span><br><span class="line">        &lt;RadioButton</span><br><span class="line">            android:id=&quot;@+id/radioButton1&quot;</span><br><span class="line">            style=&quot;@style/radioButtonStyle&quot;</span><br><span class="line">            android:text=&quot;页面1&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RadioButton</span><br><span class="line">            android:id=&quot;@+id/radioButton2&quot;</span><br><span class="line">            style=&quot;@style/radioButtonStyle&quot;</span><br><span class="line">            android:text=&quot;页面2&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RadioButton</span><br><span class="line">            android:id=&quot;@+id/radioButton3&quot;</span><br><span class="line">            style=&quot;@style/radioButtonStyle&quot;</span><br><span class="line">            android:text=&quot;页面3&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RadioButton</span><br><span class="line">            android:id=&quot;@+id/radioButton4&quot;</span><br><span class="line">            style=&quot;@style/radioButtonStyle&quot;</span><br><span class="line">            android:text=&quot;页面4&quot; /&gt;</span><br><span class="line">    &lt;/RadioGroup&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;3dip&quot;</span><br><span class="line">        android:orientation=&quot;horizontal&quot; &gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=&quot;@+id/textView&quot;</span><br><span class="line">            android:layout_width=&quot;200dip&quot;</span><br><span class="line">            android:layout_height=&quot;3dip&quot;</span><br><span class="line">            android:background=&quot;#FF336699&quot;</span><br><span class="line">            android:textColor=&quot;#FFFF0000&quot; /&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;View</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;1dip&quot;</span><br><span class="line">        android:background=&quot;#FF336699&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v4.view.ViewPager</span><br><span class="line">        android:id=&quot;@+id/viewPager&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot; &gt;</span><br><span class="line">    &lt;/android.support.v4.view.ViewPager&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="3、具体效果"><a href="#3、具体效果" class="headerlink" title="3、具体效果"></a>3、具体效果</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201604/927927-20160410161503062-1179134914.gif" alt="运行截图" title="">
+                </div>
+                <div class="image-caption">运行截图</div>
+            </figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.136Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/04/10/如何实现微信5.0的滑动效果/" target="_blank" rel="external">http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信滑动效果/">微信滑动效果</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&title=《如何实现微信5.0的滑动效果》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&title=《如何实现微信5.0的滑动效果》 — 温斯渤&source=作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5...." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《如何实现微信5.0的滑动效果》 — 温斯渤&url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用 SharedPreferences 实现数据的存储和读取</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/04/安卓下如何使用JUnit进行软件测试/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">安卓下如何使用JUnit进行软件测试</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="如何实现微信5.0的滑动效果"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&title=《如何实现微信5.0的滑动效果》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&title=《如何实现微信5.0的滑动效果》 — 温斯渤&source=作为初学者，虽然深知不可一步登天也应当脚踏实地，但是总会有一些奇思异想想要去实现。在实现第一个app的时候我们遇到的另一个头疼的问题便是如何实现像微信5...." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《如何实现微信5.0的滑动效果》 — 温斯渤&url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/10/如何实现微信5.0的滑动效果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aQXLCMAwF0N7/0nSmW5rwJVnA4mXFQCF+7oztfOnnJ74ef9fV66t3nj99/oWrb92/f/jCw8PDaw39flhXP50z7oeejzAfMx4eHt42r7cZ5NNxj7lHVqcbDw8P73t486W8enC/n2I8PDy87+dVn/Tz+CBh4OHh4X0bLzkiVzHJwTo/TK9nLXh4eHjTtfrYwr3x+q31PTw8PLzigTiPa6sNBPebx3yceHh4eBu8agm/12g1D3BHATEeHh7eGi8PcPPbVwOOXgDxYsx4eHh4a7zq0twr/Ofv558WCmB4eHh4h3jJst77uV60kVCbjwR4eHh4Y16ylOdNV/ND+WQiLgNcPDw8vGVevknkG0PhyFvcbF68j4eHh7fGy8OIapDam77eZvPPffHw8PAWeL2GgB6+upFUmw9GWTUeHh5ezMs3hu3YIg+OCw1YeHh4eAu8agNBM06Na1L53+dTj4eHh7fBS4Y1uXG1UaA6ZYVnBTw8PLyjvKRklS/lp4LgQlCLh4eH9xZeHrbmN+6Fs3n5LS+n4eHh4b2HF32tdaSeVOeqLQV4eHh4e7zqYff+xvmRN49uq9sVHh4e3vt5eftUXhJLBteLNgq/jIeHh3eIN2lvqkYV1eH28P88MeDh4eEd5U0K/72oIm9ByDEvJg4PDw9vgVct6leLW9XNpnoQj2JiPDw8vKO8fEvoAarBa77BRGPDw8PDW+OdGnSvsaA3fdH48fDw8I7yHsVro/SVIw+kLHh4eHhjXn5Vo9XJBOWfTrY3PDw8vAmvFz1MGqqq5bRRoQ4PDw9vjTcpblU3hl7kMYok8PDw8D7Km7QdJMFBHhNHDVt4eHh4H+U1Q9I4zuhtMy/ugoeHh7fGSxb3HJxsKvPmqmjq8fDw8BZ4k2W9esytHruTf8YBJB4eHl7K+wXcUrGGTjgB3AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

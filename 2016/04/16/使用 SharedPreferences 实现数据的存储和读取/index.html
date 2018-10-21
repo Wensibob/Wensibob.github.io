@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/">
+    
+    
+    <title>使用 SharedPreferences 实现数据的存储和读取 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="SharedPreferences">
+    <meta name="description" content="在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住我们的账号以及密码，我们退出当前账号，就可以直接点击登陆进入账号内部，而不需要再输入账号和密码了。那么这就是今天我们要说的，如何对用户输入的账号以及密码进行存储，并且进行显示。这里我们使用到了google工程师向我们推荐的一个API——Share">
+<meta name="keywords" content="SharedPreferences">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 SharedPreferences 实现数据的存储和读取">
+<meta property="og:url" content="http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住我们的账号以及密码，我们退出当前账号，就可以直接点击登陆进入账号内部，而不需要再输入账号和密码了。那么这就是今天我们要说的，如何对用户输入的账号以及密码进行存储，并且进行显示。这里我们使用到了google工程师向我们推荐的一个API——Share">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160416212554504-89357901.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 SharedPreferences 实现数据的存储和读取">
+<meta name="twitter:description" content="在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住我们的账号以及密码，我们退出当前账号，就可以直接点击登陆进入账号内部，而不需要再输入账号和密码了。那么这就是今天我们要说的，如何对用户输入的账号以及密码进行存储，并且进行显示。这里我们使用到了google工程师向我们推荐的一个API——Share">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160416212554504-89357901.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用 SharedPreferences 实现数据的存储和读取</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用 SharedPreferences 实现数据的存储和读取</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-16T08:21:04.000Z" itemprop="datePublished" class="page-time">
+  2016-04-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于SharedPreferences"><span class="post-toc-number">1.</span> <span class="post-toc-text">关于SharedPreferences</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于SharedPreferences的实例"><span class="post-toc-number">2.</span> <span class="post-toc-text">关于SharedPreferences的实例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用saveUserInfo-方法来存储用户的数据："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">使用saveUserInfo()方法来存储用户的数据：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#当用户重新打开软件时使用如下代码将其显示出来："><span class="post-toc-number">2.2.</span> <span class="post-toc-text">当用户重新打开软件时使用如下代码将其显示出来：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#软件运行之后我们可以发现config-xml文件的内容如下："><span class="post-toc-number">2.3.</span> <span class="post-toc-text">软件运行之后我们可以发现config.xml文件的内容如下：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#运行截图："><span class="post-toc-number">2.4.</span> <span class="post-toc-text">运行截图：</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-使用 SharedPreferences 实现数据的存储和读取" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用 SharedPreferences 实现数据的存储和读取</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-16 16:21:04" datetime="2016-04-16T08:21:04.000Z" itemprop="datePublished">2016-04-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住我们的账号以及密码，我们退出当前账号，就可以直接点击登陆进入账号内部，而不需要再输入账号和密码了。那么这就是今天我们要说的，如何对用户输入的账号以及密码进行存储，并且进行显示。这里我们使用到了google工程师向我们推荐的一个API——SharedPreferences。<br><a id="more"></a></p>
+<h2 id="关于SharedPreferences"><a href="#关于SharedPreferences" class="headerlink" title="关于SharedPreferences"></a>关于SharedPreferences</h2><p>它是android.content下的一个接口，官方对他的描述是这样的：用于访问和修改getSharedPreferences(String, int)返回偏好设置数据(preference data)的一个接口。对于任何一组特殊的preferences，所有的客户端共享一个此类单独的实例。修改Preferences必须通过一个SharedPreferences.Editor对象，以确保当他们提交存储数据的操作时，preference值保持一致的状态。最后再提交数据的时候必须使用commit()方法将数据完全写入。</p>
+<p>它的优点在于会对一些特殊的字符进行分辨，达到准确读取的目的，传统上我们选择以特殊分隔符来分割要存储的数据，这样虽然会简单点，但是如果用户舌设置的数据同样包含这个分隔符，那么将造成读取失误。</p>
+<h2 id="关于SharedPreferences的实例"><a href="#关于SharedPreferences的实例" class="headerlink" title="关于SharedPreferences的实例"></a>关于SharedPreferences的实例</h2><blockquote>
+<p>这里我只介绍关键代码，整个工程可以在<a href="http://files.cnblogs.com/files/ghylzwsb/shareprefenrence.rar" target="_blank" rel="noopener">该链接</a>下载。</p>
+</blockquote>
+<h3 id="使用saveUserInfo-方法来存储用户的数据："><a href="#使用saveUserInfo-方法来存储用户的数据：" class="headerlink" title="使用saveUserInfo()方法来存储用户的数据："></a>使用saveUserInfo()方法来存储用户的数据：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * 保存用户名 密码的业务方法</span><br><span class="line">     * @param context 上下文</span><br><span class="line">     * @param username 用户名</span><br><span class="line">     * @param pas 密码</span><br><span class="line">     * @return true 保存成功  false 保存失败</span><br><span class="line">     */</span><br><span class="line">    public static void saveUserInfo(Context context,String username,String pas)&#123;</span><br><span class="line">        /**</span><br><span class="line">         * SharedPreferences将用户的数据存储到该包下的shared_prefs/config.xml文件中，</span><br><span class="line">         * 并且设置该文件的读取方式为私有，即只有该软件自身可以访问该文件</span><br><span class="line">         */</span><br><span class="line">        SharedPreferences sPreferences=context.getSharedPreferences(&quot;config&quot;, context.MODE_PRIVATE);</span><br><span class="line">        Editor editor=sPreferences.edit();</span><br><span class="line">        //当然sharepreference会对一些特殊的字符进行转义，使得读取的时候更加准确</span><br><span class="line">        editor.putString(&quot;username&quot;, username);</span><br><span class="line">        editor.putString(&quot;password&quot;, pas);</span><br><span class="line">        //这里我们输入一些特殊的字符来实验效果</span><br><span class="line">        editor.putString(&quot;specialtext&quot;, &quot;hajsdh&gt;&lt;?//&quot;);</span><br><span class="line">        editor.putBoolean(&quot;or&quot;, true);</span><br><span class="line">        editor.putInt(&quot;int&quot;, 47);</span><br><span class="line">        //切记最后要使用commit方法将数据写入文件</span><br><span class="line">        editor.commit();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="当用户重新打开软件时使用如下代码将其显示出来："><a href="#当用户重新打开软件时使用如下代码将其显示出来：" class="headerlink" title="当用户重新打开软件时使用如下代码将其显示出来："></a>当用户重新打开软件时使用如下代码将其显示出来：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">　　  <span class="comment">//显示用户此前录入的数据</span></span><br><span class="line">SharedPreferences sPreferences=getSharedPreferences(<span class="string">"config"</span>, MODE_PRIVATE);</span><br><span class="line">String username=sPreferences.getString(<span class="string">"username"</span>, <span class="string">""</span>);</span><br><span class="line">String password =sPreferences.getString(<span class="string">"password"</span>, <span class="string">""</span>);</span><br><span class="line">ed_username.setText(username);</span><br><span class="line">ed_pasw.setText(password);</span><br></pre></td></tr></table></figure>
+<h3 id="软件运行之后我们可以发现config-xml文件的内容如下："><a href="#软件运行之后我们可以发现config-xml文件的内容如下：" class="headerlink" title="软件运行之后我们可以发现config.xml文件的内容如下："></a>软件运行之后我们可以发现config.xml文件的内容如下：</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0' encoding='utf-8' standalone='yes' ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"specialtext"</span>&gt;</span>hajsdh&amp;gt;&amp;lt;?//<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span>dsa<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span>dasdasd<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">int</span> <span class="attr">name</span>=<span class="string">"int"</span> <span class="attr">value</span>=<span class="string">"47"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">boolean</span> <span class="attr">name</span>=<span class="string">"or"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们看到，在xml文件中“&gt;&lt;”被转以为“&gt;&lt;”，这也为数据的准确读取做好了规范。</p>
+</blockquote>
+<h3 id="运行截图："><a href="#运行截图：" class="headerlink" title="运行截图："></a>运行截图：</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201604/927927-20160416212554504-89357901.png" alt="运行截图" title="">
+                </div>
+                <div class="image-caption">运行截图</div>
+            </figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此SharedPreferences的应用结束。在以后的开发过程中，应当多家注意使用官方推荐的API，这会对数据的安全以及数据的完整性有所保障。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.168Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" target="_blank" rel="external">http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SharedPreferences/">SharedPreferences</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&title=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&title=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&source=在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/29/SharePreference是如何实现的——序列化XML文件/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SharePreference是如何实现的——序列化XML文件</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/10/如何实现微信5.0的滑动效果/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">如何实现微信5.0的滑动效果</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="使用 SharedPreferences 实现数据的存储和读取"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&title=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&title=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&source=在开发的过程中我们必须遇到的就是如何对用户的数据进行有效的存储以及读取。我们举个例子，现在我们使用app，当我们登陆一个账号的时候选择记住密码软件就会记住..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 SharedPreferences 实现数据的存储和读取》 — 温斯渤&url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADKElEQVR42u3awW6rQAwF0Pz/T+dJXXXxINc2lYI5rFBbyJyJ1Cvb83rF1/vn+n3/+0qeOnr26A35b8/XMLqwsbGxb8J+n15HgGRrzu+TbUq24/wrOdwabGxs7HXsnJEHzPlCj97Zo+YWbGxs7Cez83jIl5KTqtuBjY2NjZ0E2DzSzvHV1hU2Njb2k9nVRfTiLS8/eiXNn/TSsLGxsb+e3Rv0fuf9n8+3sbGxsb+M/R5c1YM1vQM38+D8z7PY2NjYi9jJ0nu50MuRXjOrOirAxsbG3sSehMc8qPKfn9+XwxUbGxt7EXvCm7Tpq9s3KU5e136r2NjY2F/MTg7iJGVGXgPNW1rVg0fY2NjY+9jVVk5SEiQFQx5F54BmZGJjY2MvYif/7pMQmvyk2lrK14ONjY39HHYeNvmC5kd/ekOFwtAXGxsbexG72k6axM88JqtFTnRuCBsbG3sdO3qgVajkn3VV4VEuSLCxsbFvyM7b9L2Bay9yqivJh8rY2NjYz2Hn0ZI3jKotoeaUIz+phI2NjX1zdg85GQz3Wv/Vzf1Q8GBjY2MvYievrjZ68kHvpEU1GQNjY2Njb2LnhcG8PZSPkK9qVx2+GRsbG3sRu1ok9Fr5k8FwdXSRP4uNjY29id1r5eTXpFGVx2E+wMDGxsbexM7HpfNB73xIkHxitKHY2NjYS9mTkUC+Eb0CpjrGiObb2NjY2EvZvWM3k0i76vBNXkphY2Njb2Lnx3Su3YJqiVK9jzYFGxsbex271+6pFirJ3/dWFRUh2NjY2A9gT4a1eclxbQGTfEmHpQg2Njb2Cnav4V4NsOqhnOpYt1yKYGNjY69m5xtR/pi4Iki2tfcp2NjY2LvZveMykwHAnDTaemxsbOybs9/Fq9f0n4dftVD58B5sbGzsReyrltILp3zp+aGi5tAXGxsb++bsvygq5od7zhedN7+aBQk2Njb2DdlJ434eNklpMf97bGxsbOycfb6UajRWW1qjNhM2Njb2I9l5Cz4vOfItq67kw3qwsbGx17GTmJkET28k0ItMbGxs7KexJ4PePMyq44c80vLQvWy+jY2Njf0t7H8hyrWpvzLzrQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/">
+    
+    
+    <title>【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer) | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Navigation Drawer">
+    <meta name="description" content="抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程序的顶层，用户触摸操作栏上的应用程序图标也可以将其显示出来。 本课程介绍在可用的API 支持库下如何实现导航抽屉DrawerLayout。">
+<meta name="keywords" content="Navigation Drawer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)">
+<meta property="og:url" content="http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程序的顶层，用户触摸操作栏上的应用程序图标也可以将其显示出来。 本课程介绍在可用的API 支持库下如何实现导航抽屉DrawerLayout。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201609/927927-20160903105123465-806778297.gif">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.432Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)">
+<meta name="twitter:description" content="抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程序的顶层，用户触摸操作栏上的应用程序图标也可以将其显示出来。 本课程介绍在可用的API 支持库下如何实现导航抽屉DrawerLayout。">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201609/927927-20160903105123465-806778297.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-03T03:01:45.000Z" itemprop="datePublished" class="page-time">
+  2016-09-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、创建一个抽屉布局文件（Drawer-Layout）"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、创建一个抽屉布局文件（Drawer Layout）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、初始化抽屉列表"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、初始化抽屉列表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、处理导航的点击事件"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、处理导航的点击事件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、监听打开以及关闭抽屉导航栏的事件"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、监听打开以及关闭抽屉导航栏的事件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、如何通过应用程序图标打开或关闭抽屉导航栏"><span class="post-toc-number">5.</span> <span class="post-toc-text">5、如何通过应用程序图标打开或关闭抽屉导航栏</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-03 11:01:45" datetime="2016-09-03T03:01:45.000Z" itemprop="datePublished">2016-09-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程序的顶层，用户触摸操作栏上的应用程序图标也可以将其显示出来。</p>
+<p>本课程介绍在可用的API 支持库下如何实现导航抽屉DrawerLayout。<br><a id="more"></a></p>
+<p>首先我们可以看一下最终的效果图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201609/927927-20160903105123465-806778297.gif" alt="DrawerLayout效果图" title="">
+                </div>
+                <div class="image-caption">DrawerLayout效果图</div>
+            </figure></p>
+<h2 id="1、创建一个抽屉布局文件（Drawer-Layout）"><a href="#1、创建一个抽屉布局文件（Drawer-Layout）" class="headerlink" title="1、创建一个抽屉布局文件（Drawer Layout）"></a>1、创建一个抽屉布局文件（Drawer Layout）</h2><p>要添加一个抽屉式导航，首先你必须要声明你的用户界面的根布局为DrawerLayout对象。在DrawerLayout里面，添加一个主视图内容的view对象（当抽屉被隐藏的时候显示在屏幕上的 视图）和另外一个包含抽屉导航视图的view对象。</p>
+<blockquote>
+<p>例如，下面的布局采用了包含两个子视图的DrawerLayout：一个是FrameLayout，包含了主要内容（在运行时由填充Fragment），和一个ListView的导航抽屉。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v4.widget.DrawerLayout</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/drawer_layout"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 主视图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">FrameLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/content_frame"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 抽屉视图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ListView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/left_drawer"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"240dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"start"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"#111"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:choiceMode</span>=<span class="string">"singleChoice"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:divider</span>=<span class="string">"@android:color/transparent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:dividerHeight</span>=<span class="string">"0dp"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v4.widget.DrawerLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个布局文件演示了一些比较重要的布局特点，如下：</p>
+</blockquote>
+<ul>
+<li>主内容视图（上面的FrameLayout）必须是DrawerLayout布局对象的第一个子view对象，这是因为xml文件意味着是z排序（即空间上的上下排序，也就是说抽屉导航栏应该位于住内容视图的垂直上方）。</li>
+<li>主内容视图的view对象的两个属性：layout_width、layout_height必须是match_parent的，这是因为当抽屉导航栏被隐藏的时候他便是整个UI。</li>
+<li>抽屉视图要指定其宽度的单位为dp，高度与父视图相匹配。抽屉的宽度应该不超过320dp，这样用户可以随时看到主要内容视图的一些部分。</li>
+<li>抽屉视图（ListView）必须用 android:layout_gravity 属性来指定他的水平重力方向。为了支持从右到左（RTL）的语言，应该要指定其属性为”start” ，而不是”left” 。</li>
+</ul>
+<h2 id="2、初始化抽屉列表"><a href="#2、初始化抽屉列表" class="headerlink" title="2、初始化抽屉列表"></a>2、初始化抽屉列表</h2><p>在你的Activity中，首先要做的事之一就是初始化抽屉导航栏中的列表项。至于你要如何做取决于你的应用程序中的内容，但是通常情况下抽屉导航栏都是包含了一个ListView，所以列表应该由Adapter来填充（如ArrayAdapter或者SimpleCursorAdapter）。</p>
+<blockquote>
+<p>例如下面将告诉你如何用字符串数组初始化抽屉导航栏列表：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String[] mPlanetTitles;</span><br><span class="line">    <span class="keyword">private</span> DrawerLayout mDrawerLayout;</span><br><span class="line">    <span class="keyword">private</span> ListView mDrawerList;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        mPlanetTitles = getResources().getStringArray(R.array.planets_array);</span><br><span class="line">        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);</span><br><span class="line">        mDrawerList = (ListView) findViewById(R.id.left_drawer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Set the adapter for the list view</span></span><br><span class="line">        mDrawerList.setAdapter(<span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,</span><br><span class="line">                R.layout.drawer_list_item, mPlanetTitles));</span><br><span class="line">        <span class="comment">// Set the list's click listener</span></span><br><span class="line">        mDrawerList.setOnItemClickListener(<span class="keyword">new</span> DrawerItemClickListener());</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此代码还调用setOnItemClickListener()来接收抽屉导航栏列表的点击事件。下一节将展示如何实现此接口，以实现当用户选择一个项目后更改主内容视图。</p>
+</blockquote>
+<h2 id="3、处理导航的点击事件"><a href="#3、处理导航的点击事件" class="headerlink" title="3、处理导航的点击事件"></a>3、处理导航的点击事件</h2><p>当用户选择在抽屉导航栏里列表中的项目时，系统调用OnItemClickListener接口中的onItemClick()方法以返回给OnItemClickListener() 。你要在onItemClick()方法中做什么样的处理取决于你如何实现你的的应用程序结构。在下面的例子中，你将可以实现下面的内容：当点击抽屉导航栏中列表项里的item时，将会在住内容视图中插入一个不同的Fragment。(FrameLayout的id为 R.id.content_frame)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DrawerItemClickListener</span> <span class="keyword">implements</span> <span class="title">ListView</span>.<span class="title">OnItemClickListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">        selectItem(position);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Swaps fragments in the main content view */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">selectItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Create a new fragment and specify the planet to show based on position</span></span><br><span class="line">    Fragment fragment = <span class="keyword">new</span> PlanetFragment();</span><br><span class="line">    Bundle args = <span class="keyword">new</span> Bundle();</span><br><span class="line">    args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);</span><br><span class="line">    fragment.setArguments(args);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Insert the fragment by replacing any existing fragment</span></span><br><span class="line">    FragmentManager fragmentManager = getFragmentManager();</span><br><span class="line">    fragmentManager.beginTransaction()</span><br><span class="line">                   .replace(R.id.content_frame, fragment)</span><br><span class="line">                   .commit();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Highlight the selected item, update the title, and close the drawer</span></span><br><span class="line">    mDrawerList.setItemChecked(position, <span class="keyword">true</span>);</span><br><span class="line">    setTitle(mPlanetTitles[position]);</span><br><span class="line">    mDrawerLayout.closeDrawer(mDrawerList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTitle</span><span class="params">(CharSequence title)</span> </span>&#123;</span><br><span class="line">    mTitle = title;</span><br><span class="line">    getActionBar().setTitle(mTitle);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、监听打开以及关闭抽屉导航栏的事件"><a href="#4、监听打开以及关闭抽屉导航栏的事件" class="headerlink" title="4、监听打开以及关闭抽屉导航栏的事件"></a>4、监听打开以及关闭抽屉导航栏的事件</h2><p>要监听抽屉打开和关闭事件，在你的DrawerLayout中调用setDrawerListener()并传入一个DrawerLayout.DrawerListener接口 。此接口为抽屉导航栏提供了回掉方法，如onDrawerOpened()和onDrawerClosed()。</p>
+<p>然而，除了实现DrawerLayout.DrawerListener接口之外，如果你的Activity包含了ActionBar，你也可以继承ActionBarDrawerToggle这个类，这是因为ActionBarDrawerToggle类实现DrawerLayout.DrawerListener接口，所以你仍然可以复写这些方法，但是这对ActionBar图标和抽屉的交互也有一定的帮助。</p>
+<p>正如在抽屉导航设计指南讨论的一样，当抽屉处于可见状态时你应该要修改操作栏（ActionBar）的内容，例如你应该要改变标题，并移除与主内容试图相关的列表项。下面的代码演示了如何通过实例化ActionBarDrawerToggle类并复写在DrawerLayout.DrawerListener中的回调方法，以达到这样的目的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> DrawerLayout mDrawerLayout;</span><br><span class="line">    <span class="keyword">private</span> ActionBarDrawerToggle mDrawerToggle;</span><br><span class="line">    <span class="keyword">private</span> CharSequence mDrawerTitle;</span><br><span class="line">    <span class="keyword">private</span> CharSequence mTitle;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        mTitle = mDrawerTitle = getTitle();</span><br><span class="line">        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);</span><br><span class="line">        mDrawerToggle = <span class="keyword">new</span> ActionBarDrawerToggle(<span class="keyword">this</span>, mDrawerLayout,</span><br><span class="line">                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** Called when a drawer has settled in a completely closed state. */</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerClosed</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onDrawerClosed(view);</span><br><span class="line">                getActionBar().setTitle(mTitle);</span><br><span class="line">                invalidateOptionsMenu(); <span class="comment">// creates call to onPrepareOptionsMenu()</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** Called when a drawer has settled in a completely open state. */</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerOpened</span><span class="params">(View drawerView)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onDrawerOpened(drawerView);</span><br><span class="line">                getActionBar().setTitle(mDrawerTitle);</span><br><span class="line">                invalidateOptionsMenu(); <span class="comment">// creates call to onPrepareOptionsMenu()</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Set the drawer toggle as the DrawerListener</span></span><br><span class="line">        mDrawerLayout.setDrawerListener(mDrawerToggle);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Called whenever we call invalidateOptionsMenu() */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onPrepareOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// If the nav drawer is open, hide action items related to the content view</span></span><br><span class="line">        <span class="keyword">boolean</span> drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);</span><br><span class="line">        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onPrepareOptionsMenu(menu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面将介绍ActionBarDrawerToggle构造函数的参数，并设置它来处理与操作栏图标交互所需的其他步骤。</p>
+<h2 id="5、如何通过应用程序图标打开或关闭抽屉导航栏"><a href="#5、如何通过应用程序图标打开或关闭抽屉导航栏" class="headerlink" title="5、如何通过应用程序图标打开或关闭抽屉导航栏"></a>5、如何通过应用程序图标打开或关闭抽屉导航栏</h2><p>用户可以通过来自或朝向屏幕的左边缘轻扫的手势来打开与关闭抽屉式导航栏，但如果你正在使用操作栏（ActionBar） ，你也应该允许用户通过触摸应用程序图标的方式打开或者关闭抽屉导航栏。而应用程序图标也应用一个特殊的图标注明抽屉的存在。你也可以通过实现上一节讲到的ActionBarDrawerToggle来实现这些行为。</p>
+<p>为了使ActionBarDrawerToggle发挥作用，你将需要创建它的一个实例与它的构造方法，这需要下列参数：　</p>
+<ul>
+<li>持有该抽屉的Activity</li>
+<li>一个DrawerLayout</li>
+<li>用于作为抽屉指标的绘制资源（drawable resource），这里会提供一个android官方提供的<a href="http://files.cnblogs.com/files/ghylzwsb/Android_Design_Icons_20130926.zip" target="_blank" rel="noopener">图标包</a>。</li>
+<li>用来形容“打开抽屉”这一操作的字符串资源</li>
+<li>用来形容“关闭抽屉”这一操作的字符串资源</li>
+</ul>
+<p>最后，不管你是否已经创建了ActionBarDrawerToggle的子类作为抽屉的监听器，你还是需要在整个Activity的生命周期中的几个地方调用ActionBarDrawerToggle：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> DrawerLayout mDrawerLayout;</span><br><span class="line">    <span class="keyword">private</span> ActionBarDrawerToggle mDrawerToggle;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);</span><br><span class="line">        mDrawerToggle = <span class="keyword">new</span> ActionBarDrawerToggle(</span><br><span class="line">                <span class="keyword">this</span>,                  <span class="comment">/* host Activity */</span></span><br><span class="line">                mDrawerLayout,         <span class="comment">/* DrawerLayout object */</span></span><br><span class="line">                R.drawable.ic_drawer,  <span class="comment">/* nav drawer icon to replace 'Up' caret */</span></span><br><span class="line">                R.string.drawer_open,  <span class="comment">/* "open drawer" description */</span></span><br><span class="line">                R.string.drawer_close  <span class="comment">/* "close drawer" description */</span></span><br><span class="line">                ) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** Called when a drawer has settled in a completely closed state. */</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerClosed</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onDrawerClosed(view);</span><br><span class="line">                getActionBar().setTitle(mTitle);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** Called when a drawer has settled in a completely open state. */</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerOpened</span><span class="params">(View drawerView)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onDrawerOpened(drawerView);</span><br><span class="line">                getActionBar().setTitle(mDrawerTitle);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Set the drawer toggle as the DrawerListener</span></span><br><span class="line">        mDrawerLayout.setDrawerListener(mDrawerToggle);</span><br><span class="line"></span><br><span class="line">        getActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line">        getActionBar().setHomeButtonEnabled(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onPostCreate(savedInstanceState);</span><br><span class="line">        <span class="comment">// Sync the toggle state after onRestoreInstanceState has occurred.</span></span><br><span class="line">        mDrawerToggle.syncState();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConfigurationChanged</span><span class="params">(Configuration newConfig)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onConfigurationChanged(newConfig);</span><br><span class="line">        mDrawerToggle.onConfigurationChanged(newConfig);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Pass the event to ActionBarDrawerToggle, if it returns</span></span><br><span class="line">        <span class="comment">// true, then it has handled the app icon touch event</span></span><br><span class="line">        <span class="keyword">if</span> (mDrawerToggle.onOptionsItemSelected(item)) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Handle your other action bar items...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>教程的最后，我提供了项目供你<a href="http://files.cnblogs.com/files/ghylzwsb/DrawerLayout_sample.rar" target="_blank" rel="noopener">下载</a>，希望这个教程能够帮到你。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.432Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" target="_blank" rel="external">http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Navigation-Drawer/">Navigation Drawer</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&title=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&title=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&source=抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">setSupportActionBar(toolbar)导致程序崩溃闪退</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/08/13/如何避免Activity 被杀死/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">如何避免Activity 被杀死</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&title=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&title=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&source=抽屉式导航栏是显示在屏幕的左边缘，它是应用程序的主导航选项面板。它大部分时间是处于隐藏状态的，但是当用户从屏幕的左边缘挥动手指时它就会显示出来，而在应用程..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)》 — 温斯渤&url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEe0lEQVR42u3aS27cMBAFQN//0s4B4pHf69YAQ7m0ymJMkaUA7N/XV/x8v3j+/83/v3+12qtffl8+1+tc7/z6lzc8mDBhwoTpI5mSbV1vNDnM9XZbgpwy/0i/rIMJEyZMmA5nSpZLbsl8zfx6zgmud9WeCxMmTJgw/WWm7/LZp6PXwcQsrMGECRMmTJjai3yWBm8CgpwGEyZMmDD9ZaZ8ueSQ+6LtDDfHemMtHBMmTJgwfRhTfiU/799vmW/ChAkTJkwfwzQr1LZX8uxibj/b7MqPTo0JEyZMmI5lmo3O5Ez7izlJuZO2ZTsAhAkTJkyYnsF0V0syaXbm1/9+7KZtwf6CiAkTJkyYjmXaLFcPvtz0xva9LXeR+mLChAkTpo9nml32G7h2uy1ZXpjO18GECRMmTKcztYMs+8LrrEycJ8mbNX84KSZMmDBhegTTpqTbNgvfnTa3qfsvQQkmTJgwYTqcqU1oN4llS9Om4smu6pQbEyZMmDA9jmkTBMwGa3LE671txm2Lfi8mTJgwYTqE6frFmwu1bSsmo65tezUv+xb/pzBhwoQJ0yOY7r0Hk0S6TZLztHyWnGPChAkTpr/AtLnI9+n0XYl08kQfCRMmTJgwHci0ubzbQ+4hkj3vR3Z+QMSECRMmTIcz5aM8+dWep6Cziz9vxLaN2x92hQkTJkyYDmdqC7v3psez5DYvQN9wFkyYMGHC9AimvFzbvr4NONrmZb5O/puXFQJMmDBhwnQsU9IUzMujs2O0n2qWKucBASZMmDBhehJT3tRsE92kBLwvyLYE+bswYcKECdPpTO0lfW8Ykf/VXSXj/F11xIEJEyZMmD6SqU1WZ8M9mxS3bbsmIz7FQBImTJgwYXoEU136LFPZzZDNO0KNogyNCRMmTJgewbQf08mHdfLmaBsQ7EeFMGHChAnTU5nahl/eJmxB2yeHm70XEyZMmDA9g2k2fJOP5iSpcluuzTlWTVBMmDBhwnQ4U1uKbVPKtiA7u+DfV3rGhAkTJkynM7WJ7v56zodvcr7ZrqKgBxMmTJgwHcuUX96zlmT9+hHBPt1ti9GYMGHChOkUpvzF7XU7G9x5X0Aw21txAEyYMGHC9JFMmzgiL/Luk+fZkNBsnKhobWLChAkTpkOY7hrcaQOI9r1tuHDXbjFhwoQJ07lM9x5sduzZmE77gWfBxFf7rTBhwoQJ0yFM7QFmLca2/Jqnx3lgkTyYMGHChOkZTLOLuU1WZ5f6phmZBysv18eECRMmTMcybYBmG20h8oBgv3LRpsWECRMmTIcw1Ung4gDtGE3+lneUg39IfTFhwoQJ04FM+2t4FkbkpeGkaTr7JMneMGHChAnTM5iSICApnuYEm0Gf/FNtgo86AcaECRMmTB/PtLmk2+228ci7C7vR58eECRMmTH+GaRNGtF3CTfl10y59mfpiwoQJE6Y/wDRjnQUWq2Q1+E0RTGDChAkTpsOZ7rqSN+Otr1bYNDj34QgmTJgwYTqdaZMQ7g+fl4PbpHeWrt9QIcaECRMmTJ/C9A+H/RDxM6aOJwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

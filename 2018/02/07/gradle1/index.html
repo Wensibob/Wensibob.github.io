@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2018/02/07/gradle1/">
+    
+    
+    <title>一口一口吃掉Gradle（一）：初识Gradle | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Gradle">
+    <meta name="description" content="2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。相信很多朋友都和我一样从eclipse转到Android Studio时是又爱又恨，爱是因为Android Studio功能强大，UI也很炫酷，当然还有Google爸爸支持；恨是因为从比较熟悉的eclipse一下子转到了Android Studio，本以为速度会快很多，然而现实却给了自己一记大耳光，其次">
+<meta name="keywords" content="Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一口一口吃掉Gradle（一）：初识Gradle">
+<meta property="og:url" content="http://www.wensibo.top/2018/02/07/gradle1/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。相信很多朋友都和我一样从eclipse转到Android Studio时是又爱又恨，爱是因为Android Studio功能强大，UI也很炫酷，当然还有Google爸爸支持；恨是因为从比较熟悉的eclipse一下子转到了Android Studio，本以为速度会快很多，然而现实却给了自己一记大耳光，其次">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg">
+<meta property="og:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/android_build_process.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/gradle-all_dir.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一口一口吃掉Gradle（一）：初识Gradle">
+<meta name="twitter:description" content="2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。相信很多朋友都和我一样从eclipse转到Android Studio时是又爱又恨，爱是因为Android Studio功能强大，UI也很炫酷，当然还有Google爸爸支持；恨是因为从比较熟悉的eclipse一下子转到了Android Studio，本以为速度会快很多，然而现实却给了自己一记大耳光，其次">
+<meta name="twitter:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一口一口吃掉Gradle（一）：初识Gradle</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一口一口吃掉Gradle（一）：初识Gradle</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-02-07T04:07:25.000Z" itemprop="datePublished" class="page-time">
+  2018-02-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#何为Gradle"><span class="post-toc-number">1.</span> <span class="post-toc-text">何为Gradle</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Ant"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Ant</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Maven"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Maven</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Gradle"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Gradle</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Gradle有啥作用"><span class="post-toc-number">2.</span> <span class="post-toc-text">Gradle有啥作用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#搭建Gradle开发环境"><span class="post-toc-number">3.</span> <span class="post-toc-text">搭建Gradle开发环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解压-amp-配置环境变量"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">解压&amp;配置环境变量</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#写一个Hello-World的小demo"><span class="post-toc-number">4.</span> <span class="post-toc-text">写一个Hello World的小demo</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Gradle-Wrapper"><span class="post-toc-number">5.</span> <span class="post-toc-text">Gradle Wrapper</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#首先程序的开发者需要为工程提供gradle-wrapper的支持"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">首先程序的开发者需要为工程提供gradle wrapper的支持</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用终端-或命令行-添加gradle-wrapper"><span class="post-toc-number">5.1.1.</span> <span class="post-toc-text">使用终端(或命令行)添加gradle wrapper</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编写文件添加gradle-wrapper"><span class="post-toc-number">5.1.2.</span> <span class="post-toc-text">编写文件添加gradle wrapper</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用gradle-wrapper构建项目"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">使用gradle wrapper构建项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载很慢怎么办？"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">下载很慢怎么办？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Gradle该如何学习"><span class="post-toc-number">6.</span> <span class="post-toc-text">Gradle该如何学习</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-gradle1" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一口一口吃掉Gradle（一）：初识Gradle</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-02-07 12:07:25" datetime="2018-02-07T04:07:25.000Z" itemprop="datePublished">2018-02-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。<br>相信很多朋友都和我一样从eclipse转到Android Studio时是又爱又恨，爱是因为Android Studio功能强大，UI也很炫酷，当然还有Google爸爸支持；恨是因为从比较熟悉的eclipse一下子转到了Android Studio，本以为速度会快很多，然而现实却给了自己一记大耳光，其次就是Android Studio采用了Gradle来对项目进行编译，但是Gradle是个啥鬼咯，配置文件又看不懂，首次编译还得下载，下载速度贼慢，不fq就gg。<br>Android Studio现在已经更新到3.0.1.0，如果你对Gradle还不是很熟悉，那这个系列的文章将会帮到你。相信仔细看完整个系列之后你将会对如何在Android开发中使用Gradle得心应手。祝你好运，我们出发吧！<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><a id="more"></a> </p>
+<h1 id="何为Gradle"><a href="#何为Gradle" class="headerlink" title="何为Gradle"></a>何为Gradle</h1><p>在了解Gradle之前，我们来讲讲在Gradle之前我们构建Android程序的时候使用的最多的是Ant以及Maven，我们简单看看三者有什么区别。</p>
+<h2 id="Ant"><a href="#Ant" class="headerlink" title="Ant"></a>Ant</h2><p>Ant是在2000年的时候发布的，因其简单易学的特点很快就成为了十分流行的Java项目的构建工具。<br>Ant的优点就是： </p>
+<ul>
+<li>简单、易学，不需要什么特殊准备就能上手 </li>
+<li>基于过程式编程思想使得构建非常灵活 </li>
+</ul>
+<p>不足之处就是使用XML作为脚本配置格式，如果项目比较大的话，XML文件将会很难管理。</p>
+<h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><p>Maven是在2004年的时候发布的，他的出现在一定程度上解决了Ant的一些缺点。但是Maven同样沿用了Ant的做法：即把XML作为构建配置的文件格式，不过文件结构却有了巨大的变化：</p>
+<ul>
+<li>Ant需要开发者将执行task所需的全部命令都列出来</li>
+<li>而Maven依靠约定并提供现成的可调用的目标</li>
+<li>不仅如此，Maven更重要的一个进步是具备从网络上自动下载依赖的能力（当然Ant后来通过Ivy 也具备了这个功能）。</li>
+</ul>
+<p>Maven的缺点就是：</p>
+<ul>
+<li>依赖管理不能很好地处理相同库文件不同版本之间的冲突（Ivy在这方面更好一些）</li>
+<li>XML作为配置文件的格式有严格的结构层次和标准，定制化目标很困难</li>
+</ul>
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><p>Gradle则是在2012年发布的，它吸收了前两者的优点并极大的改进了他们的缺点，使其成为了Google官方推荐的构建语言。Gradle最大的改进就是摒弃了XML而是使用了一门基于java的Groovy语言作为构建脚本的书写语言，使得原本采用XML、冗杂得难以维护的配置文件变得清爽强大许多。</p>
+<p>如果你还想对三者的对比有一个更直观的印象，可以查看<a href="http://blog.csdn.net/napolunyishi/article/details/39345995" target="_blank" rel="noopener">这篇文章</a>了解更详细的内容。这篇文章介绍了完成同一任务，三个构建工具的代码如下：<br><strong>Ant的ivy.xml文件</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ivy-module</span> <span class="attr">version</span>=<span class="string">"2.0"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">info</span> <span class="attr">organisation</span>=<span class="string">"org.apache"</span> <span class="attr">module</span>=<span class="string">"java-build-tools"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span> <span class="attr">org</span>=<span class="string">"junit"</span> <span class="attr">name</span>=<span class="string">"junit"</span> <span class="attr">rev</span>=<span class="string">"4.11"</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span> <span class="attr">org</span>=<span class="string">"org.hamcrest"</span> <span class="attr">name</span>=<span class="string">"hamcrest-all"</span> <span class="attr">rev</span>=<span class="string">"1.3"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">ivy-module</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Ant的build.xml文件</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns:ivy</span>=<span class="string">"antlib:org.apache.ivy.ant"</span> <span class="attr">name</span>=<span class="string">"java-build-tools"</span> <span class="attr">default</span>=<span class="string">"jar"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"src.dir"</span> <span class="attr">value</span>=<span class="string">"src"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"build.dir"</span> <span class="attr">value</span>=<span class="string">"build"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"classes.dir"</span> <span class="attr">value</span>=<span class="string">"$&#123;build.dir&#125;/classes"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jar.dir"</span> <span class="attr">value</span>=<span class="string">"$&#123;build.dir&#125;/jar"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"lib.dir"</span> <span class="attr">value</span>=<span class="string">"lib"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span> <span class="attr">id</span>=<span class="string">"lib.path.id"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">fileset</span> <span class="attr">dir</span>=<span class="string">"$&#123;lib.dir&#125;"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">path</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">"resolve"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">ivy:retrieve</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">target</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">"clean"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">delete</span> <span class="attr">dir</span>=<span class="string">"$&#123;build.dir&#125;"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">target</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">"compile"</span> <span class="attr">depends</span>=<span class="string">"resolve"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">mkdir</span> <span class="attr">dir</span>=<span class="string">"$&#123;classes.dir&#125;"</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">javac</span> <span class="attr">srcdir</span>=<span class="string">"$&#123;src.dir&#125;"</span> <span class="attr">destdir</span>=<span class="string">"$&#123;classes.dir&#125;"</span> <span class="attr">classpathref</span>=<span class="string">"lib.path.id"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">target</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">"jar"</span> <span class="attr">depends</span>=<span class="string">"compile"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">mkdir</span> <span class="attr">dir</span>=<span class="string">"$&#123;jar.dir&#125;"</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">jar</span> <span class="attr">destfile</span>=<span class="string">"$&#123;jar.dir&#125;/$&#123;ant.project.name&#125;.jar"</span> <span class="attr">basedir</span>=<span class="string">"$&#123;classes.dir&#125;"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">target</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Maven的pom.xml文件</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span>  </span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>  </span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.technologyconversations<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>java-build-tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hamcrest<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hamcrest-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Gradle的build.gradle文件则只需要如下代码即可</strong><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'java'</span>  </span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'checkstyle'</span>  </span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'findbugs'</span>  </span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'pmd'</span>  </span><br><span class="line">   </span><br><span class="line">version = <span class="string">'1.0'</span>  </span><br><span class="line">   </span><br><span class="line">repositories &#123;  </span><br><span class="line">    mavenCentral()  </span><br><span class="line">&#125;  </span><br><span class="line">   </span><br><span class="line">dependencies &#123;  </span><br><span class="line">    testCompile <span class="string">group:</span> <span class="string">'junit'</span>, <span class="string">name:</span> <span class="string">'junit'</span>, <span class="string">version:</span> <span class="string">'4.11'</span>  </span><br><span class="line">    testCompile <span class="string">group:</span> <span class="string">'org.hamcrest'</span>, <span class="string">name:</span> <span class="string">'hamcrest-all'</span>, <span class="string">version:</span> <span class="string">'1.3'</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>单单从代码量上做一个选择的话，相信大家都会选择Gradle吧！</p>
+<h1 id="Gradle有啥作用"><a href="#Gradle有啥作用" class="headerlink" title="Gradle有啥作用"></a>Gradle有啥作用</h1><p>我们一直在说Gradle是一个构建工具，可是构建(build)究竟是个啥意思呢？我们以Android平台为例，构建就是将我们的代码，资源文件进行打包，编译最后形成一个可以安装运行的apk文件的过程。如果你还不是很了解，那么我们来瞧瞧Google官方给出的Android应用程序构建的完整流程图吧！<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/android_build_process.png" alt="典型 Android 应用模块的构建流程" title="">
+                </div>
+                <div class="image-caption">典型 Android 应用模块的构建流程</div>
+            </figure><br>上述的流程主要包含以下几个过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将程序中的以及引用的第三方库中的资源文件、代码文件、和aidl文件通过java编译器编译成.class文件，再通过dex工具将.class文件转换为.dex文件。</span><br><span class="line">使用apkbuilder工具将所有未编译的资源（如图片），已编译的资源和.dex文件打包到.apk文件中。</span><br><span class="line">jarsigner工具使用调试密钥或正式发行版本的秘钥将.apk文件签名。</span><br><span class="line">使用zipalign工具对齐.apk包中的文件，以减少其在设备上运行时的内存占用。</span><br></pre></td></tr></table></figure></p>
+<p>以上的每个步骤就是构建工具需要完成的，也就是说这其中的许多事情都是由Gradle来干的。所以说没有Gradle那就需要我们手动一个步骤一个步骤做，有了构建工具，程序员只需要动动手指就可以啦！</p>
+<h1 id="搭建Gradle开发环境"><a href="#搭建Gradle开发环境" class="headerlink" title="搭建Gradle开发环境"></a>搭建Gradle开发环境</h1><p>工欲善其事,必先利其器，想要了解并且使用Gradle，我们得先把开发环境搭建起来。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>下载的方法有很多种，这里介绍的是适用于各个平台的，首先需要到<a href="http://services.gradle.org/distributions/" target="_blank" rel="noopener">Gradle官网</a>，然后找到你想要的版本下载即可。需要注意的是Gradle官网的服务器在国外，所以下载速度贼慢，最好是能够自备梯子，否则你需要耐心等待一段时间。<br>在这个页面中你会看到同一个版本号也有几个版本，如：-src对应的是Gradle源代码，这个不是我们需要下载的；-bin对应的是二进制版本，但不包含源代码，文档等，体积相对较小；-all版本是完全版，既包含了编译需要的二进制文件，也包含了源代码和开发文档等。<br>推荐大家一开始可以下载一个-all版本作为你主要使用的版本，如果你需要使用到其他版本号的，再去下载其他版本号对应的-bin版本，这样可以节省磁盘空间。当然如果你只安装了-bin版本，你可以到<a href="https://docs.gradle.org/4.4.1/javadoc/" target="_blank" rel="noopener">这里</a>查看在线的官方文档，在<a href="https://github.com/gradle/gradle" target="_blank" rel="noopener">这里</a>查看Gradle的源代码。</p>
+<h2 id="解压-amp-配置环境变量"><a href="#解压-amp-配置环境变量" class="headerlink" title="解压&amp;配置环境变量"></a>解压&amp;配置环境变量</h2><p>下载完成之后需要解压，以-all版本为例，解压之后的目录结构如下图所示：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/gradle-all_dir.png" alt="gradle-4.1-all目录结构图" title="">
+                </div>
+                <div class="image-caption">gradle-4.1-all目录结构图</div>
+            </figure><br>接着就是配置环境变量<br><strong>Linux系统下</strong><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"><span class="meta">#</span># 将"/usr/local/gradle-4.3"替换为你解压好的gradle的根目录</span><br><span class="line">export GRADLE_HOME=/usr/local/gradle-4.3</span><br><span class="line">PATH=$PATH:$GRADLE_HOME/bin</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p><strong>Windows系统下</strong><br>在环境变量配置页面新增一个系统变量GRADLE_HOME，值为你解压好的gradle的根目录；接着修改Path变量，在最后追加<code>%GRADLE_HOME%\bin;</code>，之后点击应用，确定即可。</p>
+<p>配置好之后需要测试一下Gradle的开发环境是否搭建成功，在linux下打开终端，在Windows下则是打开命令行，输入<code>gradle -v</code>然后回车，如果输出的信息与下面类似那就说明Gradle的开发环境已经搭建成功啦！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bob@bob-PC:~$ gradle -v</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">Gradle 4.3</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Build time:   2017-10-30 15:43:29 UTC</span><br><span class="line">Revision:     c684c202534c4138b51033b52d871939b8d38d72</span><br><span class="line"></span><br><span class="line">Groovy:       2.4.12</span><br><span class="line">Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015</span><br><span class="line">JVM:          1.8.0_131 (Oracle Corporation 25.131-b11)</span><br><span class="line">OS:           Linux 4.9.0-deepin4-amd64 amd64</span><br></pre></td></tr></table></figure>
+<h1 id="写一个Hello-World的小demo"><a href="#写一个Hello-World的小demo" class="headerlink" title="写一个Hello World的小demo"></a>写一个Hello World的小demo</h1><p>前面我们说到Gradle是基于Groovy的，所以我们还得再学Groovy，下面的这个例子我们就先来领略一下Groovy，具体的语法我们将在下一篇文章继续学习。<br>首先我们新建一个目录，然后在目录下新建一个build.gradle文件，接着用记事本或者sublime打开，写入如下代码：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">task hello&#123;</span><br><span class="line">    println <span class="string">'Hello World'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后保存，之后打开终端(Windows使用命令行)进入当前目录(Windows可以直接在当前目录下同时按住<code>Shift</code>键和鼠标右键选择命令行或者Powershell打开则可以直接进入当前目录)，输入如下代码：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle -q hello</span><br></pre></td></tr></table></figure></p>
+<p>不出意外的话屏幕上会打印Hello World。</p>
+<p>我们再来回顾一下整个过程，首先是新建一个build.gradle文件，有没有很熟悉呢？在Android项目中，也经常会出现build.gradle文件，在工程中他扮演着十分重要的角色，现在只需要知道它是整个项目的入口即可，具体的我们后续再讲。<br>接着我们再来看看在build.gradle文件中插入的代码是什么意思:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">task hello&#123;</span><br><span class="line">    println <span class="string">'Hello World'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先声明了一个task(任务)，这个任务的名称叫做hello，接着使用<code>{}</code>将该任务的内容包围起来，即花括号里面的内容就是这个hello任务的内容，我们看到他的输出语句与java十分相似，但是也有不同点：</p>
+<ul>
+<li>java中方法的声明和调用需要使用<code>()</code>，但是groovy则可以不用，这样可以更加简洁。</li>
+<li>java使用双引号来表示字符串，但是在groovy中则直接使用了单引号，这是因为在groovy的语法中，字符串的表达方式比较多种，有的需要单引号<code>&#39;&#39;</code>，有的需要双引号<code>&quot;&quot;</code>，还有的需要三引号<code>&#39;&#39;&#39;&#39;&#39;&#39;</code>，每种符号都有他使用的场景与作用，这个我们也是放到后面再讲。</li>
+<li>java需要使用分号来表示一行语句的结束，而groovy与kotlin一样不需要使用分号来作为语句的结束标志，只需要换行即可。<br>最后我们使用命令行输入的<code>gradle -q hello</code>又是代表什么意思呢？<br>首先gradle则是命令，它会去查找当前所在目录下的build.gradle文件，因为这个文件就是整个命令的入口，而hello就是我们刚才命名的任务的名称，那么-q又是什么呢？其实这里的-q代表quiet模式，它不会生成 Gradle的日志信息(log messages)，所以用户只能看到tasks的输出，这样可以让输出信息更加清晰。</li>
+</ul>
+<p>通过上面的说明大家应该都能够理解。</p>
+<h1 id="Gradle-Wrapper"><a href="#Gradle-Wrapper" class="headerlink" title="Gradle Wrapper"></a>Gradle Wrapper</h1><p>相信大家在运行github上的项目时经常会出现导入失败的问题，例如我们将一个项目导入了Android studio，但是由于项目使用的gradle版本与我们本机安装的不一致，尽管我们可以手动更改配置文件使得该项目使用我们本机的gradle，不过不同的gradle版本对应用程序的编译支持又不一样，所以最好就是还得自行下载gradle然后再运行，这就是为什么我们在Android studio倒入一个项目有的时候需要很久的原因。为了应对着一些列复杂的操作，Google推出了gradle wrapper(即gradle包装器)。接下来我们来看看gradle wrapper是如何解决的。</p>
+<h2 id="首先程序的开发者需要为工程提供gradle-wrapper的支持"><a href="#首先程序的开发者需要为工程提供gradle-wrapper的支持" class="headerlink" title="首先程序的开发者需要为工程提供gradle wrapper的支持"></a>首先程序的开发者需要为工程提供gradle wrapper的支持</h2><p>我们使用者想要使用gradle wrapper来构建项目，得需要项目的开发者为该工程添加gradle wrapper的支持，这样我们要使用的时候才知道需要哪个版本的gradle来构建项目。为工程添加gradle wrapper其实很简单，一般来说有两种方法。</p>
+<h3 id="使用终端-或命令行-添加gradle-wrapper"><a href="#使用终端-或命令行-添加gradle-wrapper" class="headerlink" title="使用终端(或命令行)添加gradle wrapper"></a>使用终端(或命令行)添加gradle wrapper</h3><p>在项目的根目录下打开终端或者命令行并进入到该目录，接着使用如下的命令即可：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># 将下方4.0换成你需要的gradle版本号，将all换成你需要的版本类型，例如bin</span><br><span class="line">bob@bob-PC:~/workspace/gradle_workspace/how_to_use_gradleWrapper$ gradle wrapper --gradle-version 4.0 --distribution-type all</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 9s</span><br><span class="line">1 actionable task: 1 executed</span><br></pre></td></tr></table></figure></p>
+<p>如果出现了上方的构建成功的信息则代表已经成功为工程添加了gradle wrapper。</p>
+<h3 id="编写文件添加gradle-wrapper"><a href="#编写文件添加gradle-wrapper" class="headerlink" title="编写文件添加gradle wrapper"></a>编写文件添加gradle wrapper</h3><p>我们还可以通过编辑项目根目录的build.gradle文件，为该文件添加如下代码：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">task wrapper(<span class="string">type:</span> Wrapper) &#123;</span><br><span class="line">    gradleVersion <span class="string">'4.0'</span></span><br><span class="line">    distributionType <span class="string">'all'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到其实就是添加了一个名为wrapper的任务，该任务还接受一个Wrapper类型的参数，然后在任务内部可以定义gradle的版本号，以及版本类型，根据我们的需要自行修改即可。<br>添加完该任务之后还是打开终端或者命令行进入项目的根目录执行wrapper任务：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bob@bob-PC:~/workspace/gradle_workspace/how_to_use_gradleWrapper$ gradle wrapper</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL in 0s</span><br><span class="line">1 actionable task: 1 executed</span><br></pre></td></tr></table></figure></p>
+<p>通过这种方式我们也是可以为项目添加gradle wrapper的。</p>
+<p>添加了gradle wrapper之后项目的根目录下添加了如下几个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── build.gradle</span><br><span class="line">├── gradle</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── gradle-wrapper.jar</span><br><span class="line">│       └── gradle-wrapper.properties</span><br><span class="line">├── gradlew</span><br><span class="line">└── gradlew.bat</span><br></pre></td></tr></table></figure></p>
+<p>新增加的四个文件各有含义：</p>
+<ul>
+<li>gradlew：linux下执行gradle wrapper的脚本</li>
+<li>gradlew.bat：windows下执行gradle wrapper的脚本</li>
+<li>gradle-wrapper.jar：gradle wrapper微类库，包含下载和解包gradle运行时的逻辑</li>
+<li>gradle-wrapper.properties：gradle wrapper元信息，包含已下载gradle运行时的存储位置和原始URL</li>
+</ul>
+<h2 id="使用gradle-wrapper构建项目"><a href="#使用gradle-wrapper构建项目" class="headerlink" title="使用gradle wrapper构建项目"></a>使用gradle wrapper构建项目</h2><p>现在我们使用者已经拿到了支持gradle wrapper的项目，我们只需要打开终端或者命令行并导航到项目的根目录然后执行：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># linux系统下</span><br><span class="line">./gradlew build</span><br><span class="line"><span class="meta">#</span># Windows系统下</span><br><span class="line">gradlew build</span><br></pre></td></tr></table></figure></p>
+<p>即可编译项目。这里的<code>gradlew</code>就是<code>gradle wrapper</code>的缩写了。当我们使用gradlew运行gradle时，他会首先检查wrapper对应的gradle是否可用，如果可用，他会将gradlew的所有参数委托给gradle，然后执行构建，如果gradle包不可用，它就会首先下载对应版本的gradle，然后再构建。</p>
+<h2 id="下载很慢怎么办？"><a href="#下载很慢怎么办？" class="headerlink" title="下载很慢怎么办？"></a>下载很慢怎么办？</h2><p>如果执行了上述的命令之后发现gradle的下载很慢，那我们可以手动修改<code>gradle-wrapper.properties</code>文件，将其中的distributionUrl更改成下面这样，这样他就会复用我们本地的gradle而不是去服务器下载。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># linux系统下：</span><br><span class="line">distributionUrl='file:/home/bob/gradle/gradle-4.0-all.zip'</span><br><span class="line"><span class="meta">#</span># Windows系统下：</span><br><span class="line">distributionUrl='file:///D:/grale/gradle-4.0-all.zip'</span><br></pre></td></tr></table></figure></p>
+<h1 id="Gradle该如何学习"><a href="#Gradle该如何学习" class="headerlink" title="Gradle该如何学习"></a>Gradle该如何学习</h1><p>通过上面的学习想必大家对gradle应该有了初步的认识了，但是gradle的知识还有很多，那我们要怎么学呢？</p>
+<ul>
+<li>首先gradle是基于groovy语言的，所以我们需要对groovy的语法有所了解，我们将在下一节与大家一起学习。</li>
+<li>接着就是深入到Android项目中，来看看gradle的文件结构。</li>
+<li>随后需要了解的就是gradle的插件，这些插件有的是专门用于Android项目的构建的，所以我们需要结合文档一起来理解。</li>
+<li>再后面的话我们还得了解如何构建变体，例如我们需要为一个项目编译多个不同应用市场的渠道包。<br>当然还有很多，这里只是先给大家一个思路，之后的文章我们一起继续学习。</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.748Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2018/02/07/gradle1/" target="_blank" rel="external">http://www.wensibo.top/2018/02/07/gradle1/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2018/02/07/gradle1/&title=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2018/02/07/gradle1/&title=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&source=2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。相信很多朋友都和我一样从eclipse转到Android ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2018/02/07/gradle1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&url=http://www.wensibo.top/2018/02/07/gradle1/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2018/02/07/gradle1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/16/gradle2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一口一口吃掉Gradle（二）：深入学习Groovy</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/12/31/2017summary/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">2017年终总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="gradle1"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2018/02/07/gradle1/&title=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2018/02/07/gradle1/&title=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&source=2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。相信很多朋友都和我一样从eclipse转到Android ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2018/02/07/gradle1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Gradle（一）：初识Gradle》 — 温斯渤&url=http://www.wensibo.top/2018/02/07/gradle1/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2018/02/07/gradle1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQY4CMQwEQP7/aVbitBeG7iQYkConhGCocLCcdm63eN0fK3n9f10/7fozWwsXF3ebe79c18RnP98+JzHg4uLOc5PitVO2ku0l38XFxf027kyrhIuL+1vc6+KVb2m07uLi4m5wk8PP9Tst6O1nNVxc3A3u2cB07fXH8l1cXNxyKpE0NGvhyH1p4eLiznCT5iOJPttxS95C3VoELi7uNjc/ouRDlPaYlHQyuLi4k9xkmJqXrXYbawEKLi7uJLd90NoApg1fokYHFxf3KHctBFkbpSSgF7+Li4s7wm2blTwWSYpd2yTh4uLOcNcijISVb7sITXBxcce5bRTSXrPIDz9Pt4eLizvITUrVTsSZ/x0vno+LizvOba9EtKPTnWMPLi7uJDcfkCSzjLXrVgcCU1xc3KPctojkrUw7oI02jIuLO8jNW5Od61kHWiJcXNxBbtu45KWnLXz1KAUXF/cN3LagrF3JOjukwcXFneHmAUe71zxyLSJUXFzcQW5evPYbo2PtCy4u7hdw10Yv+ZA1suHi4v4It72osTOUxcXFneTmg5C2PK0VvgOxCC4u7gZ3Z8jaxh/JOAcXF/ej3D9eUAYcfwtgkgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

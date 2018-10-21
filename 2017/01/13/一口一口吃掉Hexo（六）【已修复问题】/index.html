@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/">
+    
+    
+    <title>一口一口吃掉Hexo（六）【已修复问题】 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="使用Hexo建立个人博客网站">
+    <meta name="description" content="不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这一节，我将与你分享一些解决错误的方法以及如何提高你网站的访问速度。一起来吧！本篇文章已经得到更新，我已经将Hexo配置404页面的问题以及部署到Nginx的问题得到了解决，你可以点击这里/)查看详细的更新">
+<meta name="keywords" content="使用Hexo建立个人博客网站">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一口一口吃掉Hexo（六）【已修复问题】">
+<meta property="og:url" content="http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这一节，我将与你分享一些解决错误的方法以及如何提高你网站的访问速度。一起来吧！本篇文章已经得到更新，我已经将Hexo配置404页面的问题以及部署到Nginx的问题得到了解决，你可以点击这里/)查看详细的更新">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一口一口吃掉Hexo（六）【已修复问题】">
+<meta name="twitter:description" content="不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这一节，我将与你分享一些解决错误的方法以及如何提高你网站的访问速度。一起来吧！本篇文章已经得到更新，我已经将Hexo配置404页面的问题以及部署到Nginx的问题得到了解决，你可以点击这里/)查看详细的更新">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一口一口吃掉Hexo（六）【已修复问题】</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一口一口吃掉Hexo（六）【已修复问题】</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-13T06:52:04.000Z" itemprop="datePublished" class="page-time">
+  2017-01-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Hexo/">一口一口吃掉Hexo</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#请详细观看这份文档"><span class="post-toc-number">1.</span> <span class="post-toc-text">请详细观看这份文档</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#提高网站的访问速度"><span class="post-toc-number">2.</span> <span class="post-toc-text">提高网站的访问速度</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#推广你的网站"><span class="post-toc-number">3.</span> <span class="post-toc-text">推广你的网站</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后记"><span class="post-toc-number">4.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-一口一口吃掉Hexo（六）【已修复问题】" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一口一口吃掉Hexo（六）【已修复问题】</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-13 14:52:04" datetime="2017-01-13T06:52:04.000Z" itemprop="datePublished">2017-01-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Hexo/">一口一口吃掉Hexo</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这一节，我将与你分享一些解决错误的方法以及如何提高你网站的访问速度。一起来吧！<br>本篇文章已经得到更新，我已经将Hexo配置404页面的问题以及部署到Nginx的问题得到了解决，你可以点击<a href="http://wensibo.top/2017/01/12/%E4%B8%80%E5%8F%A3%E4%B8%80%E5%8F%A3%E5%90%83%E6%8E%89Hexo(%E5%9B%9B" target="_blank" rel="noopener">这里</a>/)查看详细的更新<br><a id="more"></a></p>
+<h2 id="请详细观看这份文档"><a href="#请详细观看这份文档" class="headerlink" title="请详细观看这份文档"></a>请详细观看这份文档</h2><p>如果你是使用<a href="http://www.wensibo.top">Indigo</a>主题的，，那么最重要的就是这份<a href="https://github.com/yscoder/hexo-theme-indigo/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">文档</a>了，里面列出了许多你可能会遇到的问题，如果这里没有列出，或者这里的回答满足不了你，请给作者发Issue，或者你也可以<a href="http://www.wensibo.top">站内留言</a></p>
+<hr>
+<h2 id="提高网站的访问速度"><a href="#提高网站的访问速度" class="headerlink" title="提高网站的访问速度"></a>提高网站的访问速度</h2><p>最开始的时候网站的访问速度出奇的慢，在控制台观察知道是头像加载的时候拖慢了速度，要知道我的头像只有300K，无奈只能压缩图片大小了，推荐这个<a href="http://www.tuhaokuai.com/image" target="_blank" rel="noopener">在线压缩图片</a>的网站，把头像压缩成了20K，这下加载就不会龟速了。</p>
+<hr>
+<h2 id="推广你的网站"><a href="#推广你的网站" class="headerlink" title="推广你的网站"></a>推广你的网站</h2><p>网站推广其实质就是SEO(搜索引擎优化)，提高你网站在网络的可见度，那么可以通过很多方式去增加网站的访问量。</p>
+<ul>
+<li>向搜索引擎提交你的网站地址。这是至关重要的，也是十分有效的。</li>
+<li>如果你有访问量比较客观的网络工具，例如<a href="http://www.cnblogs.com/ghylzwsb/" target="_blank" rel="noopener">我的博客园博客</a>，可以在上面增加你网站的外链，吸引用户来访问你的网站。</li>
+<li>在社交工具上分享你的网站内容，并附上你的链接。</li>
+<li>优化好你的网站，这个是核心，搜索引擎只有觉得你的网站是面向用户的才会给你加分。<br>如果你能做到以上列出的4点，相信你的网站访问量会很可观，当然我也在持续努力中。</li>
+</ul>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>本次系列教程到这里就结束啦，如果你对Hexo建站有什么问题或者对我的教程有任何的建议，请你联系我，让我们一起分享吧！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.248Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/" target="_blank" rel="external">http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/使用Hexo建立个人博客网站/">使用Hexo建立个人博客网站</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&title=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&title=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&source=不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/02/16/一口一口吃掉Volley（一）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一口一口吃掉Volley（一）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/01/13/一口一口吃掉Hexo（五）【有更新】/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一口一口吃掉Hexo（五）【有更新】</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="一口一口吃掉Hexo（六）【已修复问题】"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&title=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&title=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&source=不知不觉已经更新到了最后一节了，很开心你能看到这一节，相信你也已经在你的虚拟主机上成功部署了你的网站，但是可能总会遇到一些问题，也想让你的网站变得更好，这..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Hexo（六）【已修复问题】》 — 温斯渤&url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/01/13/一口一口吃掉Hexo（六）【已修复问题】/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJUlEQVR42u3awa7iMAwFUP7/p5ntk0aUaztI1JyuUEFpTrq4xM7jEV/PP9erb6v3kzH/fvv/L69HOHBhY2Nj34T9vLxyQDLd66nno12Pfz0mNjY29lb2dfxcPz65n0zr1e9PvR5sbGxs7Oq0qhuMyQvAxsbGxk4elvOqhaFq/SeZJzY2NvavsXvFnWTq1S1E/jnZCB2opWFjY2N/PTvvin7/54/0t7GxsbG/mP382FUtSyWNhFMKbGxs7E3s3l//SVpODgNVW8VvnoWNjY29iH2qZNNbvmojedJmiPZY2NjY2Ldi5w3U60jIw2MSS/lz3yw3NjY29lJ2L8YmeTEJud4rwcbGxt7H/lxLOI/Gaum/WvDCxsbG/gV2b4p5PFS3Jb0qULMxgI2Njb2C3cP3SvnJhHq/zxsJ2NjY2PvY1SJOtdjUm2gvkAqlKGxsbOxF7FMPHm0J4nzJqYXcxsbGxl7EzstGkzZqr4WQN5sL3Q9sbGzsdexJ8PQmkW9dei3eqLSEjY2NfVt2vrXotXJPxdjhY5fY2NjYS9m9v/L5diU59FM9JFSNN2xsbOyt7N6Rl+oGo1fKn7ccsLGxsX+BnZdvrhcrj5BkuatFpXyG2NjY2JvYycOqwyWjjeJnEITY2NjY+9jVQzD50Zkk3qq/rAZb85gONjY29m3Z1XZvtZXbu5MvU/J0bGxs7H3s3nSrbd154/bU0kTBho2NjX1Ddl6+T5ZgHmxVanWbhI2Njb2VferPfYLphVneGIiKTdjY2Ngr2PlUkkEnrdm8WTs54vPI1wYbGxv7JuxJ87VXYEpayNUtUPUFYGNjY29iJ5uKPEiqcfKJdkJ0lAcbGxt7EbvacE3iZ1KoystV+fVyfGxsbOwV7GfxmgRb3qbttQea/RBsbGzsm7MPpF8cM/nCTbrWeYEMGxsbexP7VMzkk64uSl78KswBGxsbex27Wtavlu+rIVTuV1dDFxsbG/sn2b3C0zzwenfebEiwsbGxf5Ld22YkMZPfyctGb2aFjY2NvY7di5xkyXoL/en2AzY2NvYm9jxmckbvAFCPNA9XbGxs7K9n/wMOC7Wp5ViPIAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

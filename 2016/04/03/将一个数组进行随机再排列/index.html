@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/04/03/将一个数组进行随机再排列/">
+    
+    
+    <title>将一个数组进行随机再排列 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="数组排列">
+    <meta name="description" content="我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很久，当然最后的算法也是参考借鉴了且听风吟博主的一篇文章：http://wsjiang.iteye.com/blog/1775341 ，在此鸣谢！">
+<meta name="keywords" content="数组排列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将一个数组进行随机再排列">
+<meta property="og:url" content="http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很久，当然最后的算法也是参考借鉴了且听风吟博主的一篇文章：http://wsjiang.iteye.com/blog/1775341 ，在此鸣谢！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160403222037551-2125721015.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160403222840410-1693410340.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将一个数组进行随机再排列">
+<meta name="twitter:description" content="我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很久，当然最后的算法也是参考借鉴了且听风吟博主的一篇文章：http://wsjiang.iteye.com/blog/1775341 ，在此鸣谢！">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160403222037551-2125721015.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">将一个数组进行随机再排列</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">将一个数组进行随机再排列</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-03T14:35:04.000Z" itemprop="datePublished" class="page-time">
+  2016-04-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JAVA/">JAVA</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题的解决："><span class="post-toc-number">1.</span> <span class="post-toc-text">问题的解决：</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-将一个数组进行随机再排列" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">将一个数组进行随机再排列</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-03 22:35:04" datetime="2016-04-03T14:35:04.000Z" itemprop="datePublished">2016-04-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JAVA/">JAVA</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很久，当然最后的算法也是参考借鉴了且听风吟博主的一篇文章：<a href="http://wsjiang.iteye.com/blog/1775341" target="_blank" rel="noopener">http://wsjiang.iteye.com/blog/1775341</a> ，在此鸣谢！<br><a id="more"></a></p>
+<h2 id="问题的解决："><a href="#问题的解决：" class="headerlink" title="问题的解决："></a>问题的解决：</h2><p>1、假设想要将2~7这6个数字随机排序成一个数组，这里我们设置min为该范围的最小值2，max为该范围的上限7，n为想要在这个范围中取出多少个数字组成一个数组，当然当n等于范围的长度len即6时，那么得到的就是将原来的6个数字重新随机排序一遍。</p>
+<p>2、为了方便我们引进一个初始化数组source，并将刚刚范围中的所有数字依次存进该数组中，则初始化数组source为{2,3,4,5,6,7}。</p>
+<p>3、为了方便我们同样再引进另一个数组result作为最后返回的数组。在这里我们知道一开始len=6，那么就随机取得一个随机数index(0&lt;=index&lt;=len-1),接下来就要在source数组中找到index位置上的元素放入到result数组的第0位，这时应该将len自减，同时在source数组中将source[index]替换为source[len]。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201604/927927-20160403222037551-2125721015.png" alt="流程图" title="">
+                </div>
+                <div class="image-caption">流程图</div>
+            </figure>
+<p>4、以此类推直到数组result已满位置。最终得到的就是一个经过随机排序的数组。</p>
+<p>5、代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestRandom</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 该方法用于在制定范围即（min~max）内对min到max的所有数字进行重新随机排列，使他们形成一组随机数。</span></span><br><span class="line"><span class="comment">     *  1、首先先初始化一个长度为(max-min+1)的数组source，数组的元素按照数字从大到小的顺序分别为min~max；</span></span><br><span class="line"><span class="comment">     *  2、每次取一个随机数index，0&lt;=index&lt;=(数组长度len-1)，同时len自减1，</span></span><br><span class="line"><span class="comment">     *  取出source数组中对应在index位置上的元素依次放进最终数组result，并且将source[index]替换为source[len]。</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] randomArray(<span class="keyword">int</span> min,<span class="keyword">int</span> max,<span class="keyword">int</span> n)&#123;</span><br><span class="line">        <span class="keyword">int</span> len = max-min+<span class="number">1</span>;<span class="comment">//len为该范围内元素的个数</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(max &lt; min || n &gt; len)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//初始化给定范围的待选数组</span></span><br><span class="line">        <span class="keyword">int</span>[] source = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = min; i &lt; min+len; i++)&#123;</span><br><span class="line">            source[i-min] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        Random rd = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; result.length; i++) &#123;</span><br><span class="line">            <span class="comment">//待选数组0到(len-2)随机一个下标</span></span><br><span class="line">            index = Math.abs(rd.nextInt() % len--);</span><br><span class="line">            <span class="comment">//将随机到的数放入结果集</span></span><br><span class="line">            result[i] = source[index];</span><br><span class="line">            <span class="comment">//将待选数组中被随机到的数，用待选数组(len-1)下标对应的数替换</span></span><br><span class="line">            source[index] = source[len];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;=<span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> result[]=TestRandom.randomArray(<span class="number">2</span>,<span class="number">7</span>,<span class="number">6</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> num:result) &#123;</span><br><span class="line">                System.out.print(num+<span class="string">"\t"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>6、运行结果如图，可见每次运行的结果都有可能不一样。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201604/927927-20160403222840410-1693410340.png" alt="运行结果" title="">
+                </div>
+                <div class="image-caption">运行结果</div>
+            </figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.072Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/04/03/将一个数组进行随机再排列/" target="_blank" rel="external">http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数组排列/">数组排列</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&title=《将一个数组进行随机再排列》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&title=《将一个数组进行随机再排列》 — 温斯渤&source=我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《将一个数组进行随机再排列》 — 温斯渤&url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/04/安卓下如何使用JUnit进行软件测试/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">安卓下如何使用JUnit进行软件测试</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="将一个数组进行随机再排列"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&title=《将一个数组进行随机再排列》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&title=《将一个数组进行随机再排列》 — 温斯渤&source=我们在开发第一个app的时候遇到的一个比较有趣的算法，这种将一个数组重新进行随机排序的问题并不罕见，但是因为是初学者，所以在探讨这个算法的过程中也纠结了很..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《将一个数组进行随机再排列》 — 温斯渤&url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/03/将一个数组进行随机再排列/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3a0U4DMQwEQP7/p+EVCTXddZK2SHNPqNw1mUOKje2vr/j6/nX9/uTvPY9+2z6VrHjswsPDw9vY+t9rvdj6/pyx3s8a/+h+PDw8vNu89SG+prbfthMq6lXw8PDwPoA3O6Znx3oeePDw8PD+Cy+/khXblBoPDw/vvbxZcaHdSptw74QiPDw8vHu8vIv0OT9f6e/h4eHhbXfVd1LbJDlun613i4eHh3eB16az+YbaUa12cKHYJx4eHt4FXn6g58GgLVvkzbZklAEPDw/vNq8ts64Bs+GA9hUXwQAPDw/vAq/dYn5Yt9udteKioIWHh4d3lLdTop0BdpLpeuwADw8P7yhvnebOEuK8bTZLlNehCw8PD++9vFkpNr8n+eaddBwPDw/vBq9deHbEt69pJzDg4eHhvYY3G5DaOdbzlls7RlA3wPDw8PBKXn40t5tup73ywkQeMPDw8PBu8E4tuVM1nTW3ipECPDw8vJfw2lAxe0H7BYho3AEPDw/vAi//irbOMWxZxWl0sSIeHh7eUd6xJlNZDp4lzXXpBA8PD+8ab1Z6yF9H8tROCeNJGRcPDw/vEG+W8iafJ0lzOxDQNsnw8PDwbvBmDaf2cJ8VI/LCRFI0wcPDw3slr02X84Jsu9EDBV88PDy8Q7ydxfKQ0JZ38zT9SWMMDw8P7xpvJ4WdpeZt7Epe0MMqNR4eHt41Xls+aNPl/MUlpdvoHjw8PLyjvNlG8yLsTniYlX0f9vfw8PDwDvHyq0W2RYQ2fcfDw8N7L+92a6odnMrbb9HfDQ8PD+8aLylSnDr02+bZVgDDw8PD+xjerLgwGw5oyxwHAgMeHh7eUd6skd++rItDV3h4eHiHeHlavHVMx4ML+epRYMDDw8M7ysv/yW+LFHnhYLitfRgeHh5ex/sBRra7YL8/TP8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

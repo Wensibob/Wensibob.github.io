@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/05/15/GankClient/">
+    
+    
+    <title>又是一个MVP+RxJava+Retrofit的干货集中营 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MVP,RxJava,Retrofit">
+    <meta name="description" content="今天想要与大家一起分享的是近一个星期内开发的一个新app——干货集中营客户端，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品，我也借鉴了其中的一些，自己开发出一款干货集中营客户端，目前项目已经发布到github，如果你想了解整个工程的具体内容，那么你可以fork或者clone，如果你觉得我做得还可以，那么请你赐给我一个star呗！你的支持会是我努力的动力。">
+<meta name="keywords" content="MVP,RxJava,Retrofit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="又是一个MVP+RxJava+Retrofit的干货集中营">
+<meta property="og:url" content="http://www.wensibo.top/2017/05/15/GankClient/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="今天想要与大家一起分享的是近一个星期内开发的一个新app——干货集中营客户端，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品，我也借鉴了其中的一些，自己开发出一款干货集中营客户端，目前项目已经发布到github，如果你想了解整个工程的具体内容，那么你可以fork或者clone，如果你觉得我做得还可以，那么请你赐给我一个star呗！你的支持会是我努力的动力。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/io.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/contribution.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/blog.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/car.jpg">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/logo.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/no_picture.jpg">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/1.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/2.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/3.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/4.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/5.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/6.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/gank.gif">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/QRCode.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-5-15GankClient/custom.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.664Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="又是一个MVP+RxJava+Retrofit的干货集中营">
+<meta name="twitter:description" content="今天想要与大家一起分享的是近一个星期内开发的一个新app——干货集中营客户端，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品，我也借鉴了其中的一些，自己开发出一款干货集中营客户端，目前项目已经发布到github，如果你想了解整个工程的具体内容，那么你可以fork或者clone，如果你觉得我做得还可以，那么请你赐给我一个star呗！你的支持会是我努力的动力。">
+<meta name="twitter:image" content="http://wensibo.top/file/img/2017-5-15GankClient/io.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">又是一个MVP+RxJava+Retrofit的干货集中营</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">又是一个MVP+RxJava+Retrofit的干货集中营</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-15T14:51:25.000Z" itemprop="datePublished" class="page-time">
+  2017-05-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Have-Done-List"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Have Done List</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Todo-List"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Todo List</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#项目介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">项目介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#预览"><span class="post-toc-number">3.</span> <span class="post-toc-text">预览</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全部效果图来一发"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">全部效果图来一发</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#没有gif图都不好意思说话了"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">没有gif图都不好意思说话了</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载"><span class="post-toc-number">4.</span> <span class="post-toc-text">下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#功能-amp-特色"><span class="post-toc-number">5.</span> <span class="post-toc-text">功能&amp;特色</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分解"><span class="post-toc-number">6.</span> <span class="post-toc-text">分解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何使用MVP的设计架构"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">如何使用MVP的设计架构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#你真的用好RxJava了吗"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">你真的用好RxJava了吗</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#爽快的Retrofit"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">爽快的Retrofit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#更好的网页浏览体验——Custom-Tabs-Client"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">更好的网页浏览体验——Custom-Tabs-Client</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#版本控制"><span class="post-toc-number">7.</span> <span class="post-toc-text">版本控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#致谢"><span class="post-toc-number">8.</span> <span class="post-toc-text">致谢</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后记"><span class="post-toc-number">9.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-GankClient" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">又是一个MVP+RxJava+Retrofit的干货集中营</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-15 22:51:25" datetime="2017-05-15T14:51:25.000Z" itemprop="datePublished">2017-05-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>今天想要与大家一起分享的是近一个星期内开发的一个新app——<strong>干货集中营客户端</strong>，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品，我也借鉴了其中的一些，自己开发出一款干货集中营客户端，目前项目已经发布到<a href="https://github.com/Wensibob/GankClient" target="_blank" rel="noopener">github</a>，如果你想了解整个工程的具体内容，那么你可以fork或者clone，如果你觉得我做得还可以，那么请你赐给我一个star呗！你的支持会是我努力的动力。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-5-15GankClient/io.png" alt="Google_I/O_2017" title="">
+                </div>
+                <div class="image-caption">Google_I/O_2017</div>
+            </figure><br><a id="more"></a> </p>
+
+			<script>
+				console.error("Error: [hexo-tag-aplayer] Unrecognized tag argument(2): autoplay=ture");
+			</script>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>慢慢的已经养成了每篇文章都会来一个前言，也慢慢地将写文章潜移默化的转变成写故事，所以每个故事都会有前言，也都会有结果，这次也不例外。<br>距离上篇引起<a href="http://wensibo.top/2017/04/13/2017Tencent_review/" target="_blank" rel="noopener">热烈反响的文章</a>发布已经过去一个月了，承蒙广大网友对我的支持以及建议，当然作为一个90后，我也很虚心的接受来自各方的吐槽，毕竟我并不优秀，只是一直在优秀的路上努力的奔跑着。下面我想跟大家一起分享一下这一个月里我做了些什么事，以及接下来一段时间的计划和打算。</p>
+<h3 id="Have-Done-List"><a href="#Have-Done-List" class="headerlink" title="Have Done List"></a>Have Done List</h3><p><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">持续<strong>22</strong>天在github上出现，看看下面这棵贡献树<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/contribution.png" alt="contributions"><br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">博客浏览量突破<strong>35000</strong><br><img src="http://wensibo.top/file/img/2017-5-15GankClient/blog.png" alt="blog"><br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">看了<strong>1</strong>本好书——《网络是怎样连接的》<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">研究Retrofit与RxJava的源码（待我葡萄成熟时再把文章放出来吧，现在太嫩了，不好意思让大家看到）<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt=""><strong>2</strong>次担任演讲的主讲人(之后会写一篇文章讲述我的演讲技巧)<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">看了锤子科技新品发布会(我是罗粉但也是加油，心疼老罗一秒)<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">努力寻找实习(投了许多简历，但是无一幸免:sob: ,有同学可以推荐一波吗？没有的话我待会再问问)<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt=""><strong>1</strong>个全新的干货集中营客户端app(也是写这篇文章的缘由)        </p>
+<h3 id="Todo-List"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</h3><p><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">Google I/O 2017开发者大会<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">xposed插件开发(这个闪念是有一天夜里惊醒过来的想法)<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">继续写好的文章与大家一起分享，不仅仅是技术方面的，还有许多我觉得有用的文章，都会为大家奉上，感谢老铁们的支持<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">继续看书<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">继续找实习(呜呜呜<del>~~(&gt;_&lt;)</del>~~,体会到工作难找了，尤其是互联网寒冬)        </p>
+<p><img src="http://wensibo.top/file/img/2017-5-15GankClient/car.jpg" alt="老铁别废话了"><br>好啦，上面讲了一大堆废话终于可以进入正题了，我也很基动，开车咯！</p>
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p><img src="http://wensibo.top/file/img/2017-5-15GankClient/logo.png" alt="logo"><br>GankClient(又称干货集中营客户端)是一个全新的干货集中营客户端，它获取的是来自<a href="http://gank.io/api" target="_blank" rel="noopener">干货集中营API</a>的数据，利用全新的Material Design的设计语言展示数据内容。整个项目采用MVP的设计架构，并且大量使用RxJava2，网络框架使用的是Retrofit。我用下面几个装逼的句子来形容一下这个APP：    </p>
+<ul>
+<li>更快速的加载速度</li>
+<li>更流畅的页面体验</li>
+<li>更有趣的刷新效果</li>
+<li>更精美的网页浏览</li>
+<li>更美观的视觉享受    </li>
+</ul>
+<p>这个只是我的个人感受，大神请轻喷:joy: ，不过还是希望大家能够喜欢<a href="https://github.com/Wensibob/GankClient" target="_blank" rel="noopener">这个项目</a>，并且积极的向我pull request以及反馈bug，希望大家多多支持。如果可以的话给个star咯。    </p>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-5-15GankClient/no_picture.jpg" alt="谁说不给图的" title="">
+                </div>
+                <div class="image-caption">谁说不给图的</div>
+            </figure>        
+<h3 id="全部效果图来一发"><a href="#全部效果图来一发" class="headerlink" title="全部效果图来一发"></a>全部效果图来一发</h3><p><img src="http://wensibo.top/file/img/2017-5-15GankClient/1.png" alt="screenshot">    <img src="http://wensibo.top/file/img/2017-5-15GankClient/2.png" alt="screenshot">    <img src="http://wensibo.top/file/img/2017-5-15GankClient/3.png" alt="screenshot">    <img src="http://wensibo.top/file/img/2017-5-15GankClient/4.png" alt="screenshot">    <img src="http://wensibo.top/file/img/2017-5-15GankClient/5.png" alt="screenshot">    <img src="http://wensibo.top/file/img/2017-5-15GankClient/6.png" alt="screenshot"></p>
+<h3 id="没有gif图都不好意思说话了"><a href="#没有gif图都不好意思说话了" class="headerlink" title="没有gif图都不好意思说话了"></a>没有gif图都不好意思说话了</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-5-15GankClient/gank.gif" alt="gif" title="">
+                </div>
+                <div class="image-caption">gif</div>
+            </figure>    
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>如果你想测试这个项目，那么请手动<a href="https://github.com/Wensibob/GankClient" target="_blank" rel="noopener">clone</a>，如果你想尝试一下APP，那么你可以使劲<a href="http://fir.im/1110" target="_blank" rel="noopener">戳这里</a> ,或者扫下面的二维码。后期我会发布到应用市场，希望大家可以多多支持！<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/QRCode.png" alt="QRCode">    </p>
+<h2 id="功能-amp-特色"><a href="#功能-amp-特色" class="headerlink" title="功能&amp;特色"></a>功能&amp;特色</h2><p> <strong>√表示已经实现的功能，没有√的是还没实现或者需要完善的功能。</strong>             </p>
+<p><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">实时获取服务器的最新数据，采用CardView的布局以更好的展现数据。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">刷新效果很好玩，真的很精致，感谢<a href="https://github.com/Yalantis/Phoenix" target="_blank" rel="noopener">Phoenix</a>。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">如果你装有Chrome浏览器，并将其设置为默认浏览器，那么你的网页浏览效果就会十分酷炫。感谢<a href="https://github.com/GoogleChrome/custom-tabs-client" target="_blank" rel="noopener">Custom-Tabs-Client</a> ! 墙裂推荐Chrome，如果你没有安装Chrome，那也没关系，那就用传统的WebView吧！<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">更加统一的过渡动画，相信你会爱上它。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">保存、分享图片与链接，也可以直接使用浏览器打开链接。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">更好看的Material Design设计风格。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/check.png" alt="">妹子很漂亮哟！<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">优化webview的视频播放。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">增加使用系统浏览器的选项。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">修复在主界面中加载数据到2016/4/20左右时数据显示错乱的问题。<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/not_check.png" alt="">增强分享功能。              </p>
+<h2 id="分解"><a href="#分解" class="headerlink" title="分解"></a>分解</h2><p>终于到了这个纯干货步骤了，别说话先看东西！             </p>
+<h3 id="如何使用MVP的设计架构"><a href="#如何使用MVP的设计架构" class="headerlink" title="如何使用MVP的设计架构"></a>如何使用MVP的设计架构</h3><p>我先展示以下这个项目的结构图，让大家心里有个底             </p>
+<ul>
+<li>http<ul>
+<li>GankRetrofit.java</li>
+<li>GankRetrofitClient.java</li>
+</ul>
+</li>
+<li>mvp<ul>
+<li>model<ul>
+<li>BaseModel.java</li>
+</ul>
+</li>
+<li>presenter<ul>
+<li>BasePresenter.java</li>
+</ul>
+</li>
+<li>view<ul>
+<li>IBaseView.java</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ui<ul>
+<li>activity</li>
+<li>adapter</li>
+<li>base</li>
+<li>chromeviews</li>
+<li>fragment</li>
+<li>widget   </li>
+</ul>
+</li>
+</ul>
+<p>可以看到，整个项目的结构还算比较清晰，整体的架构都是在mvp目录中定下来的，mvp架构分三层，<strong>model模型层</strong>，用于定义一些数据的类型；<strong>presenter呈现者层</strong>，用于处理view层的逻辑；<strong>view显示层</strong>，这里定义的都是接口，真正实现他们的是activity，这些activity只要实现相应的接口，就能够自己复写其中的方法。<br>当然我这么说你肯定还是一脸懵逼，而且我还必须跟你说，我这个不算最纯粹的MVP模式，最纯粹的写法应该都是面向接口编程的，就是在model，presenter，以及view下都是定义接口，而到了具体的运用场景，就定义出具体的类去实现这些接口。当然了，为了让大家能够更清楚MVP是怎么实现的，下面我会用代码的形式为大家展示，例如我要编写MainActivity的代码，首先已经知道在这个Activity中需要做如下这些事：</p>
+<ul>
+<li>初始化组件</li>
+<li>加载Fragment</li>
+<li>FloatingActionButton的点击事件——去到DailyActivity</li>
+<li>drawer menu的点击事件——去到AboutActivity</li>
+</ul>
+<p>为了让Activity专注于界面的工作，而不用去考虑逻辑处理的操作，这个就是所谓的解耦，那么我们可以将逻辑的操作放到presenter中去，而与界面有关的操作就放在view下，于是我们就可以这样写(为了便于大家理解，我将项目中的代码做了适当的修改，如果你想了解更加具体的逻辑，可以仔细看看代码)：    </p>
+<ul>
+<li><strong>IBaseView</strong>    </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBaseView</span> </span>&#123;</span><br><span class="line">        <span class="comment">//界面初始化操作</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>BasePresenter&amp;MainPresenter</strong>    </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将presenter的公共操作集成为BasePresenter</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BasePresenter</span> &lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">IBaseView</span>&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">protected</span> Disposable disposable;</span><br><span class="line">        <span class="keyword">protected</span> Context context;</span><br><span class="line">        <span class="keyword">protected</span> T iView;      <span class="comment">//获取到view的对象</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">BasePresenter</span><span class="params">(Context context, T iView)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.context = context;</span><br><span class="line">                <span class="keyword">this</span>.iView = iView;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                iView.init();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">initPresenter</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 每一个界面都可以编写自己的Presenter，并指定View的泛型</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainPresenter</span> <span class="keyword">extends</span> <span class="title">BasePresenter</span>&lt;<span class="title">IBaseView</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MainPresenter</span><span class="params">(Context context, IBaseView iView)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>(context, iView);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">toDailyActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(context, DailyActivity.class);</span><br><span class="line">                context.startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">toAboutActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(context, AboutActivity.class);</span><br><span class="line">                context.startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">toSettingActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(context, SettingActivity.class);</span><br><span class="line">                context.startActivity(intent);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>MainActivity</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> &lt;<span class="title">MainPresenter</span>&gt; <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">IBaseView</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@OnClick</span>(R.id.fab_main)</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">fabClick</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                presenter.toDailyActivity();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">                setContentView(R.layout.activity_main);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initPresenter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                presenter = <span class="keyword">new</span> MainPresenter(<span class="keyword">this</span>, <span class="keyword">this</span>);</span><br><span class="line">                presenter.init();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">//所有的初始化操作</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onDestroy();</span><br><span class="line">                presenter.release();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大概就是这样一个套路，讲真我这样讲你肯定迷糊，我当初在学这个的时候也是十分凌乱，后来才发现只有自己动手亲自敲代码才能了解整个思路，另外大家在学习MVP的过程中应该擅于画图，不管是在纸上画还是使用思维导图都行，这样可以让你更加宏观的了解整个调用的顺序以及各个类之间的关系，这绝不是你看了一篇文章就能懂的。</p>
+<h3 id="你真的用好RxJava了吗"><a href="#你真的用好RxJava了吗" class="headerlink" title="你真的用好RxJava了吗"></a>你真的用好RxJava了吗</h3><p>当我问这个问题的时候，其实我想说的是RxJava的用处很广，我们想当然的认为只要RxJava与Retrofit相配合就算是完成任务了，但实际上只要涉及到耗时操作、线程切换：网络请求、图片解析、数据库读取等等需要用多个线程一起完成的工作时，你都可以用到RxJava，并且如果你还一直用RxJava1的话，那么你也OUT啦，当你认识RxJava2.x的时候你会发现他更强大了。关于RxJava，我后续会写相关的文章与大家一起分享，这里我举项目中遇到的一个例子，看看RxJava的用武之地是多么的广：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将图片保存在本地</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openWebView</span><span class="params">(<span class="keyword">final</span> Gank gank)</span> </span>&#123;</span><br><span class="line">    disposable=Observable.create(<span class="keyword">new</span> ObservableOnSubscribe() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter e)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                    e.onNext(android.R.drawable.ic_menu_share);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;).subscribeOn(Schedulers.newThread())<span class="comment">//开启一个新线程来进行耗时操作</span></span><br><span class="line">            .map(<span class="keyword">new</span> Function&lt;Integer, Bitmap&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> Bitmap <span class="title">apply</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                            <span class="comment">//将资源id解析为bitmap是一个耗时操作</span></span><br><span class="line">                            <span class="keyword">return</span> BitmapFactory.decodeResource(activity.getResources(), integer);</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;).observeOn(AndroidSchedulers.mainThread())<span class="comment">//回到主线程操作bitmap</span></span><br><span class="line">            .subscribe(<span class="keyword">new</span> Consumer&lt;Bitmap&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Bitmap bitmap)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                            <span class="comment">//拿到bitmap之后做的界面更新</span></span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">&#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment">//释放资源</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (disposable != <span class="keyword">null</span>&amp;&amp;!disposable.isDisposed()) &#123;</span><br><span class="line">                        disposable.dispose();</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="爽快的Retrofit"><a href="#爽快的Retrofit" class="headerlink" title="爽快的Retrofit"></a>爽快的Retrofit</h3><p>还记得之前我写过Volley的一系列文章，虽然觉得这个开源框架已经不错了，但毕竟长江后浪推前浪，在Retrofit的面前，Volley简直就是小巫见大巫，看看我们应该如何在项目中使用：</p>
+<ul>
+<li>1、新建一个接口，用注解的形式在里面定义网络请求的方法：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GankRetrofit</span> </span>&#123;</span><br><span class="line">        <span class="comment">//获取MainActivity界面的数据，具体的请求路径应该详细看官方的API说明，</span></span><br><span class="line">        <span class="comment">// Retrofit与RxJava配合之后才能显示出更强的威力</span></span><br><span class="line">        <span class="meta">@GET</span>(<span class="string">"data/&#123;type&#125;/40/&#123;page&#125;"</span>)</span><br><span class="line">        <span class="function">Observable&lt;MainData&gt; <span class="title">getMainData</span><span class="params">(@Path(<span class="string">"type"</span>)</span> String type, @<span class="title">Path</span><span class="params">(<span class="string">"page"</span>)</span> <span class="keyword">int</span> page)</span>;</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">* <span class="number">2</span>、获得实例：</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">Gson date_gson = <span class="keyword">new</span> GsonBuilder().setDateFormat(<span class="string">"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"</span>).create();</span><br><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">        .baseUrl(<span class="string">"http://gank.io/api/"</span>)         <span class="comment">//指定服务器地址</span></span><br><span class="line">        .addConverterFactory(GsonConverterFactory.create(date_gson))    <span class="comment">//添加一个gson的解析器</span></span><br><span class="line">        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())          <span class="comment">// 如果想使用RxJava那就需要添加这个适配器  </span></span><br><span class="line">        .build();</span><br><span class="line">GankRetrofit gankRetrofit;</span><br><span class="line">gankRetrofit = retrofit.create(GankRetrofit.class);            <span class="comment">//获取GankRetrofit的对象</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>3、获取数据：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回的Observable&lt;MainData&gt;对象就可以使用RxJava进行解析了</span></span><br><span class="line">gankRetrofit.getMainData(<span class="string">"Android"</span>,<span class="number">40</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="更好的网页浏览体验——Custom-Tabs-Client"><a href="#更好的网页浏览体验——Custom-Tabs-Client" class="headerlink" title="更好的网页浏览体验——Custom-Tabs-Client"></a>更好的网页浏览体验——<a href="https://github.com/GoogleChrome/custom-tabs-client" target="_blank" rel="noopener">Custom-Tabs-Client</a></h3><p>如果你使用过Chrome浏览器，那么你应该会喜欢上它，当我们在使用webview开发的时候，会发现webview存在许多的限制，并且开发者对webview不能完全控制，于是Chrome团队为了解决开发者的这些问题，就设计出这个开源库，只要用户手机上安装Chrome并且设置为默认浏览器，那么打开网页链接的时候就会看到如下的画面：<br><img src="http://wensibo.top/file/img/2017-5-15GankClient/custom.png" alt="custom-tabs-client"><br>是的！如此酷炫的画面是用到了Chrome浏览器的内核，并且读取Chrome的cookie，例如如果你在Chrome已经登录过github了，那么通过这个库打开的github链接同样也显示你已经登录了github。当然除了页面效果十分好之外，我们还可以自定义许多东西，例如<strong>过渡动画</strong>、<strong>ToolBar上方的ActionButton</strong>等等，我的项目中也已经实现了这两个功能。接下来我带大家一起看看最简单的实例应该怎么编写：</p>
+<pre><code class="java">CustomTabsIntent.Builder customTabsIntent;
+ customTabsIntent = <span class="keyword">new</span> CustomTabsIntent.Builder();     <span class="comment">//获取到CustomTabsIntent实例</span>
+ <span class="comment">//一系列的设置</span>
+customTabsIntent.setToolbarColor(activity.getResources().getColor(R.color.colorPrimaryDark));   <span class="comment">//设置ToolBar的颜色</span>
+customTabsIntent.setShowTitle(<span class="keyword">true</span>);    <span class="comment">//设置是否显示网页的标题</span>
+customTabsIntent.setStartAnimations(activity, R.anim.slide_in_right, R.anim.slide_out_left);    <span class="comment">//设置进入的动画</span>
+customTabsIntent.setExitAnimations(activity, R.anim.slide_in_left,R.anim.slide_out_right);      <span class="comment">//设置退出的动画</span>
+<span class="comment">//开启网页</span>
+CustomTabActivityHelper.openCustomTab(
+    activity,       <span class="comment">//当前的activity</span>
+    customTabsIntent.build(),
+    view,
+    gank,   <span class="comment">//gank带有要打开的网页的url</span>
+    <span class="keyword">new</span> CustomFallback() { <span class="comment">//如果用户没有安装Chrome并将其设置为默认浏览器的话，应该做这样的处理</span>
+            <span class="meta">@Override</span>
+            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openUri</span><span class="params">(Activity activity, View view,Gank gank)</span> </span>{
+                    Log.d(<span class="string">"Gank"</span>, gank.toString());
+                    <span class="keyword">super</span>.openUri(activity, view,gank);
+            }
+    });
+</code></pre>
+<hr>
+<p><strong>以上就是想要跟大家一起分享的关于这个项目中一些重要的点，可能有些地方讲得并不那么清楚，但我觉得只有实践才能出真知，所以老哥还是乖乖打开AS撸撸代码啦！</strong></p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>目前app的版本为V1.0.0，我会用下面的时间表记录版本的迭代，如果有更新的版本，我会及时更新这个表格。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Version</th>
+<th style="text-align:center">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://github.com/Wensibob/GankClient/releases/tag/V1.0.0" target="_blank" rel="noopener">V1.0.0</a></td>
+<td style="text-align:center">2017/5/14</td>
+</tr>
+</tbody>
+</table>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>作为一名Android开发者，我们都应该具有像罗老师一样感激开源世界的情怀，而我们现在能做的就是同样为开源世界做贡献，无论是写文章亦或是写程序，记得都要时刻保持一颗感恩的心。非常感谢代码家以及他的干活集中营，也非常感谢许多前辈们做过的干活集中营app。</p>
+<ul>
+<li><a href="https://daimajia.com/" target="_blank" rel="noopener">代码家</a></li>
+<li><a href="http://gank.io/" target="_blank" rel="noopener">干货集中营</a></li>
+<li><a href="https://github.com/Panl/Gank.io" target="_blank" rel="noopener">Gank.lu</a></li>
+</ul>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>最近一个月，感觉自己身体被掏空，吐槽学校对我们专业的课程安排如此不合理，每天上那些自己不感兴趣的课程确实很无趣，但是生活再难也要感激它，只有通过自己的双手去努力，将来的你才会为现在的自己喝彩骄傲。下篇文章再见！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.664Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/05/15/GankClient/" target="_blank" rel="external">http://www.wensibo.top/2017/05/15/GankClient/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVP/">MVP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Retrofit/">Retrofit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJava/">RxJava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/05/15/GankClient/&title=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/05/15/GankClient/&title=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&source=今天想要与大家一起分享的是近一个星期内开发的一个新app——干货集中营客户端，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/05/15/GankClient/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&url=http://www.wensibo.top/2017/05/15/GankClient/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/05/15/GankClient/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/05/28/speaker/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">What kind of PPT makes you an excellent speaker——什么样的PPT能助你成为一个优秀的演讲者</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/16/birthday/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">给21岁的自己</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="GankClient"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/05/15/GankClient/&title=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/05/15/GankClient/&title=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&source=今天想要与大家一起分享的是近一个星期内开发的一个新app——干货集中营客户端，其实网上已经有许多类似的项目，代码家也在他的干货集中营中推荐了几款优秀的作品..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/05/15/GankClient/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《又是一个MVP+RxJava+Retrofit的干货集中营》 — 温斯渤&url=http://www.wensibo.top/2017/05/15/GankClient/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/05/15/GankClient/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aS27DMAxFUe9/0y7QaWH7PjJuIOpqFKSGpZMBK36OA6/zd5G//v18te6fP95YMmTIWJbBN7va5uqb/vPkbDJkyNiHQcLoG4HyHknOJkOGDBl8s3sMP5wMGTJk9BkkEKfB+gsBV4YMGQsy0qIYL72lx3o9F5chQ8aCjDTV/M/PL/Y3ZMiQsQjjDFdaJqsdLj6VDBkyRjNI+7AWfNOhjRry4F1QGTJkLMu4D6YE1hmqIKEW4WXIkDGa0S97pcGRXzprA2oyZMiYxyAHSgE87UzHLy7fIEOGjNEMXj7jCSe5DvL/BuQbGTJkzGakI1xpWY2H5rTB+XA1lCFDxjhGeoh+Eps2QR/KeTJkyBjN6BTL0iZl/521kp8MGTJWZ9RCZy355OlxHKBlyJCxDYOX8nn8fu/9lwFXhgwZ4xhpiS14KSmTtZsKMmTI2IFRayvGhfsPjY49zIzIkCFjKIMkovcHTQM0SXSLDVQZMmRswKi1EmulN3I1TJ+XIUPGVAbfoBbfUgb5KWXIkLEzgxf3axun7cwg3MuQIWM0o7Z4GS4ds0j3lSFDxg6MM1wdEm9/xqU6GTJkjGakQTZtWHbKc7WxDxkyZExl8LGGWmhOL5HFq6cMGTI2YPAgWwvQnyqcPQRcGTJkbM/ghf40AeZXyWBmRIYMGdsz0jZAv3z28APJkCFjAwZPYvvhNW1zooRZhgwZoxlpUsqT1c4wxyvvlyFDxnqMH9IAZasU5+QBAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

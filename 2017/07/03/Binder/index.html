@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/07/03/Binder/">
+    
+    
+    <title>从Android源码的角度分析Binder机制 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android源码解析,Binder机制,IPC">
+    <meta name="description" content="大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时间依旧在看书，同时也在研究Android源码，准备了不少干货想与大家一起分享。7月刚到，该放假的也都差不多放假了，该实习的也已经在实习了，而我。。。还是准备秋招吧！多看书多打码多提升自己的眼界。">
+<meta name="keywords" content="Android源码解析,Binder机制,IPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Android源码的角度分析Binder机制">
+<meta property="og:url" content="http://www.wensibo.top/2017/07/03/Binder/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时间依旧在看书，同时也在研究Android源码，准备了不少干货想与大家一起分享。7月刚到，该放假的也都差不多放假了，该实习的也已经在实习了，而我。。。还是准备秋招吧！多看书多打码多提升自己的眼界。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/Android.jpg">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/name_log.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/IStudentManager.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/IStudentManager_structure.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/client_log.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/process.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/IPC.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-03Binder/all_process.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从Android源码的角度分析Binder机制">
+<meta name="twitter:description" content="大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时间依旧在看书，同时也在研究Android源码，准备了不少干货想与大家一起分享。7月刚到，该放假的也都差不多放假了，该实习的也已经在实习了，而我。。。还是准备秋招吧！多看书多打码多提升自己的眼界。">
+<meta name="twitter:image" content="http://wensibo.top/file/img/2017-7-03Binder/Android.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">从Android源码的角度分析Binder机制</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">从Android源码的角度分析Binder机制</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-03T04:01:25.000Z" itemprop="datePublished" class="page-time">
+  2017-07-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#IPC"><span class="post-toc-number">2.</span> <span class="post-toc-text">IPC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是IPC"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">什么是IPC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么要用IPC"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">为什么要用IPC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android中解决IPC的方法"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Android中解决IPC的方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Binder"><span class="post-toc-number">3.</span> <span class="post-toc-text">Binder</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Binder在Android中的运用"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Binder在Android中的运用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何使用Binder"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">如何使用Binder</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、创建Student-java，Student-aidl，IStudentManager-aidl"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">1、创建Student.java，Student.aidl，IStudentManager.aidl</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、分析IStudentManager-java"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">2、分析IStudentManager.java</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建StudentManagerService-java，并为其指定进程"><span class="post-toc-number">3.2.3.</span> <span class="post-toc-text">创建StudentManagerService.java，并为其指定进程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在客户端愉快的绑定Service吧！"><span class="post-toc-number">3.2.4.</span> <span class="post-toc-text">在客户端愉快的绑定Service吧！</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#看看效果"><span class="post-toc-number">3.2.5.</span> <span class="post-toc-text">看看效果</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Binder的原理"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Binder的原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#进程的机制"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">进程的机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IPC交互示意图"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">IPC交互示意图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码分析"><span class="post-toc-number">3.3.3.</span> <span class="post-toc-text">源码分析</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#后记"><span class="post-toc-number">4.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Binder" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">从Android源码的角度分析Binder机制</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-03 12:01:25" datetime="2017-07-03T04:01:25.000Z" itemprop="datePublished">2017-07-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时间依旧在看书，同时也在研究Android源码，准备了不少干货想与大家一起分享。7月刚到，该放假的也都差不多放假了，该实习的也已经在实习了，而我。。。还是准备秋招吧！多看书多打码多提升自己的眼界。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/Android.jpg" alt="Binder" title="">
+                </div>
+                <div class="image-caption">Binder</div>
+            </figure>
+<a id="more"></a> 
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天想要和大家一起分享的是Android中的Binder机制，讲真这绝对是Android中很深奥的一个点，如果能够彻底弄懂它，这对初级程序员来说绝对会是一件具有里程碑意义的事件，当然我也研究了许久，终于琢磨出点所以然，所以就拿出来和大家一起分享分享。另外这篇文章将会通过一个小实例来讲解Binder，大家可以点击<a href="https://github.com/Wensibob/AIDLTest" target="_blank" rel="noopener">这里</a>，也欢迎大家fork和star。话不多说让我们开始吧！</p>
+<h1 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h1><p>为了弄懂IPC的来龙去脉，我将从以下三个方面为大家来讲解，希望对大家理解IPC会有帮助</p>
+<h2 id="什么是IPC"><a href="#什么是IPC" class="headerlink" title="什么是IPC"></a>什么是IPC</h2><p>IPC是<code>Inter Process Communication</code>的缩写，其意思就是进程间的通信，也就是两个进程之间的通信过程。我们都知道在Android系统中，每个应用都运行在一个进程上，具有自己的DVM实例，而且进程之间是相互隔离的，也就是说各个进程之间的数据是互相独立，互不影响的，而如果一个进程崩溃了，也不会影响到另一个进程。<br>采取这样的设计是有一定道理的，例如这样的前提下将互相不影响的系统功能分拆到不同的进程里面去，有助于提升系统的稳定性，毕竟我们都不想自己的应用进程崩溃会导致整个手机系统的崩溃。<br>进程之间隔离是不错的选择，可是如果进程之间想要互相通信，进行数据交互的时候那该怎么办呢？例如我们在自己的应用中想要访问手机通讯录中的联系人，很显然这是两个不同的进程，如果Android没有提供一种进程之间交流的机制，那么这种功能将无法实现。<br>不过由于Android系统使用的是Linux内核，而在Linux系统中进程之间的交互是有一套机制的，所以Android也借鉴了其中的一些机制，从而形成了Android的IPC机制。<br>上面只是粗略的讲解了IPC是啥，关于它的使用和原理我将一一为大家呈上。</p>
+<h2 id="为什么要用IPC"><a href="#为什么要用IPC" class="headerlink" title="为什么要用IPC"></a>为什么要用IPC</h2><p>上一点中我举了访问手机通讯录的例子。但你可能觉得我不需要用到这种功能，那么我就不用管IPC啦！其实不然，IPC在我们的应用开发过程中随处可见，下面我将举一个例子来说明他的重要性。<br>我们在MainActivity中修改一个静态变量，接着在另一个进程的SecondActivity中去访问该变量，看看能否读取已经修改过的变量。</p>
+<p><strong>1、新建一个Student类，并声明一个静态变量</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String name=<span class="string">"BOB"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2、在MainActivity的onCreate方法中修改name的值，并打印log</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">    Student.name = <span class="string">"JACK"</span>;</span><br><span class="line">    Log.d(<span class="string">"MainActivity:Sname="</span>, Student.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3、将SecondActivity设置为新进程，并在其onCreate方法中访问name</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在清单文件中通过android:process属性为SecondActivity指定特定的进程：com.bob.aidltest：second --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">".SecondActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">":second"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecondActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.second_activity);</span><br><span class="line">        Log.d(<span class="string">"SecondActivity:Sname="</span> , Student.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4、通过log，可以看到在MainActivity中修改了name的值，但是在SecondActivity中却无法读取修改后的值</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/name_log.png" alt="Log图" title="">
+                </div>
+                <div class="image-caption">Log图</div>
+            </figure></p>
+<p>通过以上的实验，大家应该明白了一点：在不同的进程之间访问同一个静态变量是行不通的。其原因是：<strong>每一个进程都分配有一个独立的虚拟机，不同的虚拟机在内存分配上有不同的地址空间，这就导致在不同的虚拟机上访问同一个对象会产生多个副本。例如我们在MainActivity中访问的name的值只会影响当前进程，而对其他进程不会造成影响，所以在SecondActivity中访问name时依旧只能访问自己进程中的副本。</strong></p>
+<h2 id="Android中解决IPC的方法"><a href="#Android中解决IPC的方法" class="headerlink" title="Android中解决IPC的方法"></a>Android中解决IPC的方法</h2><p>上面也讲到，为了解决这些跨进程的问题，Android沿用了一些Linux的进程管理机制，使得进程之间能够进行交互，下面我将列出一些常见的IPC方式，需要指出的是本文主要讲解Binder机制，所以会注重讲解AIDL，其他方式请读者自行查阅相关资料。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">特点</th>
+<th style="text-align:left">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Bundle</td>
+<td style="text-align:left">只能传输实现了Serializable或者Parcelable接口或者一些Android支持的特殊对象</td>
+<td style="text-align:left">适合用于四大组件之间的进程交互</td>
+</tr>
+<tr>
+<td style="text-align:left">文件</td>
+<td style="text-align:left">不能做到进程间的即时通信，并且不适合用于高并发的场景</td>
+<td style="text-align:left">适合用于SharedPreference以及IO操作</td>
+</tr>
+<tr>
+<td style="text-align:left">ContentProvider</td>
+<td style="text-align:left">可以访问较多的数据，支持一对多的高并发访问，因为ContentProvider已经自动做好了关于并发的机制</td>
+<td style="text-align:left">适合用于一对多的数据共享并且需要对数据进行频繁的CRUD操作</td>
+</tr>
+<tr>
+<td style="text-align:left">Socket</td>
+<td style="text-align:left">通过网络传输字节流，支持一对多的实时通信，但是实现起来比较复杂</td>
+<td style="text-align:left">适合用于网络数据共享</td>
+</tr>
+<tr>
+<td style="text-align:left">Messenger</td>
+<td style="text-align:left">底层原理是AIDL，只是对其做了封装，但是不能很好的处理高并发的场景，并且传输的数据只能支持Bundle类型</td>
+<td style="text-align:left">低并发的一对多的即时通信</td>
+</tr>
+<tr>
+<td style="text-align:left">AIDL</td>
+<td style="text-align:left">功能强大，使用Binder机制(接下来会讲解),支持一对多的高并发实时通信，但是需要处理好线程同步</td>
+<td style="text-align:left">一对多并且有远程进程通信的场景</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h1><p>终于来到这篇文章的重头戏了，上面讲到Android解决IPC的方法中有一种是AIDL，它使用的原理就是Binder，只有理解了Binder，我们才算是理解了Android跨进程通信的原理。在这里我会带大家看看Android中有哪一些重要的地方使用到了Binder，接着我们会通过一个实例来了解如何使用Binder，最后我们会分析Binder的源码来理解他的工作流程。</p>
+<h2 id="Binder在Android中的运用"><a href="#Binder在Android中的运用" class="headerlink" title="Binder在Android中的运用"></a>Binder在Android中的运用</h2><p>说起Binder在Android的使用场景，可以说是无处不在，我列出一些最常见的场景：</p>
+<ul>
+<li>四大组件的生命周期都是使用Binder机制进行管理的</li>
+<li>View的工作原理也使用了Binder</li>
+<li>WindowManager的工作机制同样使用了Binder</li>
+</ul>
+<p>以上三个方面只是最常见的场景，但是却几乎包括了我们开发的整个流程。我们开发的应用都离不开四大组件，而四大组件也正是依靠Binder机制运行的；对于我们最常见的View，他是如何显示的，View又是如何响应我们的动作的，这其中也用到了Binder(<strong>关于这些内容我会在后续的文章中为大家分析</strong>)。可以说了解Binder对于我们的开发是很有帮助的，那接下来我们就来看看我们该如何使用Binder进行进程间的通信吧！</p>
+<h2 id="如何使用Binder"><a href="#如何使用Binder" class="headerlink" title="如何使用Binder"></a>如何使用Binder</h2><p>现在我们需要实现这样的功能：<strong>客户端与服务端位于不同的进程，客户端需要向服务端添加学生，同时客户端还可以向服务端发起查询学生列表的请求</strong>。</p>
+<h3 id="1、创建Student-java，Student-aidl，IStudentManager-aidl"><a href="#1、创建Student-java，Student-aidl，IStudentManager-aidl" class="headerlink" title="1、创建Student.java，Student.aidl，IStudentManager.aidl"></a>1、创建Student.java，Student.aidl，IStudentManager.aidl</h3><ul>
+<li>Student.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bob.aidltest.aidl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Parcel;</span><br><span class="line"><span class="keyword">import</span> android.os.Parcelable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by bob on 17-7-3.</span></span><br><span class="line"><span class="comment"> * 所有需要在Binder传递的数据类型都需要实现Parcelable接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Parcelable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String name=<span class="string">"BOB"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> s_id;</span><br><span class="line">    <span class="keyword">public</span> String s_name;</span><br><span class="line">    <span class="keyword">public</span> String s_gender;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(Parcel in)</span> </span>&#123;</span><br><span class="line">        s_id = in.readInt();</span><br><span class="line">        s_name = in.readString();</span><br><span class="line">        s_gender = in.readString();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(<span class="keyword">int</span> s_id, String s_name, String s_gender)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.s_id = s_id;</span><br><span class="line">        <span class="keyword">this</span>.s_name = s_name;</span><br><span class="line">        <span class="keyword">this</span>.s_gender = s_gender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeContents</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">        dest.writeInt(s_id);</span><br><span class="line">        dest.writeString(s_name);</span><br><span class="line">        dest.writeString(s_gender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Creator&lt;Student&gt; CREATOR = <span class="keyword">new</span> Creator&lt;Student&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Student <span class="title">createFromParcel</span><span class="params">(Parcel in)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Student(in);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Student[] newArray(<span class="keyword">int</span> size) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Student[size];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">"[StudentID: %s , StudentName: %s , StudentGender: %s]"</span>, s_id, s_name, s_gender);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Student.aidl</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Student1.aidl</span></span><br><span class="line"><span class="keyword">package</span> com.bob.aidltest.aidl;</span><br><span class="line"></span><br><span class="line">parcelable Student;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>IStudentManager.aidl</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IStudentManager.aidl</span></span><br><span class="line"><span class="keyword">package</span> com.bob.aidltest.aidl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.bob.aidltest.aidl.Student;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IStudentManager</span> </span>&#123;</span><br><span class="line">    <span class="function">List&lt;Student&gt; <span class="title">getStudentList</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(in Student student)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>创建完毕之后手动编译项目(<code>Build--&gt;ReBuild Project</code>)，接着就会在<code>app/build/generated/source/aidl/debug/com/bob/aidltest/aidl/IStudentManager.java</code>中看到自动生成的<code>IStudentManager</code>接口</strong>，如下图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/IStudentManager.png" alt="IStudentManager" title="">
+                </div>
+                <div class="image-caption">IStudentManager</div>
+            </figure></p>
+<h3 id="2、分析IStudentManager-java"><a href="#2、分析IStudentManager-java" class="headerlink" title="2、分析IStudentManager.java"></a>2、分析IStudentManager.java</h3><p>先来看看自动生成的代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IStudentManager</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">IInterface</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/** 内部类Stub，继承自Binder并且实现了IStudentManager接口，因此他也是一个Binder对象，这个内部类是需要在服务端手动实现的，并且会通过onBind方法返回给客户端 */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">bob</span>.<span class="title">aidltest</span>.<span class="title">aidl</span>.<span class="title">IStudentManager</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> java.lang.String DESCRIPTOR = <span class="string">"com.bob.aidltest.aidl.IStudentManager"</span>;</span><br><span class="line">        <span class="comment">/** 构造方法 */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Stub</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.attachInterface(<span class="keyword">this</span>, DESCRIPTOR);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 将服务端的Binder对象转换为客户端的所需的AIDL接口类型的对象，客户端拿到这个对象就可以通过这个对象远程访问服务端的方法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> com.bob.aidltest.aidl.<span class="function">IStudentManager <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> ((obj==<span class="keyword">null</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);</span><br><span class="line">            <span class="keyword">if</span> (((iin!=<span class="keyword">null</span>)&amp;&amp;(iin <span class="keyword">instanceof</span> com.bob.aidltest.aidl.IStudentManager))) &#123;</span><br><span class="line">                <span class="keyword">return</span> ((com.bob.aidltest.aidl.IStudentManager)iin);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> com.bob.aidltest.aidl.IStudentManager.Stub.Proxy(obj);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span> <span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 运行在服务端进程的Binder线程池中；当客户端进程发起远程请求时，远程请求会要求系统底层执行回调该方法</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> code 客户端进程请求方法标识符。服务端进程会根据该标识确定所请求的目标方法</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> data 目标方法的参数，他是客户端进程传进来的，当我们调用addStudent(Student student)方法时，参数就是Student对象</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> reply 目标方法执行后的结果，将会返回给客户端，例如当我们调用getStudentList，返回的就是一个Student的列表</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">switch</span> (code)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">case</span> INTERFACE_TRANSACTION:</span><br><span class="line">                &#123;</span><br><span class="line">                    reply.writeString(DESCRIPTOR);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">case</span> TRANSACTION_getStudentList:</span><br><span class="line">                &#123;</span><br><span class="line">                    data.enforceInterface(DESCRIPTOR);</span><br><span class="line">                    java.util.List&lt;com.bob.aidltest.aidl.Student&gt; _result = <span class="keyword">this</span>.getStudentList();</span><br><span class="line">                    reply.writeNoException();</span><br><span class="line">                    reply.writeTypedList(_result);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">case</span> TRANSACTION_addStudent:</span><br><span class="line">                &#123;</span><br><span class="line">                    data.enforceInterface(DESCRIPTOR);</span><br><span class="line">                    com.bob.aidltest.aidl.Student _arg0;</span><br><span class="line">                    <span class="keyword">if</span> ((<span class="number">0</span>!=data.readInt())) &#123;</span><br><span class="line">                        _arg0 = com.bob.aidltest.aidl.Student.CREATOR.createFromParcel(data);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        _arg0 = <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">this</span>.addStudent(_arg0);</span><br><span class="line">                    reply.writeNoException();</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 代理的内部类，他实现了IStudentManager接口，这个代理类就是服务端返回给客户端的AIDL接口对象，客户端可以通过这个代理类访问服务端的方法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Proxy</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">bob</span>.<span class="title">aidltest</span>.<span class="title">aidl</span>.<span class="title">IStudentManager</span></span></span><br><span class="line"><span class="class">        </span>&#123;</span><br><span class="line">            <span class="keyword">private</span> android.os.IBinder mRemote;</span><br><span class="line">            Proxy(android.os.IBinder remote)</span><br><span class="line">            &#123;</span><br><span class="line">                mRemote = remote;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span> <span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> mRemote;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">public</span> java.lang.<span class="function">String <span class="title">getInterfaceDescriptor</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> DESCRIPTOR;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span> <span class="keyword">public</span> java.util.List&lt;com.bob.aidltest.aidl.Student&gt; getStudentList() <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line">            &#123;</span><br><span class="line">                android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">                android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">                java.util.List&lt;com.bob.aidltest.aidl.Student&gt; _result;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">                    mRemote.transact(Stub.TRANSACTION_getStudentList, _data, _reply, <span class="number">0</span>);</span><br><span class="line">                    _reply.readException();</span><br><span class="line">                    _result = _reply.createTypedArrayList(com.bob.aidltest.aidl.Student.CREATOR);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">finally</span> &#123;</span><br><span class="line">                    _reply.recycle();</span><br><span class="line">                    _data.recycle();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> _result;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(com.bob.aidltest.aidl.Student student)</span> <span class="keyword">throws</span> android.os.RemoteException</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">                android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">                    <span class="keyword">if</span> ((student!=<span class="keyword">null</span>)) &#123;</span><br><span class="line">                        _data.writeInt(<span class="number">1</span>);</span><br><span class="line">                        student.writeToParcel(_data, <span class="number">0</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        _data.writeInt(<span class="number">0</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    mRemote.transact(Stub.TRANSACTION_addStudent, _data, _reply, <span class="number">0</span>);</span><br><span class="line">                    _reply.readException();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">finally</span> &#123;</span><br><span class="line">                    _reply.recycle();</span><br><span class="line">                    _data.recycle();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TRANSACTION_getStudentList = (android.os.IBinder.FIRST_CALL_TRANSACTION + <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TRANSACTION_addStudent = (android.os.IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> java.util.List&lt;com.bob.aidltest.aidl.Student&gt; getStudentList() <span class="keyword">throws</span> android.os.RemoteException;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(com.bob.aidltest.aidl.Student student)</span> <span class="keyword">throws</span> android.os.RemoteException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可能看了上面的注释大家还是一头雾水，那就先看看这个类的结构图吧：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/IStudentManager_structure.png" alt="IStudentManager结构图" title="">
+                </div>
+                <div class="image-caption">IStudentManager结构图</div>
+            </figure><br>有关这个类的细节我们待会讲，现在只需要知道我们需要在服务端手动实现Proxy类并实现其中的方法。</p>
+<h3 id="创建StudentManagerService-java，并为其指定进程"><a href="#创建StudentManagerService-java，并为其指定进程" class="headerlink" title="创建StudentManagerService.java，并为其指定进程"></a>创建StudentManagerService.java，并为其指定进程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by bob on 17-7-3.</span></span><br><span class="line"><span class="comment"> * 服务端代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentManagerService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"StudentManagerService"</span>;</span><br><span class="line">    <span class="comment">//判断Service是否销毁</span></span><br><span class="line">    <span class="keyword">private</span> AtomicBoolean mIsServiceDestroyed = <span class="keyword">new</span> AtomicBoolean(<span class="keyword">false</span>);</span><br><span class="line">    <span class="comment">//适合用于进程间传输的列表类</span></span><br><span class="line">    <span class="keyword">private</span> CopyOnWriteArrayList&lt;Student&gt; mStudentList = <span class="keyword">new</span> CopyOnWriteArrayList&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        <span class="comment">//在服务端手动添加两位默认的学生</span></span><br><span class="line">        mStudentList.add(<span class="keyword">new</span> Student(<span class="number">1</span>, <span class="string">"BOB"</span>, <span class="string">"man"</span>));</span><br><span class="line">        mStudentList.add(<span class="keyword">new</span> Student(<span class="number">2</span>, <span class="string">"MAY"</span>, <span class="string">"woman"</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mBinder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mIsServiceDestroyed.set(<span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Binder mBinder = <span class="keyword">new</span> IStudentManager.Stub() &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> List&lt;Student&gt; <span class="title">getStudentList</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">            SystemClock.sleep(<span class="number">5000</span>);<span class="comment">//休眠5s模拟耗时操作</span></span><br><span class="line">            <span class="keyword">return</span> mStudentList;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(Student student)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">            mStudentList.add(student);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在清单文件中指定服务的进程</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">".StudentManagerService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">":remote"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到这个服务类跟普通的服务类相差并不大，唯一的区别在于它创建了一个IStudentManager.Stub的匿名内部类并且实现了其中的方法，在onBind方法中将这个IBinder对象返回给客户端。<strong>这里需要说明一下：Binder是实现了IBinder接口的，所以他同时也是一个IBinder对象。</strong></p>
+<h3 id="在客户端愉快的绑定Service吧！"><a href="#在客户端愉快的绑定Service吧！" class="headerlink" title="在客户端愉快的绑定Service吧！"></a>在客户端愉快的绑定Service吧！</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity_Client"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MESSAGE_QUERY_STUDENTLIST=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> student_size = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> IStudentManager mRemoteStudentManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ServiceConnection mConnection=<span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="comment">//onServiceConnected与onServiceDisconnected都是在主线程中的，所以如果里面如果涉及到服务端的耗时操作那么需要在子线程中进行</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//获取到IStudentManager对象</span></span><br><span class="line">            <span class="keyword">final</span> IStudentManager studentManager =IStudentManager.Stub.asInterface(service);</span><br><span class="line">            mRemoteStudentManager = studentManager;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">            mRemoteStudentManager = <span class="keyword">null</span>;</span><br><span class="line">            Log.d(TAG, <span class="string">"onServiceDisconnected.threadname:"</span> + Thread.currentThread().getName());</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, StudentManagerService.class);</span><br><span class="line">        bindService(intent, mConnection, BIND_AUTO_CREATE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        unbindService(mConnection);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将服务端返回的数据显示在界面上</span></span><br><span class="line">    <span class="keyword">private</span> Handler mHandler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> MESSAGE_QUERY_STUDENTLIST:</span><br><span class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, msg.obj.toString(),Toast.LENGTH_SHORT).show();</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在客户端向服务端添加一名学生</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> view</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mRemoteStudentManager != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">int</span> student_id = student_size+ <span class="number">1</span>;</span><br><span class="line">                Student newStudent;</span><br><span class="line">                <span class="keyword">if</span> (student_id % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                    newStudent= <span class="keyword">new</span> Student(student_id, <span class="string">"新学生"</span> + student_id, <span class="string">"man"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    newStudent= <span class="keyword">new</span> Student(student_id, <span class="string">"新学生"</span> + student_id, <span class="string">"woman"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                mRemoteStudentManager.addStudent(newStudent);</span><br><span class="line">                Log.d(TAG, <span class="string">"添加一位学生："</span> + newStudent.toString());</span><br><span class="line">            &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在客户端向服务端发起查询学生的请求</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> view</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get_student_list</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"正在获取学生列表"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        <span class="comment">//由于服务端的查询操作是耗时操作，所以客户端需要开启子线程进行工作</span></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (mRemoteStudentManager != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">final</span> List&lt;Student&gt; students = mRemoteStudentManager.getStudentList();</span><br><span class="line">                        student_size = students.size();</span><br><span class="line">                        Log.d(TAG, <span class="string">"从服务器成功获取到学生列表:"</span> + students.toString());</span><br><span class="line">                        mHandler.obtainMessage(MESSAGE_QUERY_STUDENTLIST, students).sendToTarget();</span><br><span class="line">                    &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到我们在客户端只需要绑定远程的服务端，服务端就会返回一个IBinder对象，接着我们需要调用IStudentManager.Stub.asInterface()方法，将这个IBinder对象转换为我们客户端可用的AIDL接口对象，拿到这个对象之后我们就可以远程调用服务端的方法了。是不是很容易？<br><strong>但是需要注意的一点是为了模拟耗时操作，我们在服务端的getStudentList的方法中使用休眠以模拟耗时操作，所以客户端在调用该方法时不能直接在主线程中调用，而是应该开启一个子线程，在子线程中调用这个耗时的操作。</strong></p>
+<h3 id="看看效果"><a href="#看看效果" class="headerlink" title="看看效果"></a>看看效果</h3><p>首先我们获取学生列表，接着连续添加4个学生，再次查看学生列表，最终的结果如下图，可以看到我们已经实现了两个进程之间的交互，接下来我们将分析Binder的原理。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/client_log.png" alt="结果图" title="">
+                </div>
+                <div class="image-caption">结果图</div>
+            </figure></p>
+<h2 id="Binder的原理"><a href="#Binder的原理" class="headerlink" title="Binder的原理"></a>Binder的原理</h2><h3 id="进程的机制"><a href="#进程的机制" class="headerlink" title="进程的机制"></a>进程的机制</h3><p>首先我们需要了解进程之间为什么不能直接进行通信，以下是两个进程的示意图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/process.png" alt="进程间通信示意图" title="">
+                </div>
+                <div class="image-caption">进程间通信示意图</div>
+            </figure><br>从上面的图我们可以得到以下几点：</p>
+<ul>
+<li>一个进程空间分为：用户态和内核态，即把进程内用户和内核隔离开来</li>
+<li>进程之间，由于Android系统为每个进程分配了一个独立的虚拟机，用户空间和内核空间的数据不可交互</li>
+<li>Binder作为进程间的介质，充当了中介，使得进程间的内核态可以通过Binder进行数据交互</li>
+</ul>
+<h3 id="IPC交互示意图"><a href="#IPC交互示意图" class="headerlink" title="IPC交互示意图"></a>IPC交互示意图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/IPC.png" alt="IPC交互示意图" title="">
+                </div>
+                <div class="image-caption">IPC交互示意图</div>
+            </figure>
+<p>图中总共有四个元素，分别是充当客户端的Activity，服务端的StudentManagerService，充当服务管理者的IStudentManager以及充当访问介质的Binder驱动。他们的职责如下：</p>
+<ul>
+<li><strong>StudentManagerService:</strong> 服务提供者，这里面会有许多我们常用的服务，在本例中提供的服务就是添加学生以及获取学生列表。而在系统中则包括有ActivityService 、 WindowMananger等服务，这些系统服务提供的功能，对四大组件以及Window的工作提供的保障。</li>
+<li><strong>Activity:</strong> 服务调用者，一般就是我们的应用，在这里我们通过调用StudentManagerService的服务来完成工作。</li>
+<li><strong>IStudentManager:</strong> 他是负责管理服务的，在其内部通过map集合来存储Service与Binder的映射关系，这样客户端在向其请求服务的时候就能够返回特定的Binder。</li>
+<li><strong>Binder驱动:</strong> 他是IStudentManager连接各种Service的桥梁，同时也是客户端与服务端交流的桥梁。</li>
+</ul>
+<p><strong>总结起来说，应用程序(<code>Activity</code>)首先向<code>IStudentManager</code>发送请求<code>StudentManagerService</code>的服务，<code>IStudentManager</code>查看已经注册在里面的服务的列表，找到相应的服务后，通过<code>Binder驱动</code>将其中的<code>Binder</code>对象返回给客户端，从而完成对服务的请求。</strong></p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>我们主要分析的就是<code>IStudentManager</code>这个类，从上面得到讲解我们已经知道它包含了两个类：Stub和Proxy。先来看看Proxy类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Proxy.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> java.util.List&lt;com.bob.aidltest.aidl.Student&gt; getStudentList() <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line">&#123;</span><br><span class="line">    android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">    android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">    java.util.List&lt;com.bob.aidltest.aidl.Student&gt; _result;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">        mRemote.transact(Stub.TRANSACTION_getStudentList, _data, _reply, <span class="number">0</span>);</span><br><span class="line">        _reply.readException();</span><br><span class="line">        _result = _reply.createTypedArrayList(com.bob.aidltest.aidl.Student.CREATOR);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span> &#123;</span><br><span class="line">        _reply.recycle();</span><br><span class="line">        _data.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addStudent</span><span class="params">(com.bob.aidltest.aidl.Student student)</span> <span class="keyword">throws</span> android.os.RemoteException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">    android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">        <span class="keyword">if</span> ((student!=<span class="keyword">null</span>)) &#123;</span><br><span class="line">            _data.writeInt(<span class="number">1</span>);</span><br><span class="line">            student.writeToParcel(_data, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _data.writeInt(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        mRemote.transact(Stub.TRANSACTION_addStudent, _data, _reply, <span class="number">0</span>);</span><br><span class="line">        _reply.readException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span> &#123;</span><br><span class="line">        _reply.recycle();</span><br><span class="line">        _data.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面截取了Proxy的两个方法，其中Proxy是运行在客户端的，他是用服务端返回来的Binder对象调用了<code>public static IStudentManager asInterface(IBinder obj)</code>方法返回来的。<br>既然Proxy运行在客户端，那么客户端也是通过Proxy来调用远程服务端的方法的，也就是说我们将调用方法需要用到的参数传递给Proxy，接着由Proxy来访问服务端，所以我们能够看到，Proxy将我们的参数写进了_data，而_reply则代表从服务端返回来的结果。<br><strong>从代码中我们还看到客户端在将数据传递给服务端之后就处于阻塞状态，直到服务端返回结果，所以如果调用的服务端方法是一个耗时方法，那么我们就需要在子线程中进行工作了。</strong><br>数据准备好之后当然是需要传递了，可以看到Proxy通过transact方法讲数据传递出去了，接下来就来看transact方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Binder#transact</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">transact</span><span class="params">(<span class="keyword">int</span> code, Parcel data, Parcel reply,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">false</span>) Log.v(<span class="string">"Binder"</span>, <span class="string">"Transact: "</span> + code + <span class="string">" to "</span> + <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (data != <span class="keyword">null</span>) &#123;</span><br><span class="line">            data.setDataPosition(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//调用了Binder的onTransact</span></span><br><span class="line">        <span class="keyword">boolean</span> r = onTransact(code, data, reply, flags);</span><br><span class="line">        <span class="keyword">if</span> (reply != <span class="keyword">null</span>) &#123;</span><br><span class="line">            reply.setDataPosition(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到transact方法实际上调用了Binder的onTransact，而这里的Binder就是指Stub了，我们看一下Stub的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">bob</span>.<span class="title">aidltest</span>.<span class="title">aidl</span>.<span class="title">IStudentManager</span></span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到Stub确实继承了Binder并且也实现了IStudentManager接口，接下来我们继续看Stub中的onTransact方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (code)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> INTERFACE_TRANSACTION:</span><br><span class="line">        &#123;</span><br><span class="line">            reply.writeString(DESCRIPTOR);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> TRANSACTION_getStudentList:</span><br><span class="line">        &#123;</span><br><span class="line">            data.enforceInterface(DESCRIPTOR);</span><br><span class="line">            java.util.List&lt;com.bob.aidltest.aidl.Student&gt; _result = <span class="keyword">this</span>.getStudentList();</span><br><span class="line">            reply.writeNoException();</span><br><span class="line">            reply.writeTypedList(_result);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> TRANSACTION_addStudent:</span><br><span class="line">        &#123;</span><br><span class="line">            data.enforceInterface(DESCRIPTOR);</span><br><span class="line">            com.bob.aidltest.aidl.Student _arg0;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="number">0</span>!=data.readInt())) &#123;</span><br><span class="line">                _arg0 = com.bob.aidltest.aidl.Student.CREATOR.createFromParcel(data);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                _arg0 = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.addStudent(_arg0);</span><br><span class="line">            reply.writeNoException();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，服务端通过客户端传递过来的code常量来判断客户端需要调用的是哪个方法，接着就执行该方法，执行完之后如果有数据返回则将结果写入reply，接着Proxy就可以收到结果了。而整个通信过程也就结束了。<br>最后我借用<a href="http://www.jianshu.com/p/4ee3fd07da14" target="_blank" rel="noopener">Carson_Ho</a>的一张流程图来描述这个完整的流程：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/all_process.png" alt="Binder机制流程图" title="">
+                </div>
+                <div class="image-caption">Binder机制流程图</div>
+            </figure></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>Binder机制在Android中的作用举足轻重，本文只是通过Java代码分析其工作流程，由于博主不擅长C/C++，所以无法研究native，不过本文依旧完整的阐述了Binder的整个运行机制，希望通过本文大家能够对Binder机制有更深刻的理解，关于Binder在Android系统中的更多运用我会在后续的文章中为大家奉上，希望大家多多支持。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.588Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/07/03/Binder/" target="_blank" rel="external">http://www.wensibo.top/2017/07/03/Binder/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android源码解析/">Android源码解析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder机制/">Binder机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IPC/">IPC</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/07/03/Binder/&title=《从Android源码的角度分析Binder机制》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/07/03/Binder/&title=《从Android源码的角度分析Binder机制》 — 温斯渤&source=大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/07/03/Binder/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从Android源码的角度分析Binder机制》 — 温斯渤&url=http://www.wensibo.top/2017/07/03/Binder/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/07/03/Binder/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/05/Activity/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">从源码的角度看Activity是如何启动的</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/05/28/speaker/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">What kind of PPT makes you an excellent speaker——什么样的PPT能助你成为一个优秀的演讲者</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="Binder"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/07/03/Binder/&title=《从Android源码的角度分析Binder机制》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/07/03/Binder/&title=《从Android源码的角度分析Binder机制》 — 温斯渤&source=大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/07/03/Binder/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从Android源码的角度分析Binder机制》 — 温斯渤&url=http://www.wensibo.top/2017/07/03/Binder/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/07/03/Binder/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByElEQVR42u3aQY6DMAwF0N7/0h1pVpUq4NsmKYuXFUKBvGwsx/HrFY/3//h8/hzfM7/fV+eMBi4u7pj7Ph3f3KMNHFHy53MDLi7ufm4evM5DUr7V8zmH73FxcR/GTRKgZHv5/3FxcZ/PPZ+ZH2Z+FndxcXGL3OTwkx9Rqm+WnNVwcXEH3F7B9N7n5fVdXFzcm24lkqA2OeqUV8fFxd3CzdORfMmkUNIrs+Li4u7h9pokEspdRZOLEIaLi7uA2wtkeeKSbz5v9cDFxd3P7bVYNUNS7/IGFxd3C3eSjkzSo14LFy4u7k5ur7WiWhxJSq6FEIaLi7uAW70+yRHVv0WhExcXdws3Dy7V40qvxaoQEHFxcRdz81/n7/Ntl0uouLi4i7l5qOqVOfJSSLQKLi7uFm71wqPXSFHdzMWKuLi4i7nl1odWeaWa1hxuEhcXdyM3vxytXovOC6O4uLi/4uajysoPQrfd/ODi4o651YBSLXPkZdbqoQgXF3c1d95+kac1SSC7CG24uLgbub3Wikl59Ib0BRcX9wHc/Ntqa0Xh/7i4uA/mTpoqeikRLi7ufm6+wLyMMvoKFxd3C/eu5Xtb7RVicHFxl3H/APx/n2YjKeIvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

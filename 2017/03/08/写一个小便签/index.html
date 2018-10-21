@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/03/08/写一个小便签/">
+    
+    
+    <title>写一个小便签 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android">
+    <meta name="description" content="欢迎访问我的个人博客转发请注明出处：http://www.wensibo.top/2017/03/08/写一个小便签/ 一直想要写一个便签应用，因为我一直在用的是锤子便签和一加便签，觉得体验还是可以的，但是始终觉得自己也是可以做的，这段时间因为有些事情耽误了，项目前几天做好了，一直没有时间上传到github (各位大爷路过给个star呗😉) ，今天趁着有时间顺便写了这篇文章，介绍一下写这个便签时">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="写一个小便签">
+<meta property="og:url" content="http://www.wensibo.top/2017/03/08/写一个小便签/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="欢迎访问我的个人博客转发请注明出处：http://www.wensibo.top/2017/03/08/写一个小便签/ 一直想要写一个便签应用，因为我一直在用的是锤子便签和一加便签，觉得体验还是可以的，但是始终觉得自己也是可以做的，这段时间因为有些事情耽误了，项目前几天做好了，一直没有时间上传到github (各位大爷路过给个star呗😉) ，今天趁着有时间顺便写了这篇文章，介绍一下写这个便签时">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-3-8Note/1.gif">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-3-8Note/2.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="写一个小便签">
+<meta name="twitter:description" content="欢迎访问我的个人博客转发请注明出处：http://www.wensibo.top/2017/03/08/写一个小便签/ 一直想要写一个便签应用，因为我一直在用的是锤子便签和一加便签，觉得体验还是可以的，但是始终觉得自己也是可以做的，这段时间因为有些事情耽误了，项目前几天做好了，一直没有时间上传到github (各位大爷路过给个star呗😉) ，今天趁着有时间顺便写了这篇文章，介绍一下写这个便签时">
+<meta name="twitter:image" content="http://www.wensibo.top/file/img/2017-3-8Note/1.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">写一个小便签</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">写一个小便签</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-08T05:07:25.000Z" itemprop="datePublished" class="page-time">
+  2017-03-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/项目开发/">项目开发</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#功能"><span class="post-toc-number">1.</span> <span class="post-toc-text">功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#效果"><span class="post-toc-number">2.</span> <span class="post-toc-text">效果</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何在RecyclerView中使用本地Sqlite数据库数据"><span class="post-toc-number">3.</span> <span class="post-toc-text">如何在RecyclerView中使用本地Sqlite数据库数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮"><span class="post-toc-number">4.</span> <span class="post-toc-text">如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作"><span class="post-toc-number">5.</span> <span class="post-toc-text">最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-写一个小便签" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">写一个小便签</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-03-08 13:07:25" datetime="2017-03-08T05:07:25.000Z" itemprop="datePublished">2017-03-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/项目开发/">项目开发</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><strong>欢迎访问我的<a href="http://www.wensibo.top">个人博客</a>转发请注明出处：<a href="http://www.wensibo.top/2017/03/08/写一个小便签/">http://www.wensibo.top/2017/03/08/写一个小便签/</a> </strong><br>一直想要写一个便签应用，因为我一直在用的是锤子便签和一加便签，觉得体验还是可以的，但是始终觉得自己也是可以做的，这段时间因为有些事情耽误了，项目前几天做好了，一直没有时间上传到<a href="https://github.com/Wensibob/Note" target="_blank" rel="noopener">github</a> (各位大爷路过给个star呗😉) ，今天趁着有时间顺便写了这篇文章，介绍一下写这个便签时遇到的一些问题，当作是跟大家一起分享吧！<br><a id="more"></a></p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li>实现最基本的增加、删除、修改便签</li>
+<li>便签能够保存到本地</li>
+<li>主界面采用Material Design设计风格，相对美观(勿喷)</li>
+<li>RecyclerView上下滑动可以自动隐藏Toolbar,以及Floating Action Button</li>
+<li>RecyclerView的Item可以实现如QQ的侧滑效果，可以通过点击删除、置顶进行编辑</li>
+<li>可以设置便签为星✨，那么将会在便签界面左边增加一个红色的标志，以提醒用户此便签为重要便签</li>
+<li>变迁主界面标有时间，并且按照编辑时间从新到旧进行排列</li>
+</ul>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-3-8Note/1.gif" alt="效果图" title="">
+                </div>
+                <div class="image-caption">效果图</div>
+            </figure>
+<p><strong>Talk is cheap,show me your code</strong></p>
+<h2 id="如何在RecyclerView中使用本地Sqlite数据库数据"><a href="#如何在RecyclerView中使用本地Sqlite数据库数据" class="headerlink" title="如何在RecyclerView中使用本地Sqlite数据库数据"></a>如何在RecyclerView中使用本地Sqlite数据库数据</h2><p>RecyclerView是google在推出Material Design时着重介绍的一个组件，它对传统的ListView已经可以说是完全代替了，功能强大是他的一个最大优点，但是有一点局限的就是我们自定义的RecyclerView必须继承重写 RecyclerView.Adapter 和 RecyclerView.ViewHolder，虽然在里面我们可以随意重写方法，但是可以发现如果我们使用数据库作为数据源，RecyclerView.Adapter是无法支持读取Cursor的，但是开源的力量又再次显现了，直接给上<a href="https://github.com/flzyup/ExRecyclerViewLibrary" target="_blank" rel="noopener">github地址</a>，但是我们这里只需要复用其中的两个文件就行了，容我娓娓道来。</p>
+<p><strong>1、添加下面的RecyclerViewCursorAdapter 和 CursorFilter到工程中</strong><br>由于代码太长影响排版，我就直接附上下载链接<br><a href="http://www.wensibo.top/file/img/2017-3-8Note/RecyclerViewCursorAdapter.java">RecyclerViewCursorAdapter</a><br><a href="http://www.wensibo.top/file/img/2017-3-8Note/CursorFilter.java">CursorFilter</a></p>
+<p><strong>2、新建自定义的Adapter并且继承RecyclerViewCursorAdapter</strong>    </p>
+<ul>
+<li>NoteAdapter     </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoteAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerViewCursorAdapter</span>&lt;<span class="title">NoteAdapter</span>.<span class="title">MyNoteViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line">    <span class="keyword">private</span> RecyclerViewOnItemClickListener mOnItemClickListener;</span><br><span class="line">    <span class="keyword">private</span> onSwipeListener mOnSwipeListener;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NoteAdapter</span><span class="params">(Context context,Cursor cursor,<span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context,cursor,flags);</span><br><span class="line">        <span class="keyword">this</span>.mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MyNoteViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_row, parent, <span class="keyword">false</span>);</span><br><span class="line">        MyNoteViewHolder holder = <span class="keyword">new</span> MyNoteViewHolder(root);</span><br><span class="line">        <span class="keyword">return</span> holder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(<span class="keyword">final</span> MyNoteViewHolder holder, Cursor cursor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> position = cursor.getPosition();</span><br><span class="line">        holder.tv.setText(cursor.getString(cursor.getColumnIndex(NoteDbAdapter.COL_CONTENT)));</span><br><span class="line">        holder.tv_dateTime.setText(cursor.getString(cursor.getColumnIndex(NoteDbAdapter.COL_DATETIME)));</span><br><span class="line">        holder.mRowtab.setBackgroundColor(cursor.getInt(cursor.getColumnIndex(NoteDbAdapter.COL_IMPORTANT)) == <span class="number">1</span>?</span><br><span class="line">                mContext.getResources().getColor(R.color.colorAccent):mContext.getResources().getColor(android.R.color.white)</span><br><span class="line">        );</span><br><span class="line">        holder.root.setTag(position);</span><br><span class="line"></span><br><span class="line">        holder.tv.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (mOnItemClickListener != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    mOnItemClickListener.onItemClickListener(view, holder.getAdapterPosition());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onContentChanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 设置点击事件 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRecyclerViewOnItemClickListener</span><span class="params">(RecyclerViewOnItemClickListener onItemClickListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mOnItemClickListener = onItemClickListener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RecyclerViewOnItemClickListener <span class="title">getOnItemClickListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mOnItemClickListener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 点击事件接口 */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RecyclerViewOnItemClickListener</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onItemClickListener</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 内部类Holder</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MyNoteViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> TextView tv;</span><br><span class="line">        <span class="keyword">private</span> TextView tv_dateTime;</span><br><span class="line">        <span class="keyword">private</span> View mRowtab;</span><br><span class="line">        <span class="keyword">private</span> Button btnTop;</span><br><span class="line">        <span class="keyword">private</span> Button btnDelete;</span><br><span class="line">        <span class="keyword">private</span> View root;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyNoteViewHolder</span><span class="params">(View root)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(root);</span><br><span class="line">            <span class="keyword">this</span>.root = root;</span><br><span class="line">            tv = (TextView) root.findViewById(R.id.row_text);</span><br><span class="line">            tv_dateTime = (TextView) root.findViewById(R.id.tv_note_time);</span><br><span class="line">            mRowtab = root.findViewById(R.id.row_tab);</span><br><span class="line">            btnTop = (Button) root.findViewById(R.id.btnTop);</span><br><span class="line">            btnDelete = (Button) root.findViewById(R.id.btnDelete);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3、在Activity中这样用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">mRecyclerView = (RecyclerView) findViewById(R.id.recycle_notes);</span><br><span class="line">        mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>));</span><br><span class="line">        mCursor = mNoteDbAdapter.fetchAllNotes();</span><br><span class="line">        mNoteAdapter = <span class="keyword">new</span> NoteAdapter(<span class="keyword">this</span>, mCursor, <span class="number">0</span>);</span><br><span class="line">        Log.d(TAG, <span class="string">"mCursor的大小为："</span> + mCursor.getCount());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置点击事件</span></span><br><span class="line">        mNoteAdapter.setRecyclerViewOnItemClickListener(<span class="keyword">new</span> NoteAdapter.RecyclerViewOnItemClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClickListener</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (mCursor == <span class="keyword">null</span> || mCursor.isClosed()) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mCursor == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        Log.d(<span class="string">"NoteActivity"</span>, <span class="string">"newCursor is null"</span>);</span><br><span class="line">                        Toast.makeText(NoteActivity.<span class="keyword">this</span>, <span class="string">"newCursor is null"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mCursor.isClosed())&#123;</span><br><span class="line">                        Log.d(<span class="string">"NoteActivity"</span>, <span class="string">"newCursor is closed"</span>);</span><br><span class="line">                        Toast.makeText(NoteActivity.<span class="keyword">this</span>, <span class="string">"newCursor is null"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mCursor.moveToPosition(position);</span><br><span class="line">                    String content = mCursor.getString(mCursor.getColumnIndex(NoteDbAdapter.COL_CONTENT));</span><br><span class="line">                    <span class="keyword">int</span> importtant = mCursor.getInt(mCursor.getColumnIndex(NoteDbAdapter.COL_IMPORTANT));</span><br><span class="line">                    <span class="keyword">int</span> id = mCursor.getInt(mCursor.getColumnIndex(NoteDbAdapter.COL_ID));</span><br><span class="line">                    Log.d(<span class="string">"NoteActivity"</span>, content + importtant);</span><br><span class="line">                    Note clickNote = <span class="keyword">new</span> Note(id, content, importtant);</span><br><span class="line">                    Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">                    intent.setClass(NoteActivity.<span class="keyword">this</span>, NoteContentActivity.class);</span><br><span class="line">                    Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">                    bundle.putSerializable(<span class="string">"note"</span>, clickNote);</span><br><span class="line">                    intent.putExtras(bundle);</span><br><span class="line">                    startActivity(intent);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置适配器</span></span><br><span class="line">        mRecyclerView.setAdapter(mNoteAdapter);</span><br></pre></td></tr></table></figure></p>
+<h2 id="如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮"><a href="#如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮" class="headerlink" title="如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮"></a>如何在RecyclerView上下滑动时隐藏Toolbar和FAB按钮</h2><p>思路很简单，只需要记录RecyclerView向下滑动(手指向上滑动)时移动的距离，超过一定范围时就会调用Toolbar以及Floating Action Button的animate().translationY方法，令其在Y轴方向上移动，当RecyclerView向上滑动(手指向下滑动)时又会反过来回到初始状态，并且当滑动到RecyclerView底部时会强制Toolbar和FAB回到初始状态，上代码。     </p>
+<ul>
+<li>HidingScrollListener</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HidingScrollListener</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">OnScrollListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HIDE_THRESHOLD = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> scrolledDistance = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> controlsVisible = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mItemSize=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HidingScrollListener</span><span class="params">(<span class="keyword">int</span> itemSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mItemSize = itemSize - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> recyclerView</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dx 横向的滚动距离</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dy 纵向的滚动距离</span></span><br><span class="line"><span class="comment">     *           记录的是两个滚动事件之间的偏移量，而不是总的滚动距离。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onScrolled</span><span class="params">(RecyclerView recyclerView, <span class="keyword">int</span> dx, <span class="keyword">int</span> dy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onScrolled(recyclerView, dx, dy);</span><br><span class="line">        <span class="keyword">int</span> firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();</span><br><span class="line">        <span class="keyword">int</span> lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (firstVisibleItem == <span class="number">0</span>||lastVisibleItem==mItemSize) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!controlsVisible) &#123;</span><br><span class="line">                onShow();</span><br><span class="line">                controlsVisible = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">//如果总的滚动距离超多了一定值</span></span><br><span class="line">            <span class="comment">// （这个值取决于你自己的设定，越大，需要滑动的距离越长才能显示或者隐藏），</span></span><br><span class="line">            <span class="comment">// 我们就根据其方向显示或者隐藏Toolbar（dy&gt;0意味着下滚，dy&lt;0意味着上滚）。</span></span><br><span class="line">            <span class="keyword">if</span> (scrolledDistance &gt; HIDE_THRESHOLD &amp;&amp; controlsVisible) &#123;</span><br><span class="line">                onHide();</span><br><span class="line">                controlsVisible = <span class="keyword">false</span>;</span><br><span class="line">                scrolledDistance = <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (scrolledDistance &lt; -HIDE_THRESHOLD &amp;&amp; !controlsVisible) &#123;</span><br><span class="line">                onShow();</span><br><span class="line">                scrolledDistance = <span class="number">0</span>;</span><br><span class="line">                controlsVisible = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//计算出滚动的总距离（deltas相加），</span></span><br><span class="line">        <span class="comment">// 但是只在Toolbar隐藏且上滚或者Toolbar未隐藏且下滚的时候</span></span><br><span class="line">        <span class="keyword">if</span> ((controlsVisible &amp;&amp; dy &gt; <span class="number">0</span>) || (!controlsVisible &amp;&amp; dy &lt; <span class="number">0</span>)) &#123;</span><br><span class="line">            scrolledDistance += dy;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onHide</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onShow</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Avtivity中使用回掉方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//为recycleview设置滚动监听器</span></span><br><span class="line">        mRecyclerView.setOnScrollListener(<span class="keyword">new</span> HidingScrollListener(mCursor.getCount()) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onHide</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                hideView();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                showView();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mToolbar.animate().translationY(</span><br><span class="line">                -mToolbar.getHeight()).setInterpolator(<span class="keyword">new</span> AccelerateInterpolator(<span class="number">2</span>));</span><br><span class="line">        FrameLayout.LayoutParams ip = (FrameLayout.LayoutParams) mFloatingActionButton.getLayoutParams();</span><br><span class="line">        <span class="keyword">int</span> fabButtonMargin = ip.bottomMargin;</span><br><span class="line">        mFloatingActionButton.animate().translationY(</span><br><span class="line">                mFloatingActionButton.getHeight() + fabButtonMargin).setInterpolator(<span class="keyword">new</span> AccelerateInterpolator(<span class="number">2</span>)).start();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mToolbar.animate().translationY(<span class="number">0</span>).setInterpolator(<span class="keyword">new</span> DecelerateInterpolator(<span class="number">2</span>));</span><br><span class="line">        mFloatingActionButton.animate().translationY(<span class="number">0</span>).setInterpolator(<span class="keyword">new</span> DecelerateInterpolator(<span class="number">2</span>)).start();</span><br><span class="line">    	&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>特别注意布局文件</strong><br>如果你发现你运行的效果像下面的截图一样的话，那你肯定是因为布局文件上少写了这两句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:clipToPadding=&quot;false&quot;</span><br><span class="line">android:paddingTop=&quot;?attr/actionBarSize&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-3-8Note/2.png" alt="bug截图" title="">
+                </div>
+                <div class="image-caption">bug截图</div>
+            </figure>    
+<p>完整的布局代码如下：   </p>
+<ul>
+<li>main_activity.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/recycle_notes"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:clipToPadding</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:paddingTop</span>=<span class="string">"?attr/actionBarSize"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/toolbar"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:clipToPadding</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:titleTextColor</span>=<span class="string">"@android:color/white"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/button_add_note"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|right"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"16dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"16dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@drawable/ic_action_new"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:elevation</span>=<span class="string">"15dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:fabSize</span>=<span class="string">"normal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:pressedTranslationZ</span>=<span class="string">"8dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:rippleColor</span>=<span class="string">"#ff87eb"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作"><a href="#最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作" class="headerlink" title="最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作"></a>最后来讲讲如何实现仿QQ的侧滑出现删除、指定操作</h2><p>首先得谢谢<a href="http://blog.csdn.net/zxt0601/article/details/53157090" target="_blank" rel="noopener">张旭童</a> ,他的一个库帮我解决了这个问题，<a href="https://github.com/mcxtzhang/SwipeDelMenuLayout" target="_blank" rel="noopener">点击这里</a>可以访问他的项目。<br><strong>1、在布局文件中使用<code>com.mcxtzhang.swipemenulib.SwipeMenuLayout</code>布局，在ItemView后添加button表示删除置顶按钮。</strong><br><strong>2、在Adapter中设置打开侧滑菜单，并且可以设置菜单在左还是在右</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((SwipeMenuLayout) holder.root.findViewById(R.id.swipeMenuLayout)).setIos(<span class="keyword">false</span>).setLeftSwipe(<span class="keyword">false</span>).setSwipeEnable(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure></p>
+<p><strong>3、在Activity中设置动作事件</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">mNoteAdapter.setOnSwipeListener(<span class="keyword">new</span> NoteAdapter.onSwipeListener() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDel</span><span class="params">(<span class="keyword">int</span> pos)</span> </span>&#123;</span><br><span class="line">               Toast.makeText(NoteActivity.<span class="keyword">this</span>, <span class="string">"点击了第"</span> + (pos+<span class="number">1</span>) + <span class="string">"条item的删除按钮"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">               mCursor.moveToPosition(pos);</span><br><span class="line">               <span class="keyword">int</span> id = mCursor.getInt(mCursor.getColumnIndex(NoteDbAdapter.COL_ID));</span><br><span class="line">               mNoteDbAdapter.deleteNoteById(id);</span><br><span class="line">               mCursor = mNoteDbAdapter.fetchAllNotes();</span><br><span class="line">               mNoteAdapter.changeCursor(mCursor);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTop</span><span class="params">(<span class="keyword">int</span> pos)</span> </span>&#123;</span><br><span class="line">               Toast.makeText(NoteActivity.<span class="keyword">this</span>, <span class="string">"点击了第"</span> + (pos+<span class="number">1</span>) + <span class="string">"条item的Top按钮"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">               mCursor.moveToPosition(pos);</span><br><span class="line">               <span class="keyword">int</span> id = mCursor.getInt(mCursor.getColumnIndex(NoteDbAdapter.COL_ID));</span><br><span class="line">               Note editNote = mNoteDbAdapter.fetchNoteById(id);</span><br><span class="line">               editNote.setDateTime(DateUtil.formatDateTime());</span><br><span class="line">               mNoteDbAdapter.updateNote(editNote);</span><br><span class="line">               mCursor = mNoteDbAdapter.fetchAllNotes();</span><br><span class="line">               mNoteAdapter.changeCursor(mCursor);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>大功告成，如果想要看详细代码，或者有什么建议可以到<a href="https://github.com/Wensibob/Note" target="_blank" rel="noopener">Github</a>上给我发Issue或者直接在站内给我留言哦，记得star哦</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.188Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/03/08/写一个小便签/" target="_blank" rel="external">http://www.wensibo.top/2017/03/08/写一个小便签/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/03/08/写一个小便签/&title=《写一个小便签》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/03/08/写一个小便签/&title=《写一个小便签》 — 温斯渤&source=欢迎访问我的个人博客转发请注明出处：http://www.wensibo.top/2017/03/08/写一个小便签/ 一直想要写一个便签应用，因为我一直..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/03/08/写一个小便签/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《写一个小便签》 — 温斯渤&url=http://www.wensibo.top/2017/03/08/写一个小便签/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/03/08/写一个小便签/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/09/Android Studio快捷键总结/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Studio快捷键总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/02/17/一口一口吃掉Volley（四）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一口一口吃掉Volley（四）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="写一个小便签"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/03/08/写一个小便签/&title=《写一个小便签》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/03/08/写一个小便签/&title=《写一个小便签》 — 温斯渤&source=欢迎访问我的个人博客转发请注明出处：http://www.wensibo.top/2017/03/08/写一个小便签/ 一直想要写一个便签应用，因为我一直..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/03/08/写一个小便签/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《写一个小便签》 — 温斯渤&url=http://www.wensibo.top/2017/03/08/写一个小便签/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/03/08/写一个小便签/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNUlEQVR42u3aS27DMAxFUe9/0y7QUYDW7n0UU8TU1chI7ETHA0L8HAde5/d6vX795OedV/dfPXv/bduSIUPGYxnn7brfHP8F8tTKL8uQIWMHBgmy9/eQO3nYTf9XhgwZMlbCYnpYlCFDhowuBgm4/FsZMmTIIAweBPkhMkhBcaLbkIvLkCHjgYxaY+B/rt/e35AhQ8bHM86FdV8mI9+mKe7lTmTIkDGawduK/A9q7Uk+roFycRkyZIxmpIGydoh8y1CaDBkyRjPSAYv7on8tfKehv5hzy5Ah44EMnqCutxD4e+Up8R+5uAwZMgYx+KgWH7ZYD6bBK5MhQ8YGjNqRLi3YrRT14hamDBkyBjH4H3cd4ziS71OGDBmzGTxQroxf8O2SZsMvr0+GDBkbMMi2VlqVXS/l8lqGDBkbMGqHv7T0VmsVoAOrDBkyRjPSsYnecQ0+0hHUDmXIkDGOQY50tTCabrR52EKGDBmDGGTMIiXxTZMGZ9DUlCFDxlDGGS6+9ZUGQHxYlCFDxmgGP9KlhTkeTNNAXCy6yZAh47GMWsCttTB5azMO3DJkyBjNSAMuCak8e07HO1AJT4YMGeMYXQE3fWe14lpzuU2GDBkPYazEaZLikg2RpPfoWjJkyHgsI20GdDUPmgOuDBkyNmDwA1yKqY1lxEMhMmTIkBGGv/U0OH5KhgwZMkrFfd4wSF+QDBky9mTUktjiMS4M2YgqQ4aM0YyVxkA67NVbkmvrb8iQIeNzGV+SjcxS1ygKwwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

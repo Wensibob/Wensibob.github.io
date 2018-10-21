@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/">
+    
+    
+    <title>SharePreference是如何实现的——序列化XML文件 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="SharedPreferences">
+    <meta name="description" content="还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做XML序列化器(XmlSerializer)。 不同于上面一篇的保存用户的登录名以及密码，这次我们保存设备中的信息，但是由于现在知识有限，我还不能够实现对设备中信息的读取，那么我就在程序中自己生成若干条信息，对这些生成的信息进行读取，并保存到位于">
+<meta name="keywords" content="SharedPreferences">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SharePreference是如何实现的——序列化XML文件">
+<meta property="og:url" content="http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做XML序列化器(XmlSerializer)。 不同于上面一篇的保存用户的登录名以及密码，这次我们保存设备中的信息，但是由于现在知识有限，我还不能够实现对设备中信息的读取，那么我就在程序中自己生成若干条信息，对这些生成的信息进行读取，并保存到位于">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160429221918082-1162611150.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SharePreference是如何实现的——序列化XML文件">
+<meta name="twitter:description" content="还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做XML序列化器(XmlSerializer)。 不同于上面一篇的保存用户的登录名以及密码，这次我们保存设备中的信息，但是由于现在知识有限，我还不能够实现对设备中信息的读取，那么我就在程序中自己生成若干条信息，对这些生成的信息进行读取，并保存到位于">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201604/927927-20160429221918082-1162611150.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SharePreference是如何实现的——序列化XML文件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">SharePreference是如何实现的——序列化XML文件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-29T15:01:45.000Z" itemprop="datePublished" class="page-time">
+  2016-04-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、使用StringBuffer，将所有的内容逐一追加到该字符流中。"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、使用StringBuffer，将所有的内容逐一追加到该字符流中。</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、XML序列化器-使用XmlSerializer编辑xml文件-【推荐】"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、XML序列化器(使用XmlSerializer编辑xml文件)【推荐】</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-SharePreference是如何实现的——序列化XML文件" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SharePreference是如何实现的——序列化XML文件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-29 23:01:45" datetime="2016-04-29T15:01:45.000Z" itemprop="datePublished">2016-04-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做XML序列化器(XmlSerializer)。</p>
+<p>不同于上面一篇的保存用户的登录名以及密码，这次我们保存设备中的信息，但是由于现在知识有限，我还不能够实现对设备中信息的读取，那么我就在程序中自己生成若干条信息，对这些生成的信息进行读取，并保存到位于SD卡的backup.xml文件中。在这里我是用两种方法对其进行存储并比较两种方法的优缺点，当然作为开发，我更建议使用待会讲到的第二种方法。</p>
+<a id="more"></a>
+<p>先来看看我们需要做到什么样的效果:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201604/927927-20160429221918082-1162611150.png" alt="存储数据效果图" title="">
+                </div>
+                <div class="image-caption">存储数据效果图</div>
+            </figure></p>
+<h2 id="1、使用StringBuffer，将所有的内容逐一追加到该字符流中。"><a href="#1、使用StringBuffer，将所有的内容逐一追加到该字符流中。" class="headerlink" title="1、使用StringBuffer，将所有的内容逐一追加到该字符流中。"></a>1、使用StringBuffer，将所有的内容逐一追加到该字符流中。</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">backUpSms1</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">        StringBuffer sb=<span class="keyword">new</span> StringBuffer();</span><br><span class="line">        sb.append(<span class="string">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\" ?&gt;"</span>);</span><br><span class="line">        sb.append(<span class="string">"&lt;smss&gt;"</span>);</span><br><span class="line">        <span class="keyword">for</span> (SmsInfo smsinfo: smsInfo) &#123;</span><br><span class="line">            sb.append(<span class="string">"&lt;sms&gt;"</span>);</span><br><span class="line">            sb.append(<span class="string">"&lt;address&gt;"</span>);</span><br><span class="line">            sb.append(smsinfo.getAddress());</span><br><span class="line">            sb.append(<span class="string">"&lt;/address&gt;"</span>);</span><br><span class="line"></span><br><span class="line">            sb.append(<span class="string">"&lt;date&gt;"</span>);</span><br><span class="line">            sb.append(smsinfo.getDate());</span><br><span class="line">            sb.append(<span class="string">"&lt;/date&gt;"</span>);</span><br><span class="line"></span><br><span class="line">            sb.append(<span class="string">"&lt;content&gt;"</span>);</span><br><span class="line">            sb.append(smsinfo.getContent());</span><br><span class="line">            sb.append(<span class="string">"&lt;/content&gt;"</span>);</span><br><span class="line"></span><br><span class="line">            sb.append(<span class="string">"&lt;type&gt;"</span>);</span><br><span class="line">            sb.append(smsinfo.getType());</span><br><span class="line">            sb.append(<span class="string">"&lt;/type&gt;"</span>);</span><br><span class="line">            sb.append(<span class="string">"&lt;/sms&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(<span class="string">"&lt;/smss&gt;"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            File file =<span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"backUp1.xml"</span>);</span><br><span class="line">            FileOutputStream fos =<span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">            fos.write(sb.toString().getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            Toast.makeText( <span class="keyword">this</span>, <span class="string">"备份成功"</span>,<span class="number">0</span>).show();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            Toast.makeText( <span class="keyword">this</span>, <span class="string">"备份失败"</span>,<span class="number">0</span>).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>第一种方法相当简单，只是用了一个字符流，将所有的内容逐一追加就行了，可是当我们的短信中出现了一些比较特殊的字符，例如:”&lt;”或者是”&gt;”那么在读取并写入到xml文件的时候就会出错，这个时候打开该xml文件的时候将会报错；另外当我们需要在sms标签中加入一些属性，如图一所示，那么这个时候仅仅利用字符流来写就会变得冗杂，而且逻辑关系就不严谨了，所以这个时候我们就需要用到第二种方法了。</p>
+<h2 id="2、XML序列化器-使用XmlSerializer编辑xml文件-【推荐】"><a href="#2、XML序列化器-使用XmlSerializer编辑xml文件-【推荐】" class="headerlink" title="2、XML序列化器(使用XmlSerializer编辑xml文件)【推荐】"></a>2、XML序列化器(使用XmlSerializer编辑xml文件)【推荐】</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">backUpSms2</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//初始化序列号器，指定xml写入到哪个文件并指定写入的编码格式</span></span><br><span class="line">            XmlSerializer xmlSerializer =Xml.newSerializer();</span><br><span class="line">            File file =<span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"backUp2.xml"</span>);</span><br><span class="line">            FileOutputStream fos=<span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">            xmlSerializer.setOutput(fos,<span class="string">"utf-8"</span>);</span><br><span class="line">            </span><br><span class="line">            xmlSerializer.startDocument(<span class="string">"utf-8"</span>, <span class="keyword">true</span>);<span class="comment">//开始声明文件</span></span><br><span class="line">            xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"smss"</span>);<span class="comment">//开始最外层标签</span></span><br><span class="line">            <span class="keyword">for</span> (SmsInfo sms : smsInfo) &#123;</span><br><span class="line">                xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"sms"</span>);<span class="comment">//写入第一个标签</span></span><br><span class="line">                xmlSerializer.attribute(<span class="keyword">null</span>, <span class="string">"id"</span>, sms.getId()+<span class="string">""</span>);<span class="comment">//第一个标签的属性</span></span><br><span class="line"></span><br><span class="line">                xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"address"</span>);<span class="comment">//写入内一层的标签</span></span><br><span class="line">                xmlSerializer.text(sms.getAddress());</span><br><span class="line">                xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"address"</span>);</span><br><span class="line"></span><br><span class="line">                xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"date"</span>);<span class="comment">//写入内一层的标签</span></span><br><span class="line">                xmlSerializer.text(sms.getDate()+<span class="string">""</span>);</span><br><span class="line">                xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"date"</span>);</span><br><span class="line"></span><br><span class="line">                xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"content"</span>);<span class="comment">//写入内一层的标签</span></span><br><span class="line">                xmlSerializer.text(sms.getContent());</span><br><span class="line">                xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"content"</span>);</span><br><span class="line"></span><br><span class="line">                xmlSerializer.startTag(<span class="keyword">null</span>, <span class="string">"type"</span>);<span class="comment">//写入内一层的标签</span></span><br><span class="line">                xmlSerializer.text(sms.getType()+<span class="string">""</span>);</span><br><span class="line">                xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"type"</span>);</span><br><span class="line"></span><br><span class="line">                xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"sms"</span>);<span class="comment">//结束标签</span></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            xmlSerializer.endTag(<span class="keyword">null</span>, <span class="string">"smss"</span>);<span class="comment">//结束最外层标签</span></span><br><span class="line">            xmlSerializer.endDocument();<span class="comment">//结束声明文件</span></span><br><span class="line">            fos.close();<span class="comment">//记得一定要关闭输出流</span></span><br><span class="line">            Toast.makeText( <span class="keyword">this</span>, <span class="string">"备份成功"</span>,<span class="number">0</span>).show();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            Toast.makeText( <span class="keyword">this</span>, <span class="string">"备份失败"</span>,<span class="number">0</span>).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用XmlSerializer的时候有几个步骤：<br>1、首先需要找到输出流，即通过setOutput方法将输出流以及编码格式传入；<br>2、接着需要声明文件以及结束声明，这是通过startDocument以及endDocument这两个方法来实现的；<br>3、接着就可以通过startTag以及startTag方法来声明标签以及结束标签，要声明标签的内容的时候可以通过text方法，当然这个方法只能允许传入String类型，所以对于其他数据类型，需要先对其进行转换；<br>4、最后一点就是上面讲到的——要在标签中添加属性，那就需要通过attribute方法声明id属性。<br>通过以上的讲解，我们可以得到以下的xml文件：</p>
+</blockquote>
+<pre><code class="xml"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" standalone="true"?&gt;</span>
+
+-<span class="tag">&lt;<span class="name">smss</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"0"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000000<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202224<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：0<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"1"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000001<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：1<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"2"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000002<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：2<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"3"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000003<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：3<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"4"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000004<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：4<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"5"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000005<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：5<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"6"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000006<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：6<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"7"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000007<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：7<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"8"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000008<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：8<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"9"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000009<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：9<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"10"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000010<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：10<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"11"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000011<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：11<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"12"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000012<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：12<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"13"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000013<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：13<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"14"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000014<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：14<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"15"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000015<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：15<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"16"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000016<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：16<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"17"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000017<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：17<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"18"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000018<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：18<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>2<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+
+-<span class="tag">&lt;<span class="name">sms</span> <span class="attr">id</span>=<span class="string">"19"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">address</span>&gt;</span>135000000019<span class="tag">&lt;/<span class="name">address</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">date</span>&gt;</span>1461845202225<span class="tag">&lt;/<span class="name">date</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">content</span>&gt;</span>内容为：19<span class="tag">&lt;/<span class="name">content</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">type</span>&gt;</span>1<span class="tag">&lt;/<span class="name">type</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">sms</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="name">smss</span>&gt;</span>
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.952Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/04/29/SharePreference是如何实现的——序列化XML文件/" target="_blank" rel="external">http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SharedPreferences/">SharedPreferences</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&title=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&title=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&source=还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/08/13/如何避免Activity 被杀死/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何避免Activity 被杀死</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/16/使用 SharedPreferences 实现数据的存储和读取/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用 SharedPreferences 实现数据的存储和读取</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="SharePreference是如何实现的——序列化XML文件"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&title=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&title=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&source=还记得上一篇我们讲到了用SharePreference来存储数据，那么究竟它是如何实现的呢，今天我们就来仔细看看其实现的细节，我们给它一个准确的名字，叫做..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SharePreference是如何实现的——序列化XML文件》 — 温斯渤&url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/29/SharePreference是如何实现的——序列化XML文件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJ0lEQVR42u3awY7iMBAEUP7/p1lpT3sYQlXbsyLm5YRCQvwcaXpc7ccjPp5/j38/vzpe3fXqN3dd8/iNAxsbG/sm7IQx+/zqd9qBPoOjfSXY2NjY57GTotUWp2vq9e9fPyuZ+jejxcbGxv5Kdj7Q67vaYomNjY2NvbeArUxTMgUtGBsbGxt7PaxpmwSzRUhb8LZladjY2Ngfz541ej/z86/3t7GxsbE/jP1cOPY2Ytf31RQjx8bGxj6IPdtGUwQ3ZR2ZNX2HDQxsbGzsg9jtgPIilGz6Sc7nEdL1eWxsbOxT2fmA1u/Np2m9+EV1GxsbG/vm7DzWyQtD0uhdbx4vlUlsbGzs49gtePZtMol5E2Jp+rCxsbEPYq9EP+00JQOdNQPaacXGxsY+lZ0MOo9vkuD+N8pYfg02Njb2Sey2LOXtgfXgaaWM5QUVGxsb+77s2Xxs6C0HmPxZ9fYdbGxs7IPYu9q6bYHJi1a+wMjbBtjY2NjnsZNAJy9OeWy0UrTytdSbN4yNjY19EHu28GiHtR45ta/n5bOwsbGxD2IXF8Wt2b3t23wZ057HxsbGvju7LQNtiPM/N/QUCyRsbGzsg9j5gmSWyay0eFcKZ9EVwcbGxr45e1bAZoNIgqc2uhq2h7GxsbEPYrflJLmyvWsWJM3aFT+8c2xsbOybs/fO30ohbBcw+fIDGxsb+2z2rKjkBSnfTDMM90eThY2NjX0ee/hHv9z0k8dDs7KUF0JsbGzsk9htYZj90583D9pnDe/FxsbGPojdRkX5cmK2pMlbxe0CBhsbG/tsdhLBtE2C9S1Bs1KaFzZsbGzs89htQPOMjzzfagF54IWNjY39Dezk67YBsFJyljoe5WYgbGxs7Puyn+XRLl2SQbdBVfsyfngWNjY29kHslX/i20nZG2C192JjY2OfzW4jobYdm6+Hrn+t3ZQTRUjY2NjYB7HbLCrfoNOe2ZWNFdt0sLGxsb+MvSswyq9ZaSG8aRJgY2Njfxk7Z6wMetdy5c14sLGxsY9jJ6HSLHjKlwr5RKw0pLGxsbHPY88CnbxQ5U2FWWt512vAxsbGviH7D4KdB0r2svglAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

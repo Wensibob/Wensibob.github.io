@@ -170,12 +170,14 @@ ga('send', 'pageview');
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-hello-world" class="article-card article-type-post" itemprop="blogPost">
+            <article id="post-gradle2" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-10-20 17:06:09" datetime="2018-10-20T09:06:09.664Z" itemprop="datePublished">2018-10-20</time>
+        <time class="post-time" title="2018-03-16 16:32:25" datetime="2018-03-16T08:32:25.000Z" itemprop="datePublished">2018-03-16</time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
 
 
     </div>
@@ -185,7 +187,7 @@ ga('send', 'pageview');
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/10/20/hello-world/">Hello World</a>
+      <a class="post-title-link" href="/2018/03/16/gradle2/">一口一口吃掉Gradle（二）：深入学习Groovy</a>
     </h3>
   
 
@@ -195,13 +197,463 @@ ga('send', 'pageview');
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...
+        <p><a href="http://wensibo.top/2018/02/07/gradle1/" target="_blank" rel="noopener">上一篇文章</a>我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。<br>需要说明的是这篇文章大部分内容是翻译自<a href="http://www.groovy-lang.org/syntax.html" target="_blank" rel="noopener">Groovy的官方文档</a>，不过中间也有些许内容是我自己学习过程中总结整理的，如果大家英语好的话建议直接看英文文档。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>
     
 
-        <a href="/2018/10/20/hello-world/" class="post-more waves-effect waves-button">
+        <a href="/2018/03/16/gradle2/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-gradle1" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-02-07 12:07:25" datetime="2018-02-07T04:07:25.000Z" itemprop="datePublished">2018-02-07</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/02/07/gradle1/">一口一口吃掉Gradle（一）：初识Gradle</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>2018年的第一篇文章将会给大家介绍Gradle，这会是一个系列的文章，名字依旧是一口一口吃掉。<br>相信很多朋友都和我一样从eclipse转到Android Studio时是又爱又恨，爱是因为Android Studio功能强大，UI也很炫酷，当然还有Google爸爸支持；恨是因为从比较熟悉的eclipse一下子转到了Android Studio，本以为速度会快很多，然而现实却给了自己一记大耳光，其次就是Android Studio采用了Gradle来对项目进行编译，但是Gradle是个啥鬼咯，配置文件又看不懂，首次编译还得下载，下载速度贼慢，不fq就gg。<br>Android Studio现在已经更新到3.0.1.0，如果你对Gradle还不是很熟悉，那这个系列的文章将会帮到你。相信仔细看完整个系列之后你将会对如何在Android开发中使用Gradle得心应手。祝你好运，我们出发吧！<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>
+    
+
+        <a href="/2018/02/07/gradle1/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017summary" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-12-31 16:07:25" datetime="2017-12-31T08:07:25.000Z" itemprop="datePublished">2017-12-31</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/年终总结/">年终总结</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/12/31/2017summary/">2017年终总结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>大家好，不知不觉已经有两个月的时间没有更新文章了，时间真是过得好快啊，转眼间2017也已经来到了最后一天，这篇文章就来记录和总结一下过去的这个2017年吧！<br>过去的两个月时间里状态不是很好，加上学校大四了还一大堆课，一大堆作业要做。本以为拿了offer就可以轻松看书学习了，想不到这段时间过得比找工作还累。本来计划的文章都没有写，拖延症太重了，不过最主要的原因还是自己的惰性太严重了，希望在接下来的新的一年里能有所改善吧！<br>2017年对我来说注定是不简单的一个年份，有收获有遗憾，收获的是有了人生中第一份工作、在开源世界上有了自己更多的贡献、阅读了许多经典的书籍让自己的知识的深度和广度上了一个台阶、当然也结识了许多志同道合优秀的朋友、同时趁着自己大学时光的最后一年也出去走走看看；当然遗憾也不少，总感觉时间不够用，也总感觉自己浪费了许多宝贵的年华，每每想到这些心头总是唏嘘不已。<br>
+    
+
+        <a href="/2017/12/31/2017summary/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/总结/">总结</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-interview" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-10-29 16:23:20" datetime="2017-10-29T08:23:20.000Z" itemprop="datePublished">2017-10-29</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/秋招面经/">秋招面经</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/10/29/interview/">一个三非渣本的安卓秋招之路</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。<br>或许大部分朋友都是从这篇文章————<a href="http://wensibo.top/2017/04/13/2017Tencent_review/" target="_blank" rel="noopener">2017腾讯实习生Android客户端开发面试总结</a>开始认识我的吧，在那篇文章中我也讲到自己是非科班出身，同时学校也是非985非211的普通一本学校，这也就是标题中讲到的“三非”，这篇文章主要是记录一下我的秋招历程，在文章中我也会分享自己准备秋招的一些经验，希望对大家有所帮助。话不多说让我们开始吧！<br>
+    
+
+        <a href="/2017/10/29/interview/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-retrofit" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-09-05 10:20:20" datetime="2017-09-05T02:20:20.000Z" itemprop="datePublished">2017-09-05</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/09/05/retrofit/">Retrofit2.0源码解析</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>今天是九月的第四天了，学校也正式开学，趁着大学最后一年的这大好时光，抓紧时间赶快学习新知识吧！今天想要与大家一起分享的是Retrofit，由于网上已经有许多讲解Retrofit使用的文章了，本篇文章只会给一个小小的示例，以这个示例作为入口分析其源码，同样也会贴上流程图，以免迷路。话不多说，我们开始吧！！！<br>
+    
+
+        <a href="/2017/09/05/retrofit/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Retrofit/">Retrofit</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-trainee" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-08-31 10:20:20" datetime="2017-08-31T02:20:20.000Z" itemprop="datePublished">2017-08-31</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/工作/">工作</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/08/31/trainee/">实习总结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>距离上篇文章已经过去一个多月了，这段时间之所以没有更新文章不是因为偷懒，而是因为在实习。7月份的时候来到了目前的这家公司实习，当初笔试的时候自己做的不是很好，后来面试时也有些地方变现地也不尽如人意，不过最后还是很感激我老大给我来公司实习的机会。在实习的一个多月时间内自己也学到了很多，今天这篇文章就记录一下我的学习过程。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-8-31trainee/trainee.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+    
+
+        <a href="/2017/08/31/trainee/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工作/">工作</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-service" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-16 14:25:25" datetime="2017-07-16T06:25:25.000Z" itemprop="datePublished">2017-07-16</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/16/service/">从源码的角度看Service是如何启动的</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落。互联网行业的大佬们求贤若渴但对贤才也十分的苛刻，看到内推正如火如荼的进行着，深怕自己被这场浪潮甩在身后，所以也不得不苦心的准备着。如果你也是2018届应届生，如果你也看到了这篇文章，请你在留言区留下你找工作，准备秋招的感受，我们一起交流交流。<br>今天接着<a href="http://wensibo.top/2017/07/05/Activity/" target="_blank" rel="noopener">上篇文章</a>一起来看看四大组件的老二——Service。话不多说我们开始吧！</p>
+    
+
+        <a href="/2017/07/16/service/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android源码解析/">Android源码解析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service/">Service</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Activity" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-05 13:24:25" datetime="2017-07-05T05:24:25.000Z" itemprop="datePublished">2017-07-05</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/05/Activity/">从源码的角度看Activity是如何启动的</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>大家好，今天想与大家一起分享的是Activity。我们平时接触的最多的就是Activity了，作为四大组件中最为重要的老大，Activity究竟是如何启动的呢？这篇文章将会从源码的角度为大家进行全方位的解析，为了方便大家理解整个的过程，我会用流程图的方式将整个过程串起来，希望对大家有所帮助。<br>
+    
+
+        <a href="/2017/07/05/Activity/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Activity/">Activity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android源码解析/">Android源码解析</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Binder" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-03 12:01:25" datetime="2017-07-03T04:01:25.000Z" itemprop="datePublished">2017-07-03</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/03/Binder/">从Android源码的角度分析Binder机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>大家好，好久不见，距离上篇文章已经有35天之久了，因为身体不舒服害了一场病，不过现在已经好多了；另外这个月是考试月，当然得花多点时间复习功课了；再者这段时间依旧在看书，同时也在研究Android源码，准备了不少干货想与大家一起分享。7月刚到，该放假的也都差不多放假了，该实习的也已经在实习了，而我。。。还是准备秋招吧！多看书多打码多提升自己的眼界。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-03Binder/Android.jpg" alt="Binder" title="">
+                </div>
+                <div class="image-caption">Binder</div>
+            </figure>
+    
+
+        <a href="/2017/07/03/Binder/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android源码解析/">Android源码解析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder机制/">Binder机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IPC/">IPC</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-speaker" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-05-28 16:07:25" datetime="2017-05-28T08:07:25.000Z" itemprop="datePublished">2017-05-28</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/演讲/">演讲</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/05/28/speaker/">What kind of PPT makes you an excellent speaker——什么样的PPT能助你成为一个优秀的演讲者</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <p>今天是端午节假期的第一天，在这里祝大家假期快乐，不过像我这种渣渣就不休息了，撸起袖子继续学习啦😜 <a href="http://wensibo.top/2017/05/15/GankClient/" target="_blank" rel="noopener">上篇文章</a>已经向大家承诺会写一些技术以外的文章，所以这次我也履行诺言跟大家一起来分享一下我在最近的演讲过程的一些心得，当然这里最主要的还是讲如何用PPT(因为我穷得只能吃土所以就无法为大家讲解Keynote啦，但是大体的思想是差不多的)为你的演讲增色，毕竟作为程序员，在工作的时候不仅仅是只面对代码，有的时候如果具备一定的演讲才能，那么你的老板同事对你也会刮目相看。这篇文章纯粹只是我个人的经验总结，请大神轻喷😂<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-5-28speaker/jobs.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>
+    
+
+        <a href="/2017/05/28/speaker/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </p></div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PPT/">PPT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/演讲/">演讲</a></li></ul>
+
     </div>
     
 </article>
@@ -211,6 +663,12 @@ Qu...
     </ul>
 
     
+<nav id="page-nav">
+    <div class="inner">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    </div>
+</nav>
+
 
 </div>
 

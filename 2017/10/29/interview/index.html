@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/10/29/interview/">
+    
+    
+    <title>一个三非渣本的安卓秋招之路 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="面经">
+    <meta name="description" content="距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。或许大部分朋友都是从这篇文章————2017腾讯实习生Android客户端开发面试总结开始认识我的吧，在那篇文章中我也讲到自己是非科班出身，同时学校也是非985非211的普通一本学校，这也就是标题中讲到的“三非”，这篇文章主要是记录一下我的秋招历程">
+<meta name="keywords" content="面经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个三非渣本的安卓秋招之路">
+<meta property="og:url" content="http://www.wensibo.top/2017/10/29/interview/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。或许大部分朋友都是从这篇文章————2017腾讯实习生Android客户端开发面试总结开始认识我的吧，在那篇文章中我也讲到自己是非科班出身，同时学校也是非985非211的普通一本学校，这也就是标题中讲到的“三非”，这篇文章主要是记录一下我的秋招历程">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-10-29Interview/mindmap.png">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-10-29Interview/tencent.jpg">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-10-29Interview/getrgb.gif">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-10-29Interview/icon.PNG">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个三非渣本的安卓秋招之路">
+<meta name="twitter:description" content="距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。或许大部分朋友都是从这篇文章————2017腾讯实习生Android客户端开发面试总结开始认识我的吧，在那篇文章中我也讲到自己是非科班出身，同时学校也是非985非211的普通一本学校，这也就是标题中讲到的“三非”，这篇文章主要是记录一下我的秋招历程">
+<meta name="twitter:image" content="http://wensibo.com.cn/file/img/2017-10-29Interview/mindmap.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一个三非渣本的安卓秋招之路</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一个三非渣本的安卓秋招之路</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-29T08:23:20.000Z" itemprop="datePublished" class="page-time">
+  2017-10-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/秋招面经/">秋招面经</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#面试总结"><span class="post-toc-number">2.</span> <span class="post-toc-text">面试总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#体验最好的面试————CVTE"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">体验最好的面试————CVTE</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVTE一面"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">CVTE一面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVTE二面"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">CVTE二面</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#体验最糟的面试————4399"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">体验最糟的面试————4399</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4399一面"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">4399一面</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最轻松幽默的面试————珍爱网"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">最轻松幽默的面试————珍爱网</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#珍爱网一面"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">珍爱网一面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#珍爱网二面"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">珍爱网二面</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最真诚的面试————租租车"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">最真诚的面试————租租车</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#租租车一面"><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">租租车一面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#租租车二面"><span class="post-toc-number">2.4.2.</span> <span class="post-toc-text">租租车二面</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Android秋招如何准备？"><span class="post-toc-number">3.</span> <span class="post-toc-text">Android秋招如何准备？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#书籍和网站"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">书籍和网站</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#知识总结"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">知识总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#面试技巧"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">面试技巧</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#关于简历"><span class="post-toc-number">4.</span> <span class="post-toc-text">关于简历</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为每个公司准备一份简历"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">为每个公司准备一份简历</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#要不要放照片？"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">要不要放照片？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简历最好要彩印"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">简历最好要彩印</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#推荐一些实用的工具和网站"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">推荐一些实用的工具和网站</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#后记"><span class="post-toc-number">5.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-interview" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一个三非渣本的安卓秋招之路</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-29 16:23:20" datetime="2017-10-29T08:23:20.000Z" itemprop="datePublished">2017-10-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/秋招面经/">秋招面经</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。<br>或许大部分朋友都是从这篇文章————<a href="http://wensibo.top/2017/04/13/2017Tencent_review/" target="_blank" rel="noopener">2017腾讯实习生Android客户端开发面试总结</a>开始认识我的吧，在那篇文章中我也讲到自己是非科班出身，同时学校也是非985非211的普通一本学校，这也就是标题中讲到的“三非”，这篇文章主要是记录一下我的秋招历程，在文章中我也会分享自己准备秋招的一些经验，希望对大家有所帮助。话不多说让我们开始吧！<br><a id="more"></a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先来说一下我目前的情况吧，截止到这篇文章发布的时候，我手上是拿到了4个offer，分别是实习的公司，珍爱网，久邦数码，租租车，在等待最终结果的是还有1个。像我这种实力是拿不到大厂offer的啦，请大神们轻喷。<br>回顾整个秋招，从8月底开始，先后总共投了11份简历，8份过了笔试来到了面试，在这8个中有2个一面挂分别是腾讯和4399，剩下6个都到了终面，最后有1个终面挂，剩下5个就是上面说到的5个。很多朋友会问为什么只投了11份呢？因为个人的关系，我选择在广东省内工作，其实主要就是广州和深圳，再加上本身投递的岗位是Android开发，所以选择的公司就少了很多了，其实我也很羡慕那些能够到外省工作的同学，当然这个是个人自己的选择啦！下面我就来细讲一下这些面试的过程。</p>
+<h1 id="面试总结"><a href="#面试总结" class="headerlink" title="面试总结"></a>面试总结</h1><h2 id="体验最好的面试————CVTE"><a href="#体验最好的面试————CVTE" class="headerlink" title="体验最好的面试————CVTE"></a>体验最好的面试————CVTE</h2><p>CVTE是我第一个去面试的公司，三轮面试下来总共是两天，不过两天不连续，这两天的面试都是到地铁站附近等候公司的班车过来，然后坐班车前往公司面试，一面二面安排在同一天，从等待面试的人数就可以看出CVTE很受欢迎。当天我是早上11点到的公司，然后工作人员安排我们到电影院稍作休息，等候面试通知，从公司的基础设施以及环境就可以看出CVTE还是挺有钱的，工作人员也十分的热情，整个面试流程也是尽然有序。</p>
+<h3 id="CVTE一面"><a href="#CVTE一面" class="headerlink" title="CVTE一面"></a>CVTE一面</h3><p>一面的时候是两个面试官同时面试我，一个问问题的时候另一个做记录，另外一个问问题再由另一个做记录，这轮面试总共40分钟，面完之后感觉快要虚脱，因为面试节奏很快，如果脑袋不够用就可能当场gg，不过问的问题都是很基础的知识，只要基础够扎实基本没问题。下面是我被问到的一些问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">从ActivityA跳转到ActivityB的生命周期调用顺序？</span><br><span class="line">Activity的四种启动方式？</span><br><span class="line">Android多线程的通信方式有什么？做简要介绍。</span><br><span class="line">Android中的消息机制？</span><br><span class="line">HandlerThread的原理？</span><br><span class="line">Window的工作原理和作用？</span><br><span class="line">自定义View的流程以及需要注意哪些地方？</span><br><span class="line">自定义View的时候如何实现wrap_content属性？</span><br><span class="line">View事件分发机制？</span><br><span class="line">滑动冲突的解决方法有哪些？子View如何通知父View去拦截某事件？</span><br><span class="line">Volley原理？</span><br><span class="line">retrofit原理？</span><br><span class="line">JAVA的四种元注解是什么？主要作用有哪些？</span><br><span class="line">okhttp原理？</span><br><span class="line">老年代与新生代的区别？</span><br><span class="line">JVM中的复制算法是什么？</span><br><span class="line">java加锁机制有哪些方法？原理分别是什么？</span><br><span class="line">wait()和sleep()的区别是什么？</span><br><span class="line">synchronized关键字的四种用法和区别？</span><br><span class="line">onCopyWriteArrayList的原理？</span><br><span class="line">Hashmap实现原理？</span><br><span class="line">concurrentHashmap原理？</span><br><span class="line">反射机制原理？</span><br><span class="line">动态代理原理？</span><br><span class="line">单例模式有哪些实现方法？</span><br><span class="line">手写算法题————字符串反转的有哪些方法？</span><br></pre></td></tr></table></figure></p>
+<p>一面大概历时40分钟，时间也来到12点多，结束之后就等待二面，因为怕面试官通知面试所以就没去吃午饭，话说CVTE的零食和饭堂都是挺不错的，可惜没有去尝一下。差不多一点多的时候就是二面。</p>
+<h3 id="CVTE二面"><a href="#CVTE二面" class="headerlink" title="CVTE二面"></a>CVTE二面</h3><p>二面应该是总监面，问题主要偏向项目，有一些问题已经忘记了，只能列出一些还记得的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">做了哪些项目？详细说一下项目。</span><br><span class="line">讲一下RXJava原理；subscribeOn()与observeOn()哪一个方法多次切换线程只有第一次有效？为什么？</span><br><span class="line">Volley原理？</span><br><span class="line">Retrofit原理？</span><br><span class="line">Volley与Retrofit缓存机制有哪些区别？</span><br><span class="line">简单工厂，工厂方法，抽象工厂三种设计模式的优缺点？</span><br><span class="line">什么是内存泄露，什么是内存溢出？</span><br><span class="line">平常使用什么分析工具来优化APP的性能？</span><br><span class="line">手写算法题————实现一个栈</span><br><span class="line">Java的集合类包括哪些？各自有什么特点？</span><br><span class="line">为什么写博客？</span><br><span class="line">今后想要往哪些方面发展？</span><br></pre></td></tr></table></figure></p>
+<p>二面其实发挥得不好，尤其是讲到RxJava的时候，因为没有仔细看RxJava源码，后续会写关于这个开源库源码解析的文章。<br>过了几天之后面试状态变成了终面，然后就前往CVTE的第二产业园进行HR面，一般是两个面试官同时面三个同学，不过因为我面的那一批人数不够，所以只是2对2。不得不说CVTE的HR真的很专业，把我从小到大的事情都扒出来了，问的问题大体如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">对自己两轮面试打一下分</span><br><span class="line">都面试了哪些公司，拿到哪些offer？</span><br><span class="line">小时候印象最深刻的一件？</span><br><span class="line">说说自己的家庭情况？</span><br><span class="line">说说对自己影响最大的人？</span><br><span class="line">父母的性格都是怎么样的？</span><br><span class="line">从小什么事情对自己的影响最大？</span><br><span class="line">期望的工作地点，每天期望的工作时间？一周期望工作多久？</span><br><span class="line">有什么理由会让你拒绝CVTE的offer？</span><br><span class="line">说说你对薪资的要求？</span><br><span class="line">觉得什么是自己不喜欢的？</span><br><span class="line">说一下自己的优点和缺点？</span><br><span class="line">梦想是什么？</span><br><span class="line">有什么问题想问我？</span><br></pre></td></tr></table></figure></p>
+<p>全程还是挺严肃的，大概30分钟，不过因为之前对一些问题做了准备，所以没有遇到太大的难题。HR面之后过了几天官网显示已经通过终面，不过终面过了并不表示能够顺利拿到offer啦，按照CVTE的惯例，顺利通过终面的学生一般是需要经历一周的考核，考核的项目完成之后会进行再一轮的HR面，最后才会给结果。也就在前两天我刚刚结束了为期一周的实习，实习期间我的导师，同事，老大都很nice，有什么问题都可以向这些同事们请教，他们都会很耐心的帮忙解答，更重要的是CVTE给实习生的待遇很好，除了很好吃的一日三餐以及宵夜之外还会安排公司的公寓式酒店给实习生入住，相信去实习的同学对这点应该都很清楚。说了这么多好的那也该说一下不是特别好的地方，首先就是工作强度会稍微有点大，不过因为我是短期实习生，同时也要这3~4天内完成一个项目，所以压力相对大，每天几乎都是8点半左右上班工作到晚上9点多，中午12点多吃午饭，下午两点上班，如果你觉得这样的工作强度适应的了的话那来CVTE肯定是很好的选择，最后再说一下项目考核之后的HR面吧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">实习的这一周有什么不适的吗？</span><br><span class="line">对公司的安排有什么意见吗？</span><br><span class="line">觉得哪方面还没有达到你的预期？</span><br><span class="line">跟家里人说了来实习的情况了吗？家里人都说了些什么？</span><br><span class="line">父母对你未来的期望是什么？</span><br><span class="line">未来对父母有什么打算？</span><br><span class="line">家里情况怎么样？</span><br><span class="line">父母对你的影响是什么？</span><br><span class="line">从小到大对你造成的负面影响最大的事情是什么？</span><br><span class="line">哪一段时间是自己压力最大的时候？</span><br><span class="line">给自己的实习考核打个分？</span><br><span class="line">觉得自己能不能够通过此次的考核？为什么？</span><br><span class="line">期望的薪资是多少？最低的薪资要求是多少？</span><br><span class="line">如果考核评估觉得你无法达到这样的薪资水平你该怎么办？</span><br><span class="line">如果没有通过CVTE的考核你该怎么办？</span><br><span class="line">手里都拿到哪些Offer了？薪资水平都怎么样？</span><br><span class="line">都拿到这么多offer了为什么还来实习？</span><br><span class="line">为什么会选择CVTE？</span><br><span class="line">有什么理由让你拒绝CVTE的offer？</span><br><span class="line">什么情况下你会从CVTE离职？</span><br><span class="line">还想对我们说什么？用一句话表达。</span><br></pre></td></tr></table></figure></p>
+<p>讲真，经历了这么多次面试，CVTE的HR面给我的印象是最深刻的，当然这次的面试压力也是最大的，跟我一起面试的另一个小伙伴也顶着很大的压力，我们两个面试结束之后都大口的舒了口气，这次的HR是相对比较高层的，经验可以说相当丰富啊，对每个问题都会挖得很深直击要害，如果没有提前做好充分的准备可能会被问哭。总之这个星期的实习确实是个非常不错的经历。</p>
+<h2 id="体验最糟的面试————4399"><a href="#体验最糟的面试————4399" class="headerlink" title="体验最糟的面试————4399"></a>体验最糟的面试————4399</h2><p>其实这样黑4399也不是很好，那就当成是我个人的片面之见吧，写出来只是与大家分享而已，完全没有恶意。4399的面试是在华工中心酒店，去之前就听说今年的面试有点水，一面似乎都是20分钟草草而过，听去面试的同学讲起问的技术问题不多，主要聊人生。本来也不是很想去的，因为同时间也赶着去另外一家公司面试，不过为了给自己多一次机会，所以也来到现场。话说4399的人气不是盖的，会议室里坐满了人，到了现场不到3分钟就被叫去一面。</p>
+<h3 id="4399一面"><a href="#4399一面" class="headerlink" title="4399一面"></a>4399一面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">自我介绍</span><br><span class="line">问了一下项目</span><br><span class="line">说说ListView与RecyclerView的区别</span><br><span class="line">说说以后的发展方向</span><br><span class="line">为什么写博客</span><br><span class="line">用过什么设计模式？问说需不需要详细说一下面试官说不用。</span><br><span class="line">有优点和缺点？</span><br><span class="line">觉得自己什么情况下会离职？</span><br><span class="line">怎么学习Android的？</span><br></pre></td></tr></table></figure>
+<p>大概就这些问题了，面完之后面试官叫我出去等一下，然后前台的工作人员过了一阵子叫我先回去等消息，接着另一个工作人员叫我稍等一下，然后在电脑上处理了3分钟左右，接着另外一个工作人员又叫我去面二面，不过刚才那个工作人员说他在处理我的，又过了2分钟他叫我回去等消息了。听到这个回复就知道gg了。<br>总体评价一下这次的面试，感觉4399确实很多人想去，不过不知道今年是不是不怎么招人，感觉面试都很水，也有可能面试官觉得我很渣，然后随便问问过一下流程吧！不过我一直觉得面试是一个互相了解的过程，双方都应该尊重彼此，不然怎么体现这个公司的形象呢？</p>
+<h2 id="最轻松幽默的面试————珍爱网"><a href="#最轻松幽默的面试————珍爱网" class="headerlink" title="最轻松幽默的面试————珍爱网"></a>最轻松幽默的面试————珍爱网</h2><p>珍爱网简历是在8月份就投了，10月13号的时候在华工进行了现场笔试，最后HR面的时候面试官跟我说其实我的笔试成绩有点低(尴尬脸)，当初做的时候觉得除了算法题之外都答得挺好的呀，可能有些题目考虑的不是很全面吧。现在想想觉得自己还是挺幸运的。当天就收到一面的短信，一面面试官给我留下的印象十分深刻，无论是开口的第一句话：“我们不用搞得那么严肃，轻松点就行(哈哈)”，还是面试过程中对我回答的不好的问题耐心的纠正，到最后离开的时候站起来跟我握手。整体给面试者的印象都十分深刻，相信有面过珍爱网Android的同学都会倍感亲切和轻松吧！</p>
+<h3 id="珍爱网一面"><a href="#珍爱网一面" class="headerlink" title="珍爱网一面"></a>珍爱网一面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">介绍一下做过的项目，面试官问我手机上有没有安装做过的APP，自己的APP当然得装在手机上啦，于是面试过程基本都是围绕着这个项目展开的。</span><br><span class="line">介绍一下RecyclerView的原理以及优点。</span><br><span class="line">为什么会选用Material Design？</span><br><span class="line">Android 5.0之后的版本和之前的版本有什么区别？</span><br><span class="line">DVM与ART的区别？(回答得不好)</span><br><span class="line">为什么要写博客？</span><br><span class="line">怎么学习Android的？</span><br><span class="line">项目中遇到过哪些困难？如何去解决的？</span><br><span class="line">MVP与MVC有什么区别？</span><br><span class="line">Custom-Tabs-Client是什么？(因为在项目中用到这个开源库)作用是什么？</span><br><span class="line">Handler机制？Looper原理？</span><br><span class="line">如果在主线程中同时创建10个Handler，会发生什么事？(回答得不好)</span><br><span class="line">HandlerThread实现原理？</span><br><span class="line">Activity的启动流程？</span><br><span class="line">ActivityThread的main方法主要做了哪些操作？</span><br><span class="line">对团队有什么要求吗？</span><br><span class="line">有哪些问题要问他的？(去面试之前使用了珍爱网的APP，发现有一个页面有点卡顿，然后使用AS的dump View Hierarchy for UI automator观察了这个Activity的实现组件是webview，但不是传统的webview，而是基于腾讯的X5内核，同时注意到这个页面需要连接网络，如果没有网络连接的话就无法显示内容，后来通过使用分析知道这个页面的卡顿有一部分原因是网络连接造成的。基于这个问题与面试官进行了一番讨论。)</span><br><span class="line">还有什么问题要问他的吗？(请教了一下面试官在珍爱网工作最大的收获是什么)</span><br></pre></td></tr></table></figure>
+<p>面试结束之后面试官主动站起来跟我握手，我都有点受宠若惊了。分析了一下这次面试，觉得自己的技术问题上大部分答得都还行，不过有两个问题基本属于知识盲区，所以回答的不好。能过一面我觉得除了运气好之外，可能是我问的两个问题也加了不少分，第一个问题主要是我有去使用他们的产品，并且对其中的问题有自己的思考和深入的了解，这可能是面试官更加看中的吧；第二个问题能够体现出我很想去珍爱网的热情。</p>
+<h3 id="珍爱网二面"><a href="#珍爱网二面" class="headerlink" title="珍爱网二面"></a>珍爱网二面</h3><p>二面应该是总监面或者总裁面吧，面试官懂技术，会问一些技术问题，估计是CTO之类的高管。主要的问题记录如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">介绍一下项目，面试官同样也拿着我的手机看项目。</span><br><span class="line">项目中有没有做一下性能的优化？优化工具有哪些？</span><br><span class="line">了解过哪些设计模式？分别详细说一下优缺点？</span><br><span class="line">什么情况下使用单例模式？</span><br><span class="line">java中的加锁有哪些方法？</span><br><span class="line">说一下网络连接的状态码的含义？</span><br><span class="line">说一下长连接的优点和缺点？</span><br><span class="line">如何看待Android未来的发展？</span><br><span class="line">为什么会选择学习Android？</span><br><span class="line">如何学习Android？</span><br><span class="line">自己有什么优势？</span><br><span class="line">为什么写博客？</span><br><span class="line">项目中遇到过哪些困难？如何去解决的？</span><br><span class="line">遇到过最大的坎是什么？</span><br><span class="line">有什么问题要问他的？(面试前看了一下珍爱网的官网，注意到对应届生有一个培养计划————纯珍计划，于是就向面试官提问)</span><br></pre></td></tr></table></figure></p>
+<p>二面感觉发挥还可以，个人还是觉得问的问题还是比较重要的，要让面试官觉得你是一个有心的人，觉得你很想来公司工作，所以从官网了解公司是最直接的啦！二面紧接着就是HR面了，HR小姐姐很有趣，这一轮问的问题就是对一些基本问题的了解了，如实回答即可。过几天之后就收到offer通知了。</p>
+<h2 id="最真诚的面试————租租车"><a href="#最真诚的面试————租租车" class="headerlink" title="最真诚的面试————租租车"></a>最真诚的面试————租租车</h2><p>这里说的最真诚当然不是说我自己啦，我对待每次面试都是十分真诚的啦，这里的真诚就是指租租车的面试官们，因为公司已经经过了B+融资，今年应该是首次校招，不过从规模上来看招聘会办的十分好，招的人数也不少。一面的面试官挺负责任的，在面试之前先浏览了我的博客，以下是面试的一些问题。</p>
+<h3 id="租租车一面"><a href="#租租车一面" class="headerlink" title="租租车一面"></a>租租车一面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">自我介绍</span><br><span class="line">介绍一下项目</span><br><span class="line">说一下Retrofit原理</span><br><span class="line">说一下java中4种元注解？</span><br><span class="line">说一下@Retention元注解的三个取值的使用范围和场景分别是什么？</span><br><span class="line">说一下Volley的原理</span><br><span class="line">说一下Retrofit与Volley的区别和使用场景</span><br><span class="line">说一下Android中的多线程通信机制</span><br><span class="line">说一下Android中的Binder机制原理</span><br><span class="line">自定义View的流程</span><br><span class="line">MeasureSpec是什么？</span><br><span class="line">View事件的分发机制</span><br><span class="line">Android如何实现图片的高效加载</span><br><span class="line">java中的四种引用以及使用场景</span><br><span class="line">项目中有做过性能优化吗？如何优化的?</span><br><span class="line">JVM的内存模型？</span><br><span class="line">java有什么垃圾回收算法？分别是怎么实现的？</span><br><span class="line">java多线程的三个特性？原理分别是什么？</span><br><span class="line">java多线程的锁机制有什么实现方式？原理分别是什么？</span><br><span class="line">说说java中的集合类？</span><br><span class="line">写一下单例模式？</span><br><span class="line">为什么静态内部类不会造成内存泄漏？</span><br><span class="line">说一下TCP与UDP的区别？</span><br><span class="line">说一下网络连接的三次握手和四次挥手？</span><br><span class="line">为什么写博客？</span><br><span class="line">写博客给你带来什么成长？</span><br><span class="line">有什么问题想问我的吗？(面试前使用了公司的APP，发现有一个页面出现了bug，然后就基于这个问题与面试官展开了讨论。)</span><br></pre></td></tr></table></figure>
+<h3 id="租租车二面"><a href="#租租车二面" class="headerlink" title="租租车二面"></a>租租车二面</h3><p>租租车的二面是HR面，问的问题基本和其他的HR面相同，下面就列举一些还记得的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">家是哪里的啊？父母对未来的工作有什么要求啊？</span><br><span class="line">有什么优缺点吗？</span><br><span class="line">为什么想要写博客呢？</span><br><span class="line">觉得自己性格怎么样？</span><br><span class="line">对未来的团队有什么要求吗？</span><br><span class="line">拿到哪些Offer了吗？</span><br><span class="line">对薪资方面有什么要求吗？</span><br><span class="line">对自己未来几年的打算是什么？</span><br><span class="line">学校什么时候发三方啊？</span><br><span class="line">还有什么问题要问我吗？</span><br></pre></td></tr></table></figure></p>
+<p>租租车的工作环境是我比较喜欢的，地点在天河大厦，办公楼虽然只是一栋三四层的写字楼但都是自己的，而且装修十分讲究，从门外往里看就能明显感受到与其他公司的差别。两次面试加上一开始的笔试体验都挺不错的，去刚刚起步的初创公司确实能够学到很多当然对自己也是一种历练，更让我喜欢的一点则是公司员工大部分都是年轻人，跟他们工作会相对的轻松些。当然最后还是很开心能够顺利拿到租租车的offer啦！</p>
+<h1 id="Android秋招如何准备？"><a href="#Android秋招如何准备？" class="headerlink" title="Android秋招如何准备？"></a>Android秋招如何准备？</h1><p>其实每个人都有自己特有的学习方法，我们都需要寻找到最适合自己的，在这里我只是列举出我复习的技巧，大家只需要选择适合自己的就行。</p>
+<h2 id="书籍和网站"><a href="#书籍和网站" class="headerlink" title="书籍和网站"></a>书籍和网站</h2><p>我觉得看书真的是十分的重要，每一本书都有自己的知识体系，但是好书确实不多，需要经历一番挑选；关于网站则是对一些体系较小的知识进行汇总，这里推荐的是设计模式。以下我列举一些个人觉得不错的一些书籍和网站：</p>
+<ul>
+<li>Android 相关</li>
+</ul>
+<blockquote>
+<ul>
+<li>《Android开发艺术探索》</li>
+<li>《深入理解Android虚拟机》</li>
+<li>《Android源码设计模式解析与实战》</li>
+</ul>
+</blockquote>
+<ul>
+<li>Java相关</li>
+</ul>
+<blockquote>
+<ul>
+<li>《Java编程思想》</li>
+<li>《深入理解Java虚拟机》</li>
+<li>《图解Java多线程设计模式》</li>
+</ul>
+</blockquote>
+<ul>
+<li>网络相关</li>
+</ul>
+<blockquote>
+<ul>
+<li>《计算机网络》(谢希仁 编著)</li>
+<li>《网络是怎么连接的》</li>
+</ul>
+</blockquote>
+<ul>
+<li>数据结构与算法相关</li>
+</ul>
+<blockquote>
+<ul>
+<li>《算法导论》</li>
+<li>《算法》(第4版)</li>
+</ul>
+</blockquote>
+<ul>
+<li>设计模式相关</li>
+</ul>
+<blockquote>
+<ul>
+<li><a href="http://design-patterns.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">图说设计模式</a></li>
+<li><a href="https://gof.quanke.name/" target="_blank" rel="noopener">设计模式Java版</a></li>
+</ul>
+</blockquote>
+<ul>
+<li>练习相关</li>
+</ul>
+<blockquote>
+<ul>
+<li><a href="https://www.nowcoder.com/5645772" target="_blank" rel="noopener">牛客网在线笔试题(多练练编程题)</a></li>
+<li><a href="https://leetcode.com/" target="_blank" rel="noopener">LeetCode</a></li>
+</ul>
+</blockquote>
+<h2 id="知识总结"><a href="#知识总结" class="headerlink" title="知识总结"></a>知识总结</h2><p>看了这么多书籍和网站之后需要对这些知识做一个比较系统的整理，这里推荐使用思维导图工具，不过市面上的这类工具已经足够多了，有的收费有的免(po)费(jie)，大家可以根据自己的使用习惯自行选择，我个人使用的是<a href="http://www.mindmanager.cc/" target="_blank" rel="noopener">mindjet</a>，下图则是我总结的Android复习体系图，完整的版本大家可以点击<a href="https://files.cnblogs.com/files/ghylzwsb/Android%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93.rar" target="_blank" rel="noopener">这里</a>下载。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-10-29Interview/mindmap.png" alt="Android面试知识体系" title="">
+                </div>
+                <div class="image-caption">Android面试知识体系</div>
+            </figure></p>
+<h2 id="面试技巧"><a href="#面试技巧" class="headerlink" title="面试技巧"></a>面试技巧</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">面试前需要对自己总结的知识重新回顾一遍，以便在被问及时能够快速并且全面的回答问题。</span><br><span class="line">面试前对该公司稍做了解，可以从官网或者从产品等方面了解，如果有产品的话还可以使用，看看有没有存在一些bug，当面试官要你提问题的时候可以跟他一起讨论。</span><br><span class="line">面试完之后做稍做记录，记下自己回答的不好的问题，方便查漏补缺。</span><br></pre></td></tr></table></figure>
+<h1 id="关于简历"><a href="#关于简历" class="headerlink" title="关于简历"></a>关于简历</h1><p>我觉得简历真的十分重要，如果你的学历和能力都不是很有优势的情况下那么简历很可能就决定了你是否有面试的机会了。当然我的简历做得也不是很好，在这里只是与大家一起分享我在准备简历过程中的一些收获，下面一一与大家分享。</p>
+<h2 id="为每个公司准备一份简历"><a href="#为每个公司准备一份简历" class="headerlink" title="为每个公司准备一份简历"></a>为每个公司准备一份简历</h2><p>如果你不是去一些大型招聘会，不知道都有哪些企业过来招人，那么你大可以用一份普遍适用的简历投递出去，但如果你已经明确知道今天要去哪家公司面试了，那最好能够为这个企业准备一份专属的简历。最基本的就是在简历的页眉部分加上这个公司的logo，其次简历的文字主题色与logo相呼应，例如给腾讯的简历大概长这样<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-10-29Interview/tencent.jpg" alt="人丑不露相" title="">
+                </div>
+                <div class="image-caption">人丑不露相</div>
+            </figure></p>
+<h2 id="要不要放照片？"><a href="#要不要放照片？" class="headerlink" title="要不要放照片？"></a>要不要放照片？</h2><p>首先需要声明的是技术岗一般不看颜值，如果你能力棒棒哒同时颜值高高哒，那基本上就稳了，但如果你跟我一样都是屌丝，那得分两种情况讨论咯。首先如果你愿意花钱的话，可以到靠谱点儿的相馆拍张好的证件照，记得跟老板要电子版哦；如果你不愿意花钱的话，那我建议你还是不要放照片吧。</p>
+<h2 id="简历最好要彩印"><a href="#简历最好要彩印" class="headerlink" title="简历最好要彩印"></a>简历最好要彩印</h2><p>其实我在简历上还是很舍得花钱的，今年学校换了打印店，彩印一面需要两块钱，每次打印心里都在流血啊，不过想到要给面试官留下一个好的印象，还是忍下心了。对了打印一定要用比较硬一点的纸，不要像普通A4纸那样软哦，这样手感才好哟！还有最好还是单面彩印，如果你的简历不止一面那就打几张用订书机钉起来！</p>
+<h2 id="推荐一些实用的工具和网站"><a href="#推荐一些实用的工具和网站" class="headerlink" title="推荐一些实用的工具和网站"></a>推荐一些实用的工具和网站</h2><p>这里并不是推荐大家什么简历模板，讲真我也没用过这些，对于技术岗的同学简历不需要花哨，只要条理清晰版面整洁即可，基本都是可以用我的(word)哥做。这里推荐的是一款获取图片颜色的工具，还记得刚才我说简历的文字主题色最好与logo相呼应，那就得知道logo的RGB属性值了，使用这款<a href="https://files.cnblogs.com/files/ghylzwsb/GetRGB.rar" target="_blank" rel="noopener">GetRGB</a>工具则可以让你轻松获取图片的RGB参数。使用方式见下图哦！<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-10-29Interview/getrgb.gif" alt="如何使用GetRGB" title="">
+                </div>
+                <div class="image-caption">如何使用GetRGB</div>
+            </figure><br>另外推荐的则是一个图标库网站——<a href="http://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>，在上面几乎可以找到你所需要的图标，并且可以自定义颜色与大小，还是免费的哦！以后妈妈都不用担心我找不到图标了。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-10-29Interview/icon.PNG" alt="图标示例" title="">
+                </div>
+                <div class="image-caption">图标示例</div>
+            </figure></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>作为一个Android本科渣渣，在秋招中虽然也经历过失利与彷徨，但对最终的结果还是很满意的。这段时间很感谢身边人对我的帮助，感谢我实习的领导给我的意见和帮助，感谢面试过程中遇到的所有面试官以及结识的朋友们，也感谢我的老师同学朋友一直以来对我的帮助，当然也要感谢我爸妈对我的培养，最后的感谢留给自己，感谢自己学习Android一路来的坚持和努力。希望这篇文章对你有用，同时也祝大家能够实现自己的目标找到心仪的工作！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.816Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/10/29/interview/" target="_blank" rel="external">http://www.wensibo.top/2017/10/29/interview/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/10/29/interview/&title=《一个三非渣本的安卓秋招之路》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/10/29/interview/&title=《一个三非渣本的安卓秋招之路》 — 温斯渤&source=距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。或..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/10/29/interview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一个三非渣本的安卓秋招之路》 — 温斯渤&url=http://www.wensibo.top/2017/10/29/interview/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/10/29/interview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/12/31/2017summary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">2017年终总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/05/retrofit/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Retrofit2.0源码解析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="interview"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/10/29/interview/&title=《一个三非渣本的安卓秋招之路》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/10/29/interview/&title=《一个三非渣本的安卓秋招之路》 — 温斯渤&source=距离上次更新文章已经过去一个多月了，实在是很抱歉没有按照进度更新博客。最近主要是在忙秋招，前几天也刚刚结束，所以这篇文章就来和大家一起分享我的秋招之路。或..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/10/29/interview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一个三非渣本的安卓秋招之路》 — 温斯渤&url=http://www.wensibo.top/2017/10/29/interview/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/10/29/interview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aQW7DMAxEUd//0i7QbRr1D2kHMfW1CorE0vNiKpE6DjzO3/Hu8+sg31x/57hjyJAh47GMczlqi3hdyrtfkeev1yZDhox9GCRkSSCul1ibl8wiQ4YMGSRA+UL5c2TIkCGjz1j/lgf0erspQ4YMGfwQW5uGBPFHz+IyZMh4IKPfGLjv80f7GzJkyPhKxhkO/rR0s8hD9o/nyJAhYzSDtyc7W8k7oh/tcGXIkDGCkRbUOmAeu3F7QIYMGRsw0pJZuuhOqwC9CBkyZGzDICFYm4y3BPiB9m3gypAhYxyDT5m2JDsFOBLHMmTI2IfRnyA9oKY8NIsMGTJGM2qL7lwjIwyC+ef/hgwZMkYzOtcj0oXy8CUHWhkyZExlpMW19EDbKd6RDaUMGTJ2YPCA45vF9IhLIjUOdBkyZAxiXLUdTAtnNVJQNZQhQ8Y4Rr/slV7t4i8FRbAMGTJGM/rL5QfR2r6VX+yQIUPGDoxaqzIl8dtq6QFYhgwZUxnpJYl0ubVXwJsKMmTI2JORltJ4vNayP7hsIUOGjKGMToC29p4gXmslPBkyZMxjnOHg1zJ4w7L2amTIkLEPox+IZDtY+2btIpoMGTKmMkjIkr8fpZG+72BXK0OGjHGMNARrsZgW6YJjtgwZMmSEzU7y2/61MBkyZMioTXwtjMSuDBky9mGkh9i0nXDVhbCLy20yZMh4CCN9dKetyC9VEFKrtidDhoxnMH4AL2c84qdIKO4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/">
+    
+    
+    <title>setSupportActionBar(toolbar)导致程序崩溃闪退 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="toolbar导致程序崩溃闪退">
+    <meta name="description" content="最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪退，所以就开始debug，发现问题出现在12Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);setSupportActionBar(toolbar);">
+<meta name="keywords" content="toolbar导致程序崩溃闪退">
+<meta property="og:type" content="article">
+<meta property="og:title" content="setSupportActionBar(toolbar)导致程序崩溃闪退">
+<meta property="og:url" content="http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪退，所以就开始debug，发现问题出现在12Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);setSupportActionBar(toolbar);">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.916Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="setSupportActionBar(toolbar)导致程序崩溃闪退">
+<meta name="twitter:description" content="最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪退，所以就开始debug，发现问题出现在12Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);setSupportActionBar(toolbar);">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">setSupportActionBar(toolbar)导致程序崩溃闪退</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">setSupportActionBar(toolbar)导致程序崩溃闪退</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-06T06:24:45.000Z" itemprop="datePublished" class="page-time">
+  2016-09-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-setSupportActionBar(toolbar)导致程序崩溃闪退" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">setSupportActionBar(toolbar)导致程序崩溃闪退</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-06 14:24:45" datetime="2016-09-06T06:24:45.000Z" itemprop="datePublished">2016-09-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪退，所以就开始debug，发现问题出现在<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">setSupportActionBar(toolbar);</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>很显然应该是在第二行出错了，再根据logcat上的日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This Activity already has an action bar supplied by the window decor. </span><br><span class="line">Do not request Window.FEATURE_SUPPORT_ACTION_BAR and </span><br><span class="line">set windowActionBar to false in your theme to use a Toolbar instead.</span><br></pre></td></tr></table></figure></p>
+<p>所以应当是与activity中的ActionBar有冲突，最后尝试多次知道，是要在清单文件中设置activity的style<br>（只要有用到这一行代码的activity都需要在该activity节点下定义style），可以按照如下设置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:label</span>=<span class="string">"test"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:theme</span>=<span class="string">"@style/MaterialDrawerTheme.Light.DarkToolbar"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里指的就是第三行了，这样就不会造成程序崩溃了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.916Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" target="_blank" rel="external">http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/toolbar导致程序崩溃闪退/">toolbar导致程序崩溃闪退</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&title=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&title=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&source=最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/01/11/一口一口吃掉Hexo(一)/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一口一口吃掉Hexo（一）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="setSupportActionBar(toolbar)导致程序崩溃闪退"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&title=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&title=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&source=最近在做一个项目，使用了第三方的开源项目，主要是想实现android5.0之后推出的MaterialDesign的风格，但是代码已经写好了，发现一运行就闪..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《setSupportActionBar(toolbar)导致程序崩溃闪退》 — 温斯渤&url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/09/06/setSupportActionBar(toolbar)导致程序崩溃闪退/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADK0lEQVR42u3a0U7DMAwF0P3/T5dXJFh0bXdSk508IcFoTiph7JvXK17Xr/Xuu+uve+v6s9ZPv3lhY2Njb8K+lit//PqAqkeWH+J6n2/3jI2NjX0cu1eWkmPKD2X9G/LXExU5bGxs7K9n5xtab26ydWxsbGzsTzQJ9/5kXhSxsbGxsav/4idlKR/3V+OHvDW6YZaGjY2N/Xh2noo+/+uP5NvY2NjYD2ZfxbX+VNJgJMFwHjNfrYWNjY19EjsvAD1kAu79ZLWAYWNjY5/NTsLUNf7ejeaRcLV9wsbGxj6b3btkUx3BVxuJpIhWg2FsbGzsk9iTUpSzqyUnh1XL3j+zNGxsbOzN2XkBWz+4upVJLn3vQWNjY2Pvzp63HEnDMIls56/kn31iY2NjH8SulpPeyKk69FlvPYkZCoeCjY2NvTk730S1aN0VQlQv90SvBxsbG/sgdnXInlfFySHm/cLkaLCxsbHPYOfDmiqmOkLqFZ6kjRmFu9jY2NiPZ1dLxTxOqB5T78jKxRIbGxt7W3b1+ss8gu3FA729Feo2NjY29nHsPGrtDaqqEULykvLiio2NjX0eez4A6hWqSfRbLbHRB7CxsbE3ZFeHQXlJ+8Sgv9xyrD+FjY2NfQS7Ou6fxL2T+zN3tTHlrgUbGxt7E3b18b0SlQ+A8vi5Fw9jY2Njn8RO2oDesL560Wc0HorDiUL3g42Njb0Ju9dO9IKESbuSB71RMcbGxsb+Gva9Q6W8dakGvdVCiI2NjX0SO7l804tak/I2udaTl9W3ZRIbGxv7aHZ165MhUS8q6B19+bYRNjY29obsyfWdHDBpb+ZPwcbGxj6VnQ9r8k30xkB5CD26S4mNjY19HLsax+ZDooSUhAqv8WrO0rCxsbEfzL6KKxlFJaXxribkhmAAGxsbe3N29U9/tZz0mo0JqfcasLGxsXdn9+LbeenqDY+qBeztd7GxsbGPY0/KT/XB1Ws91UIVHSU2Njb2F7PzMLVa5HoRRS+QxsbGxv5m9qS09DbdG29hY2Njfxs7v4LTC2vn280L6s3xADY2Nvbj2ZPINr9YMwloP1LAsLGxsU9g/wCl+Qw36zV7hAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

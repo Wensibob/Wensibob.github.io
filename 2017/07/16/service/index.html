@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/07/16/service/">
+    
+    
+    <title>从源码的角度看Service是如何启动的 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android源码解析,Service">
+    <meta name="description" content="七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落。互联网行业的大佬们求贤若渴但对贤才也十分的苛刻，看到内推正如火如荼的进行着，深怕自己被这场浪潮甩在身后，所以也不得不苦心的准备着。如果你也是2018届应届生，如果你也看到了这篇文章，请你在留言区留下你找工作，准备秋招的感受，我们一起交流交流。今">
+<meta name="keywords" content="Android源码解析,Service">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码的角度看Service是如何启动的">
+<meta property="og:url" content="http://www.wensibo.top/2017/07/16/service/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落。互联网行业的大佬们求贤若渴但对贤才也十分的苛刻，看到内推正如火如荼的进行着，深怕自己被这场浪潮甩在身后，所以也不得不苦心的准备着。如果你也是2018届应届生，如果你也看到了这篇文章，请你在留言区留下你找工作，准备秋招的感受，我们一起交流交流。今">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/process3.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/1.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/process1.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/process2.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/server2client.png">
+<meta property="og:image" content="http://wensibo.top/file/img/2017-7-15Service/process3.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从源码的角度看Service是如何启动的">
+<meta name="twitter:description" content="七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落。互联网行业的大佬们求贤若渴但对贤才也十分的苛刻，看到内推正如火如荼的进行着，深怕自己被这场浪潮甩在身后，所以也不得不苦心的准备着。如果你也是2018届应届生，如果你也看到了这篇文章，请你在留言区留下你找工作，准备秋招的感受，我们一起交流交流。今">
+<meta name="twitter:image" content="http://wensibo.top/file/img/2017-7-15Service/process3.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">从源码的角度看Service是如何启动的</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">从源码的角度看Service是如何启动的</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-16T06:25:25.000Z" itemprop="datePublished" class="page-time">
+  2017-07-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#认识ContextImpl"><span class="post-toc-number">2.</span> <span class="post-toc-text">认识ContextImpl</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启动Service的入口"><span class="post-toc-number">3.</span> <span class="post-toc-text">启动Service的入口</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#AMS如何进一步启动Service"><span class="post-toc-number">4.</span> <span class="post-toc-text">AMS如何进一步启动Service</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#realStartServiceLocked"><span class="post-toc-number">5.</span> <span class="post-toc-text">realStartServiceLocked</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ApplicationThread-scheduleCreateService"><span class="post-toc-number">6.</span> <span class="post-toc-text">ApplicationThread.scheduleCreateService</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#H-handleMessage"><span class="post-toc-number">7.</span> <span class="post-toc-text">H.handleMessage</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#onStartCommand"><span class="post-toc-number">8.</span> <span class="post-toc-text">onStartCommand</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后记"><span class="post-toc-number">9.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-service" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">从源码的角度看Service是如何启动的</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-16 14:25:25" datetime="2017-07-16T06:25:25.000Z" itemprop="datePublished">2017-07-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落。互联网行业的大佬们求贤若渴但对贤才也十分的苛刻，看到内推正如火如荼的进行着，深怕自己被这场浪潮甩在身后，所以也不得不苦心的准备着。如果你也是2018届应届生，如果你也看到了这篇文章，请你在留言区留下你找工作，准备秋招的感受，我们一起交流交流。<br>今天接着<a href="http://wensibo.top/2017/07/05/Activity/" target="_blank" rel="noopener">上篇文章</a>一起来看看四大组件的老二——Service。话不多说我们开始吧！</p>
+<a id="more"></a> 
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们一般使用Service有两种方式，startService和bindService，这两种方法使用场景各有不同，本篇文章以startService为例讲解Service的启动过程，而bindService大体上与startService相近，只是一些逻辑调用上有所区别。<br>在这里我先贴上通过本次分析得到的Service完整的启动流程图，现在不需要理解其中的过程，只需要一步步分析源码的时候回过头来看看这幅图，以免迷失方向。当然我在每一步都会贴出相对应的流程图。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/process3.png" alt="总体流程图" title="">
+                </div>
+                <div class="image-caption">总体流程图</div>
+            </figure></p>
+<h2 id="认识ContextImpl"><a href="#认识ContextImpl" class="headerlink" title="认识ContextImpl"></a>认识ContextImpl</h2><p>首先先给出一张类图，我们从大局上看一下这些类的关系。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/1.png" alt="类图" title="">
+                </div>
+                <div class="image-caption">类图</div>
+            </figure><br>从上面这张图我们可以看到Activity继承了ContextWrapper类，而在ContextWrapper类中，实现了startService方法。在ContextWrapper类中，有一个成员变量mBase，它是一个ContextImpl实例，而ContextImpl类和ContextWrapper类一样继承于Context类。为什么会给出这张图呢？这对我们接下来的分析十分有用。</p>
+<h2 id="启动Service的入口"><a href="#启动Service的入口" class="headerlink" title="启动Service的入口"></a>启动Service的入口</h2><p>我们在Activity中使用<code>startService(Intent service)</code>来启动一个服务，其调用的方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ContextWrapper类</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ComponentName <span class="title">startService</span><span class="params">(Intent service)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mBase.startService(service);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到其调用了ContextWrapper的startService方法，而这个方法内部使用mBase的startService方法，我们再看回刚才的类图，可以看到，这里的mBase其实就是ContextImpl，从而我们可以得出ContextWrapper类的startService方法最终是通过调用ContextImpl类的startService方法来实现的。那接下来就来看看ContextImpl.startService()。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ComponentName <span class="title">startService</span><span class="params">(Intent service)</span> </span>&#123;</span><br><span class="line">    warnIfCallingFromSystemProcess();</span><br><span class="line">    <span class="keyword">return</span> startServiceCommon(service, mUser);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> ComponentName <span class="title">startServiceCommon</span><span class="params">(Intent service, UserHandle user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        validateServiceIntent(service);</span><br><span class="line">        service.prepareToLeaveProcess(<span class="keyword">this</span>);</span><br><span class="line">        ComponentName cn = ActivityManagerNative.getDefault().startService(</span><br><span class="line">            mMainThread.getApplicationThread(), service, service.resolveTypeIfNeeded(</span><br><span class="line">                        getContentResolver()), getOpPackageName(), user.getIdentifier());</span><br><span class="line">        <span class="keyword">if</span> (cn != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cn.getPackageName().equals(<span class="string">"!"</span>)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(</span><br><span class="line">                        <span class="string">"Not allowed to start service "</span> + service</span><br><span class="line">                        + <span class="string">" without permission "</span> + cn.getClassName());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cn.getPackageName().equals(<span class="string">"!!"</span>)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(</span><br><span class="line">                        <span class="string">"Unable to start service "</span> + service</span><br><span class="line">                        + <span class="string">": "</span> + cn.getClassName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cn;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到startService方法其实是调用了startServiceCommon，而startServiceCommon做了些什么呢？我们看到了一个熟悉的家伙：<code>ActivityManagerNative.getDefault()</code>，在<a href="http://wensibo.top/2017/07/05/Activity/" target="_blank" rel="noopener">上篇文章</a>分析Activity启动的时候我们也看过他，并且我们也知道ActivityManagerNative.getDefault()返回的就是一个ActivityManagerProxy对象，这里使用Binder机制（如果你对Binder机制不是很了解，那可以看一下我之前写的<a href="http://wensibo.top/2017/07/03/Binder/" target="_blank" rel="noopener">这篇文章</a>）将代理Proxy返回给客户端，而客户端通过将参数写入Proxy类，接着Proxy就会通过Binder去远程调用服务端的具体方法，因此，我们只是借用ActivityManagerProxy来调用ActivityManagerService的方法。所以这里其实是调用了远程ActivityManagerService的startService方法。<br>到这里我们先用流程图来看一下目前Service启动的情况<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/process1.png" alt="流程图1" title="">
+                </div>
+                <div class="image-caption">流程图1</div>
+            </figure><br>接下来我们就看看ActivityManagerService是如何实现的。</p>
+<h2 id="AMS如何进一步启动Service"><a href="#AMS如何进一步启动Service" class="headerlink" title="AMS如何进一步启动Service"></a>AMS如何进一步启动Service</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ActivityManagerService类</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ComponentName <span class="title">startService</span><span class="params">(IApplicationThread caller, Intent service,</span></span></span><br><span class="line"><span class="function"><span class="params">        String resolvedType, <span class="keyword">int</span> userId)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> callingPid = Binder.getCallingPid();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> callingUid = Binder.getCallingUid();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">long</span> origId = Binder.clearCallingIdentity();</span><br><span class="line">        ComponentName res = mServices.startServiceLocked(caller, service,</span><br><span class="line">                resolvedType, callingPid, callingUid, userId);</span><br><span class="line">        Binder.restoreCallingIdentity(origId);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到这里调用了mService的startServiceLocked方法，那mService是干嘛的呢？此处的mServices是一个ActiveServices对象，从名字上也能看出该类主要是封装了一些处于活动状态的service组件的方法的调用。那接下来就看看他的startServiceLocked是如何实现的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ComponentName <span class="title">startServiceLocked</span><span class="params">(IApplicationThread caller,</span></span></span><br><span class="line"><span class="function"><span class="params">        Intent service, String resolvedType,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> callingPid, <span class="keyword">int</span> callingUid, <span class="keyword">int</span> userId)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> callerFg;</span><br><span class="line">    <span class="keyword">if</span> (caller != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">//mAm 是ActivityManagerService.</span></span><br><span class="line">        <span class="keyword">final</span> ProcessRecord callerApp = mAm.getRecordForAppLocked(caller);</span><br><span class="line">        <span class="keyword">if</span> (callerApp == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(</span><br><span class="line">                    <span class="string">"Unable to find app for caller "</span> + caller</span><br><span class="line">                    + <span class="string">" (pid="</span> + Binder.getCallingPid()</span><br><span class="line">                    + <span class="string">") when starting service "</span> + service);</span><br><span class="line">        &#125;</span><br><span class="line">        callerFg = callerApp.setSchedGroup != Process.THREAD_GROUP_BG_NONINTERACTIVE;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        callerFg = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ServiceLookupResult res = retrieveServiceLocked(service, resolvedType, </span><br><span class="line">                     callingPid, callingUid, userId, <span class="keyword">true</span>, callerFg);</span><br><span class="line">    <span class="keyword">if</span> (res == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (res.record == <span class="keyword">null</span>) &#123;<span class="comment">//权限拒绝.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ComponentName(<span class="string">"!"</span>, res.permission != <span class="keyword">null</span></span><br><span class="line">                ? res.permission : <span class="string">"private to package"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ServiceRecord r = res.record;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    r.lastActivity = SystemClock.uptimeMillis();</span><br><span class="line">    r.startRequested = <span class="keyword">true</span>;</span><br><span class="line">    r.delayedStop = <span class="keyword">false</span>;</span><br><span class="line">    r.pendingStarts.add(<span class="keyword">new</span> ServiceRecord.StartItem(r, <span class="keyword">false</span>, r.makeNextStartId(),</span><br><span class="line">            service, neededGrants));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> ServiceMap smap = getServiceMap(r.userId);</span><br><span class="line">    <span class="keyword">boolean</span> addToStarting = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">return</span> startServiceInnerLocked(smap, service, r, callerFg, addToStarting);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码稍微有点长，但是最重要的逻辑在于最后一句的startServiceInnerLocked方法，他的内部实现是这样的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ComponentName <span class="title">startServiceInnerLocked</span><span class="params">(ServiceMap smap, Intent service,</span></span></span><br><span class="line"><span class="function"><span class="params">        ServiceRecord r, <span class="keyword">boolean</span> callerFg, <span class="keyword">boolean</span> addToStarting)</span> </span>&#123; </span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="comment">//真正开启service的地方。</span></span><br><span class="line">    String error = bringUpServiceLocked(r, service.getFlags(), callerFg, <span class="keyword">false</span>);</span><br><span class="line">    <span class="comment">//注意此处反回值是null的时候，证明没有异常.</span></span><br><span class="line">    <span class="keyword">if</span> (error != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ComponentName(<span class="string">"!!"</span>, error);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">return</span> r.name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>startServiceInnerLocked方法内部调用了bringUpServiceLocked方法来进行后续的启动。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> String <span class="title">bringUpServiceLocked</span><span class="params">(ServiceRecord r, <span class="keyword">int</span> intentFlags, <span class="keyword">boolean</span> execInFg,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">boolean</span> whileRestarting)</span> <span class="keyword">throws</span> TransactionTooLargeException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (app != <span class="keyword">null</span> &amp;&amp; app.thread != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        app.addPackage(r.appInfo.packageName, r.appInfo.versionCode, mAm.mProcessStats);</span><br><span class="line">        realStartServiceLocked(r, app, execInFg);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在bringUpServiceLocked方法中调用了realStartServiceLocked方法，在Activity的启动过程中我们也曾看过相似的方法，说明到了这里我们也快看到真正的Service启动了，接着来看realStartServiceLocked。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">realStartServiceLocked</span><span class="params">(ServiceRecord r,</span></span></span><br><span class="line"><span class="function"><span class="params">    ProcessRecord app, <span class="keyword">boolean</span> execInFg)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">boolean</span> created = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    app.forceProcessStateUpTo(ActivityManager.PROCESS_STATE_SERVICE);</span><br><span class="line">    app.thread.scheduleCreateService(r, r.serviceInfo,</span><br><span class="line">        mAm.compatibilityInfoForPackageLocked(r.serviceInfo.applicationInfo),</span><br><span class="line">        app.repProcState);</span><br><span class="line">    r.postNotification();</span><br><span class="line">    created = <span class="keyword">true</span>;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (DeadObjectException e) &#123;</span><br><span class="line">    Slog.w(TAG, <span class="string">"Application dead when creating service "</span> + r);</span><br><span class="line">    mAm.appDiedLocked(app);</span><br><span class="line">    <span class="keyword">throw</span> e;</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  <span class="comment">//这里会调用Service的onStartCommand</span></span><br><span class="line">  sendServiceArgsLocked(r, execInFg, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们先用流程图看看Service启动的逻辑。接着在下面会着重讲解上方的realStartServiceLocked方法。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/process2.png" alt="流程图2" title="">
+                </div>
+                <div class="image-caption">流程图2</div>
+            </figure></p>
+<h2 id="realStartServiceLocked"><a href="#realStartServiceLocked" class="headerlink" title="realStartServiceLocked"></a>realStartServiceLocked</h2><p>这里需要对上面的<code>app.thread</code>做一下特殊的说明。如果你已经了解了Binder的通信机制，那你应该知道一般我们的服务都是由客户端向服务端发出请求，接着服务端向客户端返回结果，这个是单向的通信，但是如果反过来服务端要向客户端发送请求的话，那么同样的，在服务端也应该持有另外一个Proxy，而在客户端也同样需要一个Manager与之对应。<br>在这里<code>app</code>是要运行 Service 的进程对应的ProcessRecord对象，代表一个应用进程，而<code>thread</code>是一个ApplicationThreadProxy对象，它运行在AMS(现在AMS就是客户端了)，而与之对应的服务端则是在应用程序中的ApplicatonThread，还是有点绕，我们用一张图来展示他们的关系。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/server2client.png" alt="两对Binder" title="">
+                </div>
+                <div class="image-caption">两对Binder</div>
+            </figure><br>相信通过上面的图示大家应该能够明白应用程序进程与系统服务进程之间的双向通信了吧！</p>
+<p>还需要再唠叨一下ApplicationThread与ApplicationThreadProxy之间的关系，我们通过这两个类的定义可以更深刻的理解他们的关系</p>
+<ul>
+<li><strong>IApplicationThread</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IApplicationThread</span> <span class="keyword">extends</span> <span class="title">IInterface</span></span></span><br></pre></td></tr></table></figure>
+<p><code>IApplicationThread</code>其实是一个IBinder类型的接口。并且在这个接口中声明了许多与Activity，Service生命周期相关的方法，那么它的实现类又是谁呢？答案就是<code>ApplicationThreadNative</code>。</p>
+<ul>
+<li><strong>ApplicationThreadNative</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationThreadNative</span> <span class="keyword">extends</span> <span class="title">Binder</span> <span class="keyword">implements</span> <span class="title">IApplicationThread</span></span></span><br></pre></td></tr></table></figure>
+<p>可以看到ApplicationThreadNative是一个抽象类，我们不能直接创建其对象，应该使用其子类，而恰好<code>ApplicationThread</code>就是其子类</p>
+<ul>
+<li><strong>ApplicationThread</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationThread</span> <span class="keyword">extends</span> <span class="title">ApplicationThreadNative</span></span></span><br></pre></td></tr></table></figure>
+<p>ApplicationThread就是真正意义上的服务端，它的父类<code>ApplicationThreadNative</code>就是将具体的操作将给它来执行的。</p>
+<ul>
+<li><strong>ApplicationThreadProxy</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationThreadProxy</span> <span class="keyword">implements</span> <span class="title">IApplicationThread</span></span></span><br></pre></td></tr></table></figure>
+<p>说了那么多，在客户端运行的ApplicationThreadProxy在哪里呢？其实如果理解了Binder机制，那么我们应该知道他就是ApplicationThreadNative的内部类，客户端(AMS)就是通过它与service所在的进程进行通信的。因此我们接着要看的当然是ApplicationThread的scheduleCreateService了。</p>
+<h2 id="ApplicationThread-scheduleCreateService"><a href="#ApplicationThread-scheduleCreateService" class="headerlink" title="ApplicationThread.scheduleCreateService"></a>ApplicationThread.scheduleCreateService</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">scheduleCreateService</span><span class="params">(IBinder token,</span></span></span><br><span class="line"><span class="function"><span class="params">                ServiceInfo info, CompatibilityInfo compatInfo, <span class="keyword">int</span> processState)</span> </span>&#123;</span><br><span class="line">            updateProcessState(processState, <span class="keyword">false</span>);</span><br><span class="line">            CreateServiceData s = <span class="keyword">new</span> CreateServiceData();</span><br><span class="line">            s.token = token;</span><br><span class="line">            s.info = info;</span><br><span class="line">            s.compatInfo = compatInfo;</span><br><span class="line"></span><br><span class="line">            sendMessage(H.CREATE_SERVICE, s);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到在scheduleCreateService方法中发送了一个message，其消息类型为<code>CREATE_SERVICE</code>，它是在H类中定义的一个常量，而H类其实就是继承于Handler的，它专门用来处理发送过来的请求。接下来就来看看它是如何处理创建service这个消息的。</p>
+<h2 id="H-handleMessage"><a href="#H-handleMessage" class="headerlink" title="H.handleMessage"></a>H.handleMessage</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">case</span> CREATE_SERVICE:</span><br><span class="line">            handleCreateService((CreateServiceData)msg.obj); <span class="comment">//【见流程15】</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> BIND_SERVICE:</span><br><span class="line">            handleBindService((BindServiceData)msg.obj);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> UNBIND_SERVICE:</span><br><span class="line">            handleUnbindService((BindServiceData)msg.obj);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到handleMessage处理了很多类型的消息，包括service的创建、绑定、解绑、销毁等等，我们直接看创建的逻辑，也就是handleCreateService方法。不过有一个问题，那就是Handler创建之前必须要创建Looper，否则会报错，那么Looper是在哪里创建的呢？答案就是ActivityThread的main方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="comment">//在主线程创建Looper</span></span><br><span class="line">        Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">        ActivityThread thread = <span class="keyword">new</span> ActivityThread();</span><br><span class="line">        thread.attach(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (sMainThreadHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">            sMainThreadHandler = thread.getHandler();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        AsyncTask.init();</span><br><span class="line">        Looper.loop();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Main thread loop unexpectedly exited"</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到Looper就是在这里创建的，而Handler也是在Service进程中的主线程，也就是说它处理消息也是在主线程，那么Service的创建自然也就是在主线程中。可是ActivityThread是什么鬼呢？其实刚才的ApplicationThread就是它的内部类。<br>接下来继续看Handler如何处理消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleCreateService</span><span class="params">(CreateServiceData data)</span> </span>&#123;</span><br><span class="line">    unscheduleGcIdler();</span><br><span class="line">    LoadedApk packageInfo = getPackageInfoNoCheck(data.info.applicationInfo, data.compatInfo);</span><br><span class="line"></span><br><span class="line">    java.lang.ClassLoader cl = packageInfo.getClassLoader();</span><br><span class="line">    <span class="comment">//通过反射创建目标服务对象</span></span><br><span class="line">    Service service = (Service) cl.loadClass(data.info.name).newInstance();</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//创建ContextImpl对象</span></span><br><span class="line">        ContextImpl context = ContextImpl.createAppContext(<span class="keyword">this</span>, packageInfo);</span><br><span class="line">        context.setOuterContext(service);</span><br><span class="line">        <span class="comment">//创建Application对象</span></span><br><span class="line">        Application app = packageInfo.makeApplication(<span class="keyword">false</span>, mInstrumentation);</span><br><span class="line">        service.attach(context, <span class="keyword">this</span>, data.info.name, data.token, app,</span><br><span class="line">                ActivityManagerNative.getDefault());</span><br><span class="line">        <span class="comment">//调用服务onCreate()方法</span></span><br><span class="line">        service.onCreate();</span><br><span class="line">        mServices.put(data.token, service);</span><br><span class="line">        <span class="comment">//调用服务创建完成</span></span><br><span class="line">        ActivityManagerNative.getDefault().serviceDoneExecuting(</span><br><span class="line">                data.token, SERVICE_DONE_EXECUTING_ANON, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里Handler通过反射机制拿到Service对象，于是就调用了service的onCreate方法，所以Service就算是启动了。我们通过层层的寻找总算是见到了onCreate的庐山真面目。<br>我们依旧用流程图来展示一下Service启动的全过程。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2017-7-15Service/process3.png" alt="流程图3" title="">
+                </div>
+                <div class="image-caption">流程图3</div>
+            </figure></p>
+<h2 id="onStartCommand"><a href="#onStartCommand" class="headerlink" title="onStartCommand"></a>onStartCommand</h2><p>可是还有另外一个重要的方法<code>onStartCommand</code>呢？不急，我们刚才在<code>sendServiceArgsLocked</code>方法中还有另外一个<code>sendServiceArgsLocked</code>方法没有讲到，他就是onStartCommand的入口，我们看看他是如何实现的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">sendServiceArgsLocked</span><span class="params">(ServiceRecord r, <span class="keyword">boolean</span> execInFg,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">boolean</span> oomAdjusted)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> N = r.pendingStarts.size();</span><br><span class="line">        <span class="keyword">if</span> (N == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (r.pendingStarts.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//与调用scheduleCreateService方法一样，远程调用ApplicationThread的scheduleServiceArgs方法</span></span><br><span class="line">                r.app.thread.scheduleServiceArgs(r, si.taskRemoved, si.id, flags, si.intent);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                <span class="comment">// Remote process gone...  we'll let the normal cleanup take</span></span><br><span class="line">                <span class="comment">// care of this.</span></span><br><span class="line">                <span class="keyword">if</span> (DEBUG_SERVICE) Slog.v(TAG, <span class="string">"Crashed while scheduling start: "</span> + r);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                Slog.w(TAG, <span class="string">"Unexpected exception"</span>, e);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们看到这里依旧调用了远程服务端ApplicationThread的方法来执行后面的逻辑，其实通过上面分析onCreate的逻辑大家应该能够知道调用onStartCommand也是大同小异的，具体的调用逻辑就交给大家去分析啦！</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>到这里呢，我们就把Service的启动流程完整的讲解了一遍，希望大家通过这篇文章能够对Service更加的了解，毕竟四大组件中Service的地位还是举足轻重的，并且在面试中也会经常被问到，希望大家逢问必会O(∩_∩)O哈哈~</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.884Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/07/16/service/" target="_blank" rel="external">http://www.wensibo.top/2017/07/16/service/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android源码解析/">Android源码解析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service/">Service</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/07/16/service/&title=《从源码的角度看Service是如何启动的》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/07/16/service/&title=《从源码的角度看Service是如何启动的》 — 温斯渤&source=七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/07/16/service/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从源码的角度看Service是如何启动的》 — 温斯渤&url=http://www.wensibo.top/2017/07/16/service/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/07/16/service/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/08/31/trainee/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">实习总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/05/Activity/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">从源码的角度看Activity是如何启动的</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="service"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/07/16/service/&title=《从源码的角度看Service是如何启动的》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/07/16/service/&title=《从源码的角度看Service是如何启动的》 — 温斯渤&source=七月中旬了，大家的实习有着落了吗？秋招又准备的怎么样了呢？我依旧在准备着秋招，每当想到自己以应届生的身份找着工作而工作却不一定要你的时候，难免也会有点失落..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/07/16/service/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从源码的角度看Service是如何启动的》 — 温斯渤&url=http://www.wensibo.top/2017/07/16/service/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/07/16/service/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvklEQVR42u3aQYrDQAwEwPz/01nY08Ji05JsxYHyKZAwU5ODkFvzesXP+/c5+vz3+f+bo9XOfzN6cHFxx9z36XNO7B0vOfbhLri4uIvcZMuk9CRb5oUPFxf3+dxoudNvk6KGi4v7XdzzBqhX7HBxcZ/MzUHVA+RF7eJ3NVxc3AF3HpjOP6/mu7i4uIOpxDza6MWjh7vj4uKucJNt8jD07pYIFxd3n1stKNUClzc0o3c1XFzcG7iTEUvS7sxbJVxc3B1uXkp6I9LqiKVc/nBxcW/gJsv1rlnk45PCOri4uIvcXtA5j1eS0GR02wsXF7fIza9DVUPSvGCVOy9cXNybub2ikxemKij5U3BxcXe4vdJTpfeKJi4u7j63es0iDzuqUUi0Pi4u7go3wSUvOb02qDmaxcXFvZk7b256GW01dsHFxd3nXtua5LFpnovi4uLuc3sb58fIC1/5vhguLu4N3PlMszpWmYQpuLi4m9x5LDIfvhZeonBxcRe5SaHJw81oKHJt+4KLi/shbrVjyq9W5Cvg4uI+n1sNUguDE1xc3Adwq4OQScCadC8XxCK4uLgD7vyNIz9YMs7BxcX9KPcHqx/dRMWNIaMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/03/09/Android Studio快捷键总结/">
+    
+    
+    <title>Android Studio快捷键总结 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android Studio">
+    <meta name="description" content="Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2.2.3，之篇文章我和大家一起分享在使用Android Studio过程中经常会用到的以及许多能够提高效率但是我个人不经常用的快捷键，需要注意的是我只介绍Windows操作环境下的快捷键，理论上来说Windows与Linux用户在快捷键上是相同的，">
+<meta name="keywords" content="Android Studio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio快捷键总结">
+<meta property="og:url" content="http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2.2.3，之篇文章我和大家一起分享在使用Android Studio过程中经常会用到的以及许多能够提高效率但是我个人不经常用的快捷键，需要注意的是我只介绍Windows操作环境下的快捷键，理论上来说Windows与Linux用户在快捷键上是相同的，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Studio快捷键总结">
+<meta name="twitter:description" content="Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2.2.3，之篇文章我和大家一起分享在使用Android Studio过程中经常会用到的以及许多能够提高效率但是我个人不经常用的快捷键，需要注意的是我只介绍Windows操作环境下的快捷键，理论上来说Windows与Linux用户在快捷键上是相同的，">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Studio快捷键总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Studio快捷键总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-09T05:30:25.000Z" itemprop="datePublished" class="page-time">
+  2017-03-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Windows系统下Android-Studio快捷键总结"><span class="post-toc-number">1.</span> <span class="post-toc-text">Windows系统下Android Studio快捷键总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android Studio快捷键总结" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Studio快捷键总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-03-09 13:30:25" datetime="2017-03-09T05:30:25.000Z" itemprop="datePublished">2017-03-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2.2.3，之篇文章我和大家一起分享在使用Android Studio过程中经常会用到的以及许多能够提高效率但是我个人不经常用的快捷键，需要注意的是我只介绍Windows操作环境下的快捷键，理论上来说Windows与Linux用户在快捷键上是相同的，但是Mac用户就会比较特殊，毕竟有钱人都比较特殊对吧😜，我一个穷屌丝就暂时下不了微软大哥的船了。对了，我还会用粗体的形式标出经常会使用到的快捷键，很多时候你会觉得背这些快捷键确实是一件很烦人的事情，但是最好是实践出真知，不要硬性背，或许能够有更好的效果。<br><a id="more"></a></p>
+<h1 id="Windows系统下Android-Studio快捷键总结"><a href="#Windows系统下Android-Studio快捷键总结" class="headerlink" title="Windows系统下Android Studio快捷键总结"></a>Windows系统下Android Studio快捷键总结</h1><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键,加粗的是经常会使用的</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Ctrl+E</strong></td>
+<td style="text-align:left"><strong>打开最近操作的文件</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Z</strong></td>
+<td style="text-align:left"><strong>撤销</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Shift+Z</strong></td>
+<td style="text-align:left"><strong>重做(在Eclipse中使用的是Ctrl+Y)</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctr+Y</strong></td>
+<td style="text-align:left"><strong>删除该行(Eclipse中的删除该行是Ctrl+D)</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+D</strong></td>
+<td style="text-align:left"><strong>向下复制该行</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">F11</td>
+<td style="text-align:left">将鼠标停留的所在行加入书签Bookmarks中，可以使用快捷键Alt+2查看所有的书签以及Favorites和断点BreakPoints</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+向左/右箭头</strong></td>
+<td style="text-align:left"><strong>遍历你的导航操作(如光标移动、选项卡切换和文件打开)</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Alt+左右箭头</strong></td>
+<td style="text-align:left"><strong>可以在所有已经打开的文件中左右切换</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Alt+数字1、2、3、4、5、6···</strong></td>
+<td style="text-align:left"><strong>可以打开相对应的工具按钮(分布在Android Studio的左、下、右边边，并且其中一些按钮还有一个对应的小数字)，使用Alt+对应的数字就能打开或者关闭这些按钮了</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Shift+V</strong></td>
+<td style="text-align:left"><strong>复制历史记录</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+Shift+C</td>
+<td style="text-align:left">复制方法、变量、或类的逻辑引用，当把此引用粘贴到另一个源文件中时能够自动导入所需的限定符和导入语句</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Shift+A</strong></td>
+<td style="text-align:left"><strong>弹出的搜索框中输入你想搜索的内容(Android Studio的具备的特性、功能)，系统会给出结果，这货很有用😊</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Alt+F1</td>
+<td style="text-align:left">出现Select In 对话框，可以进行一些便捷的操作，虽然好用但是还不如用鼠标</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+N</strong></td>
+<td style="text-align:left"><strong>在弹出的对话框中输入类的名字可以直接打开该类，超赞😊</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Shift+N</td>
+<td style="text-align:left">在弹出的对话框中输入文件的名字可以直接打开该文件，比起上一个能打开的文件更多</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+G</strong></td>
+<td style="text-align:left"><strong>可以输入想要到达的行数或者行数:列数，文件很长的时候很有用</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+Home</strong></td>
+<td style="text-align:left"><strong>可以打开与当前文件相关联的文件，例如打开的MainActivity.java，那么他的相关文件就会是activity_main.xml ,你的同事绝对不知道这一点😜</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+H</strong></td>
+<td style="text-align:left"><strong>可以查看当前类(只有在java文件中有效)的继承关系，你会发现不出意外的话Alt+8 与其效果是同样的</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+数字加号</td>
+<td style="text-align:left">展开光标所在处已折叠的代码块</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+数字减号</td>
+<td style="text-align:left">折叠光标所在处已展开的代码块</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Shift+数字加号</td>
+<td style="text-align:left">展开所有已折叠的代码块</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Shift+数字减号</td>
+<td style="text-align:left">折叠所有已展开的代码块</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+空格</td>
+<td style="text-align:left">代码提示，但是Windows系统下好像是输入法的切换，如果你还是想使用这个快捷键，要么将其改为Ctrl+3，要么就修改注册表咯。<a href="http://blog.csdn.net/u014284252/article/details/41854969" target="_blank" rel="noopener">方法1</a>，<a href="http://blog.csdn.net/u014284252/article/details/41854969" target="_blank" rel="noopener">方法2</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Alt+Enter</strong></td>
+<td style="text-align:left"><strong>绝对是用的最多的，可以自动补全当行并且将光标跳到下一行，当新引入一个类但是还没有导入的时候，只需要对着类的名字使用该快捷键就可以自动导入了</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Shift+Enter</strong></td>
+<td style="text-align:left"><strong>直接从当前行跳转到下一行，不用将光标置于当前行末尾然后再按回车，十分方便</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Alt+/</td>
+<td style="text-align:left">同样也是代码提示，不过这个提示只是提供在文件中使用过的单词，向上循环</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt+Shift+/</td>
+<td style="text-align:left">还是代码提示，提示只提供在文件中使用过的单词，向下循环</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+/</strong></td>
+<td style="text-align:left"><strong>代码注释，适用于单行，也可以选择多行，用得最多的了，不用我强调的啦</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Shift+/</strong></td>
+<td style="text-align:left"><strong>块注释</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Alt+Insert</strong></td>
+<td style="text-align:left"><strong>呼出Generate命令，强烈安利😎</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+J</strong></td>
+<td style="text-align:left"><strong>插入代码模板，或者如果你记得代码模板的名称，例如fbc，接着是用Ctrl+J，则可以直接插入() findViewById(R.id.)</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+J</strong></td>
+<td style="text-align:left"><strong>当选择一个单词之后使用该快捷键可以直接呼出模板，选择其中你需要的就行了</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Shift+向上箭头/向下箭头</td>
+<td style="text-align:left">在作用域的范围内上/下移一条或多条语句，如果移动的是代码块，则整个代码块将会一起移动到下一个语法正确的位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt+Shift+向上箭头/向下箭头</td>
+<td style="text-align:left">将一条或多条语句向上/下移动而不考虑作用范围以及语法是否正确</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+I</strong></td>
+<td style="text-align:left"><strong>根据Code Style 中设置的方案，对当前鼠标所在的行或选中的多行进行缩进，保持代码美观很有效</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+O</strong></td>
+<td style="text-align:left"><strong>组织导入语句</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+L</td>
+<td style="text-align:left">对文件的代码格式进行重新的整理</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+T</strong></td>
+<td style="text-align:left"><strong>选中需要包裹的语句，使用该快捷键可以快速的将其被try catch，if/else，for或者for each 等包裹，用熟了会很方便</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Shift+Delete</strong></td>
+<td style="text-align:left"><strong>选中不想被包裹的语句，使用改快捷键可以删除try catch，if/else，for或者for each等代码块</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+Shift+T</strong></td>
+<td style="text-align:left"><strong>呼出Refactor This对话框，可以做很多有关重构的事情，四个快捷键可以记住成CAST</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Shift+F6</strong></td>
+<td style="text-align:left"><strong>重命名该文件</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+F6</td>
+<td style="text-align:left">修改方法名以及参数</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Shift+F6</td>
+<td style="text-align:left">类型迁移</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>F6</strong></td>
+<td style="text-align:left"><strong>移动文件或者移动变量到另一个文件</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>F5</strong></td>
+<td style="text-align:left"><strong>复制文件或者复制变量到另一个文件</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Home</strong></td>
+<td style="text-align:left"><strong>将光标置于当前行的首个字母前</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>End</strong></td>
+<td style="text-align:left"><strong>将光标置于当前行的末尾</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+V</td>
+<td style="text-align:left">抽取变量(variable)</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+C</td>
+<td style="text-align:left">抽取常量(constant)</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+F</td>
+<td style="text-align:left">抽取字段(filed)</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+P</td>
+<td style="text-align:left">抽取参数(parameter)</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl+Alt+M</td>
+<td style="text-align:left">抽取方法(Method)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+K</strong></td>
+<td style="text-align:left"><strong>Git提交修改</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Shift+F10</strong></td>
+<td style="text-align:left"><strong>运行项目</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+S</strong></td>
+<td style="text-align:left"><strong>设置</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Ctrl+Alt+Shift+S</strong></td>
+<td style="text-align:left"><strong>项目结构设置</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>如果你有其他经常使用的快捷键而我并没有介绍到的，欢迎你留言补充，大家一起共同进步！</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.548Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/03/09/Android Studio快捷键总结/" target="_blank" rel="external">http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&title=《Android Studio快捷键总结》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&title=《Android Studio快捷键总结》 — 温斯渤&source=Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2...." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Studio快捷键总结》 — 温斯渤&url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/12/GitOnAS/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">或许是介绍Android Studio使用Git最详细的文章</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/08/写一个小便签/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">写一个小便签</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="Android Studio快捷键总结"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&title=《Android Studio快捷键总结》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&title=《Android Studio快捷键总结》 — 温斯渤&source=Android Studio2014年已经正式发布了，但是前几天才更新到2.3的版本，据说很多人升级了之后出现很多不可预见的bug，我还是乖乖守好我的2...." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Studio快捷键总结》 — 温斯渤&url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/03/09/Android Studio快捷键总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3a0W4aQQwF0Pz/T9PXSGnhXnuGovbsEyILM2eRxo7tr6/4eny7vr/z86+ze/LPft248PDw8BZbzzfxc7Hnm3j+qVP7+c3qeHh4eNd4f9pQckwn4FkASF6/sODh4eF9AO957prAEmqe0OPh4eH9e7xoE0/DyUcHBjw8vP+Y1ya+LSMvYSRliyu1Fjw8PLyYl3eRPuf1lf4eHh4e3rqrfqMZlh/fj/WFh4eHd4PXFhqS9DdPmm8MXeHh4eHd5rXb2pcVZmMKs3Xx8PDwbvBm7fnnj6O9M0/ci1i3mT7Aw8PDC3jJUZ6n1Ekinu+hDT8vJiPw8PDw1rz2S/PBqaR9lZeDj3Xt8PDw8C6MCxyIM6PDPU+U2xIwHh4e3lle1Hpfj161pYfZuNWL0i0eHh7eIV7eWJq1/5OHmKTds0IJHh4e3g1e+9WzUkJ7xLehq2h94eHh4b2F1w4EtOWJ/P02ccfDw8O7zdtsND++ZyWGVa0FDw8P7wKvHYcqjubgzs1+oqErPDw8vKO8WVtrNliQvJMXcItAgoeHh3eN1xYCcsamvroJP3h4eHj3eLPSQFKAaAcU8pZYMXSFh4eHd5Q3nNJaFA72dxbBBg8PD+8CLznu9+2otvHfjiZEyTQeHh7eUV6bOt9rjM0eVv0D4OHh4a15s+HRWQmjbYYlYeDFL4aHh4f3Rt6+6DAr0c7GEYqhKzw8PLyjvH3zqU21kzGCWTEXDw8P7wbvUV6bssUsgU7CxoFJBzw8PLwujy0O3Hz5WdiYlYDx8PDw3s9r2115UEm2nqfUw7EGPDw8vGu8tsQw28qsYXal1oKHh4f3V3n5kT0LBrPCMR4eHt6n8TbUFl+PC+Dh4eG9hZcvkyzQPo5NSh0FBjw8PLyjvNk/+e2R3YaQU2NYeHh4eEd5vwD8wuQpR5Qc6wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

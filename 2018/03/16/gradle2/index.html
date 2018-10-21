@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2018/03/16/gradle2/">
+    
+    
+    <title>一口一口吃掉Gradle（二）：深入学习Groovy | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Gradle">
+    <meta name="description" content="上一篇文章我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。需要说明的是这篇文章大部分内容是翻译自Groovy的官方文档，不过中间也有些许内容是我自己学习过程中总结整理的，如果大家英语好的话建议直接看英文文档。">
+<meta name="keywords" content="Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一口一口吃掉Gradle（二）：深入学习Groovy">
+<meta property="og:url" content="http://www.wensibo.top/2018/03/16/gradle2/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="上一篇文章我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。需要说明的是这篇文章大部分内容是翻译自Groovy的官方文档，不过中间也有些许内容是我自己学习过程中总结整理的，如果大家英语好的话建议直接看英文文档。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一口一口吃掉Gradle（二）：深入学习Groovy">
+<meta name="twitter:description" content="上一篇文章我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。需要说明的是这篇文章大部分内容是翻译自Groovy的官方文档，不过中间也有些许内容是我自己学习过程中总结整理的，如果大家英语好的话建议直接看英文文档。">
+<meta name="twitter:image" content="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一口一口吃掉Gradle（二）：深入学习Groovy</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一口一口吃掉Gradle（二）：深入学习Groovy</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-16T08:32:25.000Z" itemprop="datePublished" class="page-time">
+  2018-03-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Groovy是一门什么语言"><span class="post-toc-number">1.</span> <span class="post-toc-text">Groovy是一门什么语言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#搭建Groovy开发环境"><span class="post-toc-number">2.</span> <span class="post-toc-text">搭建Groovy开发环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux环境下"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Linux环境下</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Windows环境下"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Windows环境下</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Groovy自带编辑器"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Groovy自带编辑器</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#注释"><span class="post-toc-number">3.</span> <span class="post-toc-text">注释</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#关键字"><span class="post-toc-number">4.</span> <span class="post-toc-text">关键字</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#标识符"><span class="post-toc-number">5.</span> <span class="post-toc-text">标识符</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#普通标识符"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">普通标识符</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用标识符"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">引用标识符</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#字符串"><span class="post-toc-number">6.</span> <span class="post-toc-text">字符串</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单引号字符串"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">单引号字符串</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三单引号字符串"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">三单引号字符串</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#双引号字符串"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">双引号字符串</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他字符串"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">其他字符串</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#列表List"><span class="post-toc-number">7.</span> <span class="post-toc-text">列表List</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数组"><span class="post-toc-number">8.</span> <span class="post-toc-text">数组</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#映射Map"><span class="post-toc-number">9.</span> <span class="post-toc-text">映射Map</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#闭包"><span class="post-toc-number">10.</span> <span class="post-toc-text">闭包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#闭包的定义"><span class="post-toc-number">10.1.</span> <span class="post-toc-text">闭包的定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#闭包的调用"><span class="post-toc-number">10.2.</span> <span class="post-toc-text">闭包的调用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#闭包的可变参数"><span class="post-toc-number">10.3.</span> <span class="post-toc-text">闭包的可变参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#在GString中使用闭包"><span class="post-toc-number">10.4.</span> <span class="post-toc-text">在GString中使用闭包</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#方法"><span class="post-toc-number">11.</span> <span class="post-toc-text">方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法的声明"><span class="post-toc-number">11.1.</span> <span class="post-toc-text">方法的声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可变参数的方法"><span class="post-toc-number">11.2.</span> <span class="post-toc-text">可变参数的方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#变量"><span class="post-toc-number">12.</span> <span class="post-toc-text">变量</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量-Field"><span class="post-toc-number">12.1.</span> <span class="post-toc-text">变量(Field)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#属性-Property"><span class="post-toc-number">12.2.</span> <span class="post-toc-text">属性(Property)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量的作用域"><span class="post-toc-number">12.3.</span> <span class="post-toc-text">变量的作用域</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#类"><span class="post-toc-number">13.</span> <span class="post-toc-text">类</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-gradle2" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一口一口吃掉Gradle（二）：深入学习Groovy</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-16 16:32:25" datetime="2018-03-16T08:32:25.000Z" itemprop="datePublished">2018-03-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Gradle/">一口一口吃掉Gradle</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="http://wensibo.top/2018/02/07/gradle1/" target="_blank" rel="noopener">上一篇文章</a>我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。<br>需要说明的是这篇文章大部分内容是翻译自<a href="http://www.groovy-lang.org/syntax.html" target="_blank" rel="noopener">Groovy的官方文档</a>，不过中间也有些许内容是我自己学习过程中总结整理的，如果大家英语好的话建议直接看英文文档。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.top/file/img/2018-02-07Gradle1/gradle_logo.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><a id="more"></a> </p>
+<p><strong>这是一个系列的Gradle文章：</strong></p>
+<ul>
+<li><a href="http://wensibo.top/2018/02/07/gradle1/" target="_blank" rel="noopener">一口一口吃掉Gradle（一）：初识Gradle</a></li>
+<li><a href="http://wensibo.top/2018/03/16/gradle2/" target="_blank" rel="noopener">一口一口吃掉Gradle（二）：深入学习Groovy</a></li>
+</ul>
+<h1 id="Groovy是一门什么语言"><a href="#Groovy是一门什么语言" class="headerlink" title="Groovy是一门什么语言"></a>Groovy是一门什么语言</h1><p>在Groovy的官网上有对Groovy的一段描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Groovy tries to be as natural as possible for Java developers. We’ve tried to follow the principle of least surprise when designing Groovy, particularly for developers learning Groovy who’ve come from a Java background.</span><br></pre></td></tr></table></figure></p>
+<p>大意是说Groovy就是为了JAVA程序员“量身定做”的，既然这么说的话，我们学习Groovy应该是比较容易的。当然事实也是如此，不过Groovy作为一门脚本语言，也有它与JAVA的区别之处，例如在JAVA中我们需要每一行都要分号作为结束标志，但是Groovy却可以省略；我们调用JAVA中的方法时需要使用括号，而Groovy中也可以省略。当然还有很多特点使得Groovy相比JAVA来说都是一门更简洁的语言。接下来我们就来了解一番。</p>
+<h1 id="搭建Groovy开发环境"><a href="#搭建Groovy开发环境" class="headerlink" title="搭建Groovy开发环境"></a>搭建Groovy开发环境</h1><p>尽管Gradle使用了Groovy作为开发语言，但是确切地说Gradle使用的是基于Groovy的领域特定语言(DSL)，也就是说Gradle只是使用了Groovy中的一些语法。所以当我们来了解Groovy时最好还是搭建Groovy的开发环境。</p>
+<h2 id="Linux环境下"><a href="#Linux环境下" class="headerlink" title="Linux环境下"></a>Linux环境下</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># 到sdkman官网下载对应的安装shell script，然后调用bash解析器去执行</span><br><span class="line"><span class="meta">#</span># 在这个过程中最好关闭代理</span><br><span class="line">curl -s get.sdkman.io | bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 继续执行下面的命令</span><br><span class="line">source ~/.sdkman/bin/sdkman-init.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 安装Groovy</span><br><span class="line">sdk install groovy</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 查看Groovy版本</span><br><span class="line">groovy -version</span><br><span class="line">Groovy Version: 2.4.14 JVM: 1.8.0_131 Vendor: Oracle Corporation OS: Linux</span><br></pre></td></tr></table></figure>
+<p>如果能够成功显示如上的Groovy版本则说明安装成功。</p>
+<h2 id="Windows环境下"><a href="#Windows环境下" class="headerlink" title="Windows环境下"></a>Windows环境下</h2><p>点击这个<a href="http://www.groovy-lang.org/download.html#otherways" target="_blank" rel="noopener">连接</a>到Groovy官网下载所需的版本，之后安装并设置环境变量即可。以上步骤完成之后同样在命令行中测试<code>groovy -version</code>，看看能够正确显示Groovy的版本号。</p>
+<h2 id="Groovy自带编辑器"><a href="#Groovy自带编辑器" class="headerlink" title="Groovy自带编辑器"></a>Groovy自带编辑器</h2><p>使用终端或者命令行执行<code>groovyConsole</code>等待一下即可打开Groovy自带的编辑器，我们可以直接在上面写程序，之后使用快捷键<code>Ctrl+R</code>可以执行代码查看执行结果；使用快捷键<code>Ctrl+W</code>可以清空控制台的输出信息。另外需要了解的一点就是Groovy的代码需要保存在.groovy文件中。</p>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>Groovy与JAVA有很多的相同点，在注释上尤为明显，举例如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单行注释</span></span><br><span class="line">println <span class="string">"single line comments"</span> <span class="comment">//注释可以位于语句后方</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 多行</span></span><br><span class="line"><span class="comment">   注释 */</span></span><br><span class="line">println <span class="string">"multiline comments"</span> <span class="comment">/*多行注释还可以</span></span><br><span class="line"><span class="comment">								这样写*/</span></span><br><span class="line">println <span class="number">1</span> <span class="comment">/*还可以写在语句中间*/</span> +<span class="number">2</span> <span class="comment">/*没错，这样写也是可以的*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//文档注释与JAVA类似</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 类说明</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    <span class="comment">/** 变量说明 */</span></span><br><span class="line">    String name</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 说明方法的含义</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> 参数含义</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回值含义</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String greet(String otherPerson) &#123;</span><br><span class="line">       <span class="string">"Hello $&#123;otherPerson&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//特殊的单行注释，这种注释通常是用来给UNIX系统声明允许脚本运行的类型的</span></span><br><span class="line"><span class="meta">#!/usr/bin/env groovy</span></span><br><span class="line">println <span class="string">"Hello from the shebang line"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">as</td>
+<td style="text-align:left">assert</td>
+<td style="text-align:left">break</td>
+<td style="text-align:left">case</td>
+</tr>
+<tr>
+<td style="text-align:left">catch</td>
+<td style="text-align:left">class</td>
+<td style="text-align:left">const</td>
+<td style="text-align:left">continue</td>
+</tr>
+<tr>
+<td style="text-align:left">def</td>
+<td style="text-align:left">default</td>
+<td style="text-align:left">do</td>
+<td style="text-align:left">else</td>
+</tr>
+<tr>
+<td style="text-align:left">enum</td>
+<td style="text-align:left">extends</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">finally</td>
+</tr>
+<tr>
+<td style="text-align:left">for</td>
+<td style="text-align:left">goto</td>
+<td style="text-align:left">if</td>
+<td style="text-align:left">implements</td>
+</tr>
+<tr>
+<td style="text-align:left">import</td>
+<td style="text-align:left">in</td>
+<td style="text-align:left">instanceof</td>
+<td style="text-align:left">interface</td>
+</tr>
+<tr>
+<td style="text-align:left">new</td>
+<td style="text-align:left">null</td>
+<td style="text-align:left">package</td>
+<td style="text-align:left">return</td>
+</tr>
+<tr>
+<td style="text-align:left">super</td>
+<td style="text-align:left">switch</td>
+<td style="text-align:left">this</td>
+<td style="text-align:left">throw</td>
+</tr>
+<tr>
+<td style="text-align:left">throws</td>
+<td style="text-align:left">trait</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">try</td>
+</tr>
+<tr>
+<td style="text-align:left">while</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="普通标识符"><a href="#普通标识符" class="headerlink" title="普通标识符"></a>普通标识符</h2><p>标识符以字母，美元符号或下划线开始。不能以一个数字开始。<br>合法标识符如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> name</span><br><span class="line"><span class="keyword">def</span> item3</span><br><span class="line"><span class="keyword">def</span> with_underscore</span><br><span class="line"><span class="keyword">def</span> $dollarStart</span><br></pre></td></tr></table></figure></p>
+<p>下面是一些非法标识符：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="number">3</span>tier</span><br><span class="line"><span class="keyword">def</span> a+b</span><br><span class="line">def a#b</span><br></pre></td></tr></table></figure></p>
+<p>特殊一点的就是关键字在.之后的都可以作为合法的标识符：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo.<span class="keyword">as</span></span><br><span class="line">foo.<span class="keyword">assert</span></span><br><span class="line">foo.<span class="keyword">break</span></span><br><span class="line">foo.<span class="keyword">case</span></span><br><span class="line">foo.<span class="keyword">catch</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="引用标识符"><a href="#引用标识符" class="headerlink" title="引用标识符"></a>引用标识符</h2><p>引用标识符是指出现在<code>.</code>表达式的后面，例如person.”name”中的name，一般的用法如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> map = [:]</span><br><span class="line"></span><br><span class="line">map.<span class="string">"an identifier with a space and double quotes"</span> = <span class="string">"ALLOWED"</span>		<span class="comment">// 向map添加一个键值对</span></span><br><span class="line">map.<span class="string">'with-dash-signs-and-single-quotes'</span> = <span class="string">"ALLOWED"</span>			<span class="comment">// 向map再添加一个键值对</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> map.<span class="string">"an identifier with a space and double quotes"</span> == <span class="string">"ALLOWED"</span></span><br><span class="line"><span class="keyword">assert</span> map.<span class="string">'with-dash-signs-and-single-quotes'</span> == <span class="string">"ALLOWED"</span></span><br></pre></td></tr></table></figure></p>
+<p>另外由于Groovy支持多种字符串表达方式(接下来会讲到)，所以以下的表达方式也都是允许的：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">map.<span class="string">'single quote'</span></span><br><span class="line">map.<span class="string">"double quote"</span></span><br><span class="line">map.<span class="string">'''triple single quote'''</span></span><br><span class="line">map.<span class="string">"""triple double quote"""</span></span><br><span class="line">map.<span class="regexp">/slashy string/</span></span><br><span class="line">map.<span class="string">$/dollar slashy string/$</span></span><br></pre></td></tr></table></figure></p>
+<p>此外，由于Groovy提供了自己的String，称之为GString，他是一种有插值的字符串(即可以在字符串中引用其它变量)，所以以下的这些也算是合法的标识符：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> firstname = <span class="string">"Homer"</span></span><br><span class="line">map.<span class="string">"Simpson-$&#123;firstname&#125;"</span> = <span class="string">"Homer Simpson"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> map.<span class="string">'Simpson-Homer'</span> == <span class="string">"Homer Simpson"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><p>Groovy中的字符串有两大类，第一种与JAVA的一样，即java.lang.String，另一种则是Groovy独有的：groovy.lang.GString，后者的作用就是可以在字符串中引用其他变量(即插值)。</p>
+<h2 id="单引号字符串"><a href="#单引号字符串" class="headerlink" title="单引号字符串"></a>单引号字符串</h2><p>单引号字符串是普通的java.lang.String，不支持插值。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'a single quoted string'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="三单引号字符串"><a href="#三单引号字符串" class="headerlink" title="三单引号字符串"></a>三单引号字符串</h2><p>三单引号字符串同样也是普通的java.lang.String，也是不支持插值。<br>三单引号字符串是可以跨行和保留所有的缩进：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> startingAndEndingWithANewline = <span class="string">'''</span></span><br><span class="line"><span class="string">		line one</span></span><br><span class="line"><span class="string">	line two</span></span><br><span class="line"><span class="string">line three</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">assert</span> startingAndEndingWithANewline.startsWith(<span class="string">'\n'</span>)</span><br><span class="line"><span class="keyword">assert</span> startingAndEndingWithANewline.endsWith(<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>上述的字符串中第一行与最后一行都是换行，可见三单引号字符串是保留了所有的换行，而实际上，Groovy将其中的换行解释为<code>\n</code>，将所有的空白字符则是保留原样。<br>如果我们想要转义字符的话只要在需要转义的字符前方添加反斜杠<code>\</code>，例如我们想要去掉上方字符串的前后两个换行，则可以这样处理<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> startingAndEndingWithoutANewline = <span class="string">'''\</span></span><br><span class="line"><span class="string">		line one</span></span><br><span class="line"><span class="string">	line two</span></span><br><span class="line"><span class="string">line three\</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">assert</span> !startingAndEndingWithoutANewline.startsWith(<span class="string">'\n'</span>)</span><br><span class="line"><span class="keyword">assert</span> !startingAndEndingWithoutANewline.endsWith(<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="双引号字符串"><a href="#双引号字符串" class="headerlink" title="双引号字符串"></a>双引号字符串</h2><p>双引号字符串稍微有点特殊，刚才我们说的插值就是在这里使用的，请看下方的例子：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> name = <span class="string">"Guillaume"</span> <span class="comment">// 普通字符串</span></span><br><span class="line"><span class="keyword">def</span> greeting = <span class="string">"Hello $&#123;name&#125;"</span> <span class="comment">// 含有插值的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> greeting.toString() == <span class="string">'Hello Guillaume'</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到没有含有插值的字符串就是普通的JAVA字符串，含有的则是GString，他可以访问其他的变量，表达的方式有两种：<code>${}</code>和<code>$</code>，前者一般用于代替字符串或者表达式，后者则用于A.B的形式中，且也只能适用于这种形式中，如果表达式中含有例如括号，大括号，闭包(稍后讲解)等都是会报错的：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> sum = <span class="string">"The sum of 2 and 3 equals $&#123;2 + 3&#125;"</span></span><br><span class="line"><span class="keyword">assert</span> sum.toString() == <span class="string">'The sum of 2 and 3 equals 5'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> person = [<span class="string">name:</span> <span class="string">'Guillaume'</span>, <span class="string">age:</span> <span class="number">36</span>]</span><br><span class="line"><span class="keyword">assert</span> <span class="string">"$person.name is $person.age years old"</span> == <span class="string">'Guillaume is 36 years old'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> number = <span class="number">3.14</span></span><br><span class="line">shouldFail(MissingPropertyException) &#123;</span><br><span class="line">    <span class="comment">// 这样写是会报错的，因为解释器会将其解释为："$&#123;number.toString&#125;()"</span></span><br><span class="line">    println <span class="string">"$number.toString()"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果想要转义$或者${}占位符，只需要加上反斜杠<code>\</code>就行<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> <span class="string">'$&#123;name&#125;'</span> == <span class="string">"\$&#123;name&#125;"</span></span><br></pre></td></tr></table></figure></p>
+<p>java.lang.String与groovy.lang.GString配合使用也是我们经常遇到的，在下面的例子中，takeString方法需要的参数是String类型的，但是我们传进去的却是GString类型的，此时GSTring的toString()方法会被调用。使得传入时能够保证类型一致。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String takeString(String message) &#123; </span><br><span class="line">  <span class="keyword">assert</span> message <span class="keyword">instanceof</span> String </span><br><span class="line">  <span class="keyword">return</span> message</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> message = <span class="string">"The message is $&#123;'hello'&#125;"</span> </span><br><span class="line"><span class="keyword">assert</span> message <span class="keyword">instanceof</span> GString </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> result = takeString(message) </span><br><span class="line"><span class="keyword">assert</span> result <span class="keyword">instanceof</span> String</span><br><span class="line"><span class="keyword">assert</span> result == <span class="string">'The message is hello'</span></span><br></pre></td></tr></table></figure>
+<p>最后需要注意一点的就是，普通Java字符串是不可变的，而一个GString依赖于插入的值，它的String是可变的。即使有相同的字符串结果，GString和String也没有相同的hashCode，例如：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> <span class="string">"one: $&#123;1&#125;"</span>.hashCode() != <span class="string">"one: 1"</span>.hashCode()</span><br></pre></td></tr></table></figure></p>
+<p>所以在选择Map的键值时我们应当避免选择GString，看看下面的例子你就清楚了：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> key = <span class="string">"a"</span></span><br><span class="line"><span class="keyword">def</span> m = [<span class="string">"$&#123;key&#125;"</span>: <span class="string">"letter $&#123;key&#125;"</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> m[<span class="string">"a"</span>] == <span class="literal">null</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="其他字符串"><a href="#其他字符串" class="headerlink" title="其他字符串"></a>其他字符串</h2><p>Groovy中还有另外三种字符串，分别是：三双引号字符串、斜杠字符串、美元符修饰的斜杠字符串，由于这三种字符串用得比较少，这里就略过了，有兴趣的朋友可以直接到<a href="http://www.groovy-lang.org/syntax.html" target="_blank" rel="noopener">Groovy的官方文档</a>中查阅。</p>
+<h1 id="列表List"><a href="#列表List" class="headerlink" title="列表List"></a>列表List</h1><p>由于Groovy中没有定义任何集合类，因此List也是沿用了java.util.List，其默认的实现则是java.util.ArrayList，不过我们也可以使用as关键字将其转换。<br>变量定义：List 变量由<code>[ ]</code>定义，比如：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> aList = [<span class="number">5</span>,<span class="string">'string'</span>,<span class="literal">true</span>] <span class="comment">//List 由[]定义，其元素可以是任何对象</span></span><br></pre></td></tr></table></figure></p>
+<p>变量存取：可以直接通过索引存取，而且不用担心索引越界。如果索引超过当前链表长度，List会自动往该索引添加元素<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> aList[<span class="number">1</span>] == <span class="string">'string'</span> </span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">-1</span>] == <span class="literal">true</span>  			<span class="comment">//当索引为-1时表示倒数最后一个</span></span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">-2</span>] == <span class="string">'string'</span>  			<span class="comment">//当索引为-2时表示倒数第二个，以此类推</span></span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">5</span>] == <span class="literal">null</span> 				<span class="comment">//第 6 个元素为空  </span></span><br><span class="line">aList[<span class="number">100</span>] = <span class="number">100</span>  				<span class="comment">//设置第 101 个元素的值为 100</span></span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">100</span>] == <span class="number">100</span></span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">0</span>,<span class="number">2</span>] == [<span class="number">5</span>,<span class="literal">true</span>] 			<span class="comment">// 一次访问两个元素，并返回一个包含这两个元素的新列表</span></span><br><span class="line"><span class="keyword">assert</span> aList[<span class="number">0.</span><span class="number">.2</span>] == [<span class="number">6</span>,<span class="string">'string'</span>,<span class="literal">true</span>] 		<span class="comment">// 使用范围访问列表中这个范围内的元素，从start到end元素位置</span></span><br></pre></td></tr></table></figure></p>
+<p>那么，aList 到现在为止有多少个元素呢？<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">println aList.size()  				<span class="comment">// 结果是 101</span></span><br></pre></td></tr></table></figure></p>
+<p>现在我们打算将ArrayList转换为其他的具体实现类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def arrayList = [1, 2, 3]</span><br><span class="line">assert arrayList instanceof java.util.ArrayList 		// 默认情况下是ArrayLis</span><br><span class="line"></span><br><span class="line">def linkedList = [2, 3, 4] as LinkedList 		// 使用as关键字将其转换为LinkedList</span><br><span class="line">assert linkedList instanceof java.util.LinkedList 	</span><br><span class="line"></span><br><span class="line">LinkedList otherLinked = [3, 4, 5] 			// 声明的时候直接指定为LinkedList</span><br><span class="line">assert otherLinked instanceof java.util.LinkedList</span><br></pre></td></tr></table></figure></p>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>数组的声明与List类似，且都是用<code>[ ]</code>来表示的，之所以不能像JAVA一样采用{}来初始化数组，是因为在Groovy中{}会被误解为闭包标志。我们需要通过类型转换或者类型定义来定义数组，与List不同的是，数组中的元素类型需要一致，并且数组的大小不能改变：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String[] arrStr = [<span class="string">'Ananas'</span>, <span class="string">'Banana'</span>, <span class="string">'Kiwi'</span>] 		<span class="comment">//可以在定义的时候直接指定为数组，</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> arrStr <span class="keyword">instanceof</span> String[] </span><br><span class="line"><span class="keyword">assert</span> !(arrStr <span class="keyword">instanceof</span> List)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> numArr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="keyword">as</span> <span class="keyword">int</span>[] 				<span class="comment">// 使用as关键字转换成数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> numArr <span class="keyword">instanceof</span> <span class="keyword">int</span>[] </span><br><span class="line">numArr[<span class="number">0</span>] = <span class="number">3</span></span><br><span class="line"><span class="keyword">assert</span> numArr[<span class="number">0</span>] == <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> numArr.size() == <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="映射Map"><a href="#映射Map" class="headerlink" title="映射Map"></a>映射Map</h1><p>变量定义：Map 变量由<code>[:]</code>定义，比如<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> aMap = [<span class="string">'key1'</span>:<span class="string">'value1'</span>,<span class="string">'key2'</span>:<span class="literal">true</span>]</span><br></pre></td></tr></table></figure></p>
+<p>Map 由 [:] 定义，注意其中的冒号。冒号左边是 key，右边是value。在Groovy中key 不一定是字符串，也可以是其他对象，value也可以是任何对象。另外，key 可以用’’或”” 包起来，也可以不用引号包起来。比如：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> aNewMap = [<span class="string">key1:</span><span class="string">"value"</span>,<span class="string">key2:</span><span class="literal">true</span>] 		<span class="comment">//其中的 key1 和 key2 默认被处理成字符串 "key1" 和 "key2" </span></span><br><span class="line"><span class="keyword">assert</span> aNewMap.<span class="string">"key1"</span> == <span class="string">"value"</span></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">不过 key 要是不使用引号包起来的话，也会带来一定混淆，比如：</span><br><span class="line"></span><br><span class="line">```groovy</span><br><span class="line"><span class="keyword">def</span> key1=<span class="string">"wowo"</span></span><br><span class="line"><span class="keyword">def</span> aConfusedMap=[<span class="string">key1:</span><span class="string">"who am i?"</span>]</span><br><span class="line"><span class="comment">//aConfuseMap 中的 key1 到底是"key1"还是变量 key1 的值“wowo”？显然，答案是字符串"key1"。如果要是"wowo"的话，则 aConfusedMap 的定义必须设置成：  </span></span><br><span class="line"><span class="keyword">def</span> aConfusedMap=[(key1):<span class="string">"who am i?"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>Map 中元素的存取更加方便，它支持多种方法：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> aMap = [<span class="string">key1:</span><span class="number">1</span>,<span class="string">key2:</span><span class="number">2</span>,<span class="string">key3:</span><span class="number">3</span>,<span class="number">4</span>:<span class="number">4</span>]</span><br><span class="line"><span class="keyword">assert</span> aMap.key1 == <span class="number">1</span>  		<span class="comment">//这种表达方法好像 key1 就是 aMap 的一个成员变量一样  </span></span><br><span class="line"><span class="keyword">assert</span> aMap.<span class="string">"key1"</span> ==<span class="number">1</span>   		<span class="comment">//因为我们将key1看成了字符串，因此也可以直接这样访问</span></span><br><span class="line"><span class="keyword">assert</span> aMap[<span class="string">'key1'</span>] ==<span class="number">1</span> 		<span class="comment">//这种表达方法更传统一点  </span></span><br><span class="line"><span class="keyword">assert</span> aMap[<span class="number">4</span>] ==<span class="number">4</span> 			<span class="comment">//对于数字则需要使用这种方式来访问了</span></span><br><span class="line">aMap.anotherkey = <span class="string">"i am map"</span>  	<span class="comment">//为 map 添加新元素 </span></span><br><span class="line"><span class="keyword">assert</span> aMap == [<span class="string">key1:</span><span class="number">1</span>, <span class="string">key2:</span><span class="number">2</span>, <span class="string">key3:</span><span class="number">3</span>, <span class="number">4</span>:<span class="number">4</span>, <span class="string">anotherkey:</span><span class="string">"i am map"</span>]</span><br></pre></td></tr></table></figure></p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h2 id="闭包的定义"><a href="#闭包的定义" class="headerlink" title="闭包的定义"></a>闭包的定义</h2><p>闭包(Closure)是Groovy中一种非常重要的数据类型，他是一段可以执行的代码。定义的格式如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> xxx = &#123;paramters -&gt; code&#125;  	<span class="comment">//参数可以是0个或者多个，每个参数之间用`,`分隔开；后面的代码可以一行也可以多行</span></span><br><span class="line"><span class="keyword">def</span> xxx = &#123;无参数只有 code&#125;  	<span class="comment">//这种没有参数的情况则不需要-&gt;符号</span></span><br></pre></td></tr></table></figure></p>
+<p>根据上面的格式我们再来看看几个具体的实例：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123; item++ &#125;                    			<span class="comment">//1                      </span></span><br><span class="line">&#123; println it &#125;                			<span class="comment">//2                     </span></span><br><span class="line">&#123; it -&gt; println it &#125;          			<span class="comment">//3                      </span></span><br><span class="line">&#123; name -&gt; println name &#125;      		<span class="comment">//4                       </span></span><br><span class="line">&#123; -&gt; item++ &#125;                 		<span class="comment">//5                       </span></span><br><span class="line">&#123; String x, <span class="keyword">int</span> y -&gt;                                </span><br><span class="line">    println <span class="string">"hey $&#123;x&#125; the value is $&#123;y&#125;"</span>   <span class="comment">//6</span></span><br><span class="line">&#125;</span><br><span class="line">&#123; String x, <span class="keyword">int</span> y=<span class="number">6</span> -&gt;                                </span><br><span class="line">    println <span class="string">"hey $&#123;x&#125; the value is $&#123;y&#125;"</span>   <span class="comment">//7</span></span><br><span class="line">&#125;</span><br><span class="line">&#123; reader -&gt;                                         </span><br><span class="line">    <span class="keyword">def</span> line = reader.readLine()            	<span class="comment">//8</span></span><br><span class="line">    line.trim()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的几个例子中：</p>
+<ul>
+<li>1、闭包中引用了一个item变量，并做自增操作；</li>
+<li>2、闭包中直接打印it变量，it变量是闭包中默认的参数，他就是第三行代码的缩减形式；</li>
+<li>3、与上一行其实是一样的，这里只是显示的将it变量标了出来；</li>
+<li>4、与第三行代码其实是一个道理只是将参数名字改了一下而已；</li>
+<li>5、这里没有参数只有一个箭头符号与代码，这样写的意思就是闭包中没有任何参数，连默认的参数都没有，所以如果我们调用闭包的时候传入了参数，那么就会报错；</li>
+<li>6、这个闭包定义了两个指定类型的参数，并在代码中使用插值引用了两个参数的值；</li>
+<li>7、这个闭包相比上个闭包只是在参数定义上有了区别，在参数定义的时候可以指定默认值；</li>
+<li>8、这个闭包定义了一个没有指定类型的参数，并且代码块中是可以有多个表达式的。</li>
+</ul>
+<p>除此之外闭包也是groovy.lang.Closure类的实例，尽管它是一个代码块，但是它可以赋给一个变量或者一个属性作为其他的变量，请看如下的实例：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> listener = &#123; e -&gt; println <span class="string">"Clicked on $e.source"</span> &#125;   <span class="comment">//1   </span></span><br><span class="line"><span class="keyword">assert</span> listener <span class="keyword">instanceof</span> Closure                       </span><br><span class="line">Closure callback = &#123; println <span class="string">'Done!'</span> &#125;                   	<span class="comment">//2                      </span></span><br><span class="line">Closure&lt;Boolean&gt; isTextFile = &#123;                          	<span class="comment">//3</span></span><br><span class="line">    File it -&gt; it.name.endsWith(<span class="string">'.txt'</span>)               		<span class="comment">//4      </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的几个例子中：</p>
+<ul>
+<li>1、闭包是可以赋值给一个变量的；</li>
+<li>2、如果不使用def关键字来声明变量，我们可以把闭包赋值给一个groovy.lang.Closure类型的变量；</li>
+<li>3、我们可以指定闭包的返回类型，这里的返回类型为Boolean，当然这个是可选的。</li>
+<li>4、闭包中代码的最后一行就是闭包的返回值，也可以显示的使用return关键字，也可以不写。</li>
+</ul>
+<h2 id="闭包的调用"><a href="#闭包的调用" class="headerlink" title="闭包的调用"></a>闭包的调用</h2><p>调用闭包有两种方式：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> isOdd = &#123; <span class="keyword">int</span> i-&gt; i%<span class="number">2</span> == <span class="number">1</span> &#125;  	<span class="comment">//1                      </span></span><br><span class="line"><span class="keyword">assert</span> isOdd(<span class="number">3</span>) == <span class="literal">true</span>           	<span class="comment">//2                             </span></span><br><span class="line"><span class="keyword">assert</span> isOdd.call(<span class="number">2</span>) == <span class="literal">false</span>     	<span class="comment">//3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> isEven = &#123; it%<span class="number">2</span> == <span class="number">0</span> &#125;        	<span class="comment">//4                               </span></span><br><span class="line"><span class="keyword">assert</span> isEven(<span class="number">3</span>) == <span class="literal">false</span>         	<span class="comment">//5                               </span></span><br><span class="line"><span class="keyword">assert</span> isEven.call(<span class="number">2</span>) == <span class="literal">true</span>     	<span class="comment">//6</span></span><br></pre></td></tr></table></figure></p>
+<p>总结来说就是<code>闭包对象.call(参数)</code>或者直接<code>闭包对象.(参数)</code>，第4行中是省略了闭包参数的写法，直接使用it来代替，所以我们调用的时候需要传入一个参数。<br>当闭包作为闭包或方法的最后一个参数，可以将闭包从参数圆括号中提取出来只接在最后；如果闭包或者方法有一个参数且该参数为闭包，那么可以直接省略掉闭包或方法的圆括号；又如果闭包或者方法的参数中有多个闭包，并且这些闭包必须都要排在参数列表中的最后，则此时这些闭包可以依次写在圆括号外：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> testClosure=&#123;param,c -&gt; c(c(param))&#125;            				<span class="comment">//1</span></span><br><span class="line"><span class="keyword">def</span> testMethod(a1, b1, closure)&#123;                    					<span class="comment">//2</span></span><br><span class="line">      closure() <span class="comment">//调用闭包  </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> testClosure(<span class="number">5</span>)&#123;it*<span class="number">3</span>&#125; == <span class="number">45</span>                   					<span class="comment">//3</span></span><br><span class="line">testMethod(<span class="number">1</span>,<span class="string">'test'</span>)&#123;println(<span class="string">"i am in closure"</span>)&#125;    				<span class="comment">//4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> testClosure2=&#123;c -&gt; c()&#125;                         					<span class="comment">//5</span></span><br><span class="line"><span class="keyword">def</span> testMethod2(a1, b1, closure, closure2)&#123;         				<span class="comment">//6</span></span><br><span class="line">      closure() <span class="comment">// 调用闭包1</span></span><br><span class="line">      closure2() <span class="comment">// 调用闭包2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> testClosure2&#123;<span class="string">"i am in testClosure2"</span>&#125; == <span class="string">"i am in testClosure2"</span>         	<span class="comment">//7</span></span><br><span class="line">testMethod2(<span class="number">1</span>,<span class="string">'test'</span>)</span><br><span class="line">    &#123;println(<span class="string">"i am in closure"</span>)&#125; </span><br><span class="line">    &#123;println <span class="string">"i am in closure2"</span>&#125;                    					<span class="comment">//8</span></span><br></pre></td></tr></table></figure></p>
+<p>在上面的例子中：</p>
+<ul>
+<li>1、闭包c是作为闭包testClosure的最后一个参数；</li>
+<li>2、闭包closure作为方法testMethod的最后一个参数；</li>
+<li>3、在调用闭包testClosure时，可以将闭包c写在圆括号外，圆括号内只需要填写其他参数即可；</li>
+<li>4、同样的道理，闭包写在圆括号外面。</li>
+<li>5、当定义方法或者闭包时只有一个参数，且参数为闭包；</li>
+<li>6、当定义的方法或者闭包的参数列表中有多个闭包，并且这些闭包需要排列在参数列表的末尾；</li>
+<li>7、调用testClosure2闭包时可以直接省略闭包的圆括号，这种方式也适用于方法；</li>
+<li>8、调用testMethod2方法时可以直接将闭包写在圆括号外面，多个闭包以此排列并且不需要使用<code>,</code>将每个闭包分隔开，这种方式也适用于闭包。</li>
+</ul>
+<h2 id="闭包的可变参数"><a href="#闭包的可变参数" class="headerlink" title="闭包的可变参数"></a>闭包的可变参数</h2><p>闭包可以像其它方法那样声明一个可变的参数列表。当参数列表的最后一个参数的长度是可变的时候（或者是一个数组），那么这个闭包就能接收数量不定的参数，请看下面的实例：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> concat1 = &#123; String... args -&gt; args.join(<span class="string">''</span>) &#125;        	<span class="comment">//1   </span></span><br><span class="line"><span class="keyword">assert</span> concat1(<span class="string">'abc'</span>,<span class="string">'def'</span>) == <span class="string">'abcdef'</span>                  	<span class="comment">//2  </span></span><br><span class="line"><span class="keyword">def</span> concat2 = &#123; String[] args -&gt; args.join(<span class="string">''</span>) &#125;         	<span class="comment">//3   </span></span><br><span class="line"><span class="keyword">assert</span> concat2(<span class="string">'abc'</span>, <span class="string">'def'</span>) == <span class="string">'abcdef'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> multiConcat = &#123; <span class="keyword">int</span> n, String... args -&gt;             	<span class="comment">//4   </span></span><br><span class="line">    args.join(<span class="string">''</span>)*n</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">assert</span> multiConcat(<span class="number">2</span>, <span class="string">'abc'</span>,<span class="string">'def'</span>) == <span class="string">'abcdefabcdef'</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的例子中：</p>
+<ul>
+<li>1、闭包可以接收数量可变的String参数；</li>
+<li>2、可以在调用时使用任意数量的参数，而且不用被包装成一个数组；</li>
+<li>3、使用数组也能达到同样的效果；</li>
+<li>4、只要最后一个参数是一个数组或者可变长度的的参数类型即可。</li>
+</ul>
+<h2 id="在GString中使用闭包"><a href="#在GString中使用闭包" class="headerlink" title="在GString中使用闭包"></a>在GString中使用闭包</h2><p>之前我们讲到GString与传统的java.lang.String的区别，而在GString中使用闭包一般有两种情形：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> x = <span class="number">1</span></span><br><span class="line"><span class="keyword">def</span> gs1 = <span class="string">"x = $&#123;x&#125;"</span>          	<span class="comment">//1</span></span><br><span class="line"><span class="keyword">assert</span> gs1 == <span class="string">'x = 1'</span>         	<span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> gs2 = <span class="string">"x = $&#123;-&gt; x&#125;"</span>       	<span class="comment">//3</span></span><br><span class="line"><span class="keyword">assert</span> gs2 == <span class="string">'x = 1'</span>         	<span class="comment">//4</span></span><br><span class="line"></span><br><span class="line">x = <span class="number">2</span>         	<span class="comment">//5</span></span><br><span class="line"><span class="keyword">assert</span> gs1 == <span class="string">'x = 1'</span>         	<span class="comment">//6</span></span><br><span class="line"><span class="keyword">assert</span> gs2 == <span class="string">'x = 2'</span>         	<span class="comment">//7</span></span><br></pre></td></tr></table></figure></p>
+<p>上面例子中的第一行以及第三行就是在GString中使用闭包的两种情形，严格意义上来讲，第一行代码中的<code>${}</code>并不是闭包，而只是一个插值的符号。<br>在注释1与注释3中定义了两个GString之后我们在注释2以及注释4中验证了他们的结果，这个结果也确实与我们预料中的一致。<br>但是接下来的注释5中，我们修改了变量x的值，将其改为2，现在再来看看两个GString的结果，发现采用<code>${}</code>的结果不变，而使用了闭包<code>${-&gt;}</code>的则会更新结果，这究竟是为什么呢？<br>这个主要是因为Groovy对两种符号的加载方式不一样，前者<code>${}</code>名字叫做<code>eagerGString</code>，它的值在GString被创建时就已经确定了，并且一直指向旧的这个对象，当我们去改变他所引用的x对象时，它是不会更新的；而在后者<code>${-&gt;}</code>中，Groovy采用了懒加载(lazy evaluation)的方式，即每次GString转换为String的时候都会再次调用闭包，因此它就可以更新。<br>下面我们再来看一下两个实例加深一下对两者的理解：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    String name</span><br><span class="line">    String toString() &#123; name &#125;              </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">def</span> sam = <span class="keyword">new</span> Person(<span class="string">name:</span><span class="string">'Sam'</span>)           </span><br><span class="line"><span class="keyword">def</span> lucy = <span class="keyword">new</span> Person(<span class="string">name:</span><span class="string">'Lucy'</span>)      </span><br><span class="line"><span class="keyword">def</span> p = sam                		<span class="comment">//1                 </span></span><br><span class="line"><span class="keyword">def</span> gs = <span class="string">"Name: $&#123;p&#125;"</span>                		<span class="comment">//2           </span></span><br><span class="line"><span class="keyword">assert</span> gs == <span class="string">'Name: Sam'</span>             		<span class="comment">//3           </span></span><br><span class="line">p = lucy                		<span class="comment">//4    </span></span><br><span class="line"><span class="keyword">assert</span> gs == <span class="string">'Name: Sam'</span>             		<span class="comment">//5        </span></span><br><span class="line">sam.name = <span class="string">'Lucy'</span>                    		<span class="comment">//6    </span></span><br><span class="line"><span class="keyword">assert</span> gs == <span class="string">'Name: Lucy'</span>            		<span class="comment">//7</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中：</p>
+<ul>
+<li>1、首先将对象sam赋值给变量p；</li>
+<li>2、使用了插值符号来调用对象的toString()方法；</li>
+<li>3、很显然返回的名字是Sam；</li>
+<li>4、如果将lucy赋值给p变量；</li>
+<li>5、其依旧指向p变量之前指向的旧对象而不会因为p所指的对象的改变而改变GString的值；</li>
+<li>6、但是如果我们只是改变了旧对象的属性；</li>
+<li>7、那么很显然GString的值还是会更新的。</li>
+<li>因此如果使用的是<code>${}</code>的形式，那么改变所指的对象是不能更新GString的值，但是改变对象的属性的话是可以的。</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    String name</span><br><span class="line">    String toString() &#123; name &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">def</span> sam = <span class="keyword">new</span> Person(<span class="string">name:</span><span class="string">'Sam'</span>)</span><br><span class="line"><span class="keyword">def</span> lucy = <span class="keyword">new</span> Person(<span class="string">name:</span><span class="string">'Lucy'</span>)</span><br><span class="line"><span class="keyword">def</span> p = sam</span><br><span class="line"><span class="comment">// Create a GString with lazy evaluation of "p"</span></span><br><span class="line"><span class="keyword">def</span> gs = <span class="string">"Name: $&#123;-&gt; p&#125;"</span></span><br><span class="line"><span class="keyword">assert</span> gs == <span class="string">'Name: Sam'</span></span><br><span class="line">p = lucy</span><br><span class="line"><span class="keyword">assert</span> gs == <span class="string">'Name: Lucy'</span></span><br></pre></td></tr></table></figure>
+<p>同样的例子，如果是选择了${-&gt;}的形式，那么改变所指的对象是可以更新GString的值的，这就是两种形式的区别。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="方法的声明"><a href="#方法的声明" class="headerlink" title="方法的声明"></a>方法的声明</h2><p>Groovy中的方法与JAVA的差别不大，声明方法时可以加上一个返回值的类型，或者直接使用def关键字而无需标注返回值类型，采用这种方法的时候方法的返回值类型的不固定的。方法可以接收任意数量的参数，并且参数的类型可以是无类型的也可以是有类型的还可以是有默认值的。我们在java中使用的一些修饰方法的关键词都是可以用来修饰Groovy中的方法，但是在Groovy中默认情况下不适用任何访问修饰词的情况下是代表public的。<br>最后需要再说一下的是，Groovy中的方法总是会返回值的，如果方法中没有return语句，那么方法中的最后一行将会是该方法的返回值，具体的可以看下面的例子。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> someMethod() &#123; <span class="string">'method called'</span> &#125; 	<span class="comment">//没有参数也没有return关键字并且使用def来声明方法                     </span></span><br><span class="line">String anotherMethod() &#123; <span class="string">'another method called'</span> &#125; 	<span class="comment">//方法的返回值确定         </span></span><br><span class="line"><span class="keyword">def</span> thirdMethod(param1) &#123; <span class="string">"$param1 passed"</span> &#125; 	<span class="comment">//方法接收参数，并且参数的类型是未确定的         </span></span><br><span class="line"><span class="keyword">static</span> String fourthMethod(String param1) &#123; <span class="string">"$param1 passed"</span> &#125; 	<span class="comment">//静态方法，并且参数是有类型的</span></span><br><span class="line"><span class="comment">//方法接收三个参数，第一个是无类型的，第二个是String类型，第三个是int类型并且默认值是6</span></span><br><span class="line">String fifthMethod(param1,String param2,<span class="keyword">int</span> param3 = <span class="number">6</span>) &#123;<span class="string">"$param1,$param2,$param3"</span>&#125;   </span><br><span class="line"><span class="keyword">assert</span> fifthMethod(<span class="number">1</span>,<span class="string">"111"</span>) == <span class="string">"1,111,6"</span> 	<span class="comment">//如果调用的时候不传入默认的那个参数，则返回结果就会继续使用默认值</span></span><br><span class="line"><span class="keyword">assert</span> fifthMethod(<span class="number">1</span>,<span class="string">"111"</span>,<span class="number">5</span>) == <span class="string">"1,111,5"</span> 	<span class="comment">//如果传入了第三个参数，那么默认值将会被覆盖</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="可变参数的方法"><a href="#可变参数的方法" class="headerlink" title="可变参数的方法"></a>可变参数的方法</h2><p>在讲闭包的时候我们已经讲到了可变参数，方法中的可变参数与闭包的一致，这里就不再赘述，下面讲一下两种特殊情况：</p>
+<ul>
+<li>当方法接收可变参数时，我们调用方法时传入的参数为null</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> foo(Object... args) &#123; args &#125;      	<span class="comment">//1</span></span><br><span class="line"><span class="keyword">assert</span> foo(<span class="literal">null</span>) == <span class="literal">null</span>              	<span class="comment">//2</span></span><br><span class="line">asser foo(<span class="literal">null</span>,<span class="literal">null</span>) == [<span class="literal">null</span>,<span class="literal">null</span>]   	<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>我们声明的方法foo，他接收一个可变参数，在第二行中我们传入一个null，此时返回的是空，这里的空并不是一个包含<code>null</code>元素的长度为1的数组；但是在第三行中当我们传入了两个null时，却发现返回的确实长度为2的包含两个null元素的数组。这种情况是需要我们在实践中注意的。</p>
+<ul>
+<li>当可变函数方法遇到重载方法时</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> foo(Object... args) &#123; <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">def</span> foo(Object x) &#123; <span class="number">2</span> &#125;</span><br><span class="line"><span class="keyword">assert</span> foo() == <span class="number">1</span>               	<span class="comment">//1</span></span><br><span class="line"><span class="keyword">assert</span> foo(<span class="number">1</span>) == <span class="number">2</span>              	<span class="comment">//2</span></span><br><span class="line"><span class="keyword">assert</span> foo(<span class="number">1</span>, <span class="number">2</span>) == <span class="number">1</span>           	<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>在这里只需要注意注释2即可，在注释2中我们传入的参数只有一个，但是两个重载的函数都符合我们的参数数量，这个时候Groovy会选择最为确切的方法来调用，两个方法中一个是可变参数，一个是接收一个参数，当然是后者更为确切了，所以后者被调用。因此遇到这种情况时，函数数量最符合的函数将会被调用。</p>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>Groovy中的变量我们需要分成两类，一类叫做变量(Field)，一类叫做属性(Property)，尽管我们在JAVA中可以认为这两个其实就是一种东西，但是在Groovy中他们还是有稍微的区别的。</p>
+<h2 id="变量-Field"><a href="#变量-Field" class="headerlink" title="变量(Field)"></a>变量(Field)</h2><ul>
+<li>变量是可以使用访问修饰符的(如 public，protected，private)</li>
+<li>可以使用零个或多个修饰符(如 static，final，synchronized)</li>
+<li>类型是可选的，即可以声明类型也可以声明为无类型</li>
+</ul>
+<p>如下面的实例：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Data</span> &#123;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id =<span class="number">1</span>                                </span><br><span class="line">    <span class="keyword">protected</span> String description                    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = <span class="literal">false</span>       </span><br><span class="line">    <span class="keyword">private</span> mapping                       		<span class="comment">//最好不要声明为无类型的</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,String&gt; mapping1   	<span class="comment">//最好在声明时加上确切的类型</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>尽管Groovy中支持在变量声明的时候声明为无类型，不过这并不是一个好的编程习惯，Groovy官方推荐我们最好在声明时指定类型。</p>
+<h2 id="属性-Property"><a href="#属性-Property" class="headerlink" title="属性(Property)"></a>属性(Property)</h2><p>属性与变量有些许的区别，区别在于它不可以使用访问权限修饰符(public，protected，private)，它的声明格式应该如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    String name                             </span><br><span class="line">    <span class="keyword">int</span> age                                 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Property与Field的区别在于，前者会默认为属性添加setter和getter方法，例如下面的这个例子就可以看出两者的区别：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span> String field             <span class="comment">//1</span></span><br><span class="line"></span><br><span class="line">    String property                 <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* </span></span><br><span class="line"><span class="comment">         private String property</span></span><br><span class="line"><span class="comment">         public void setProperty(String property) &#123; ... &#125;</span></span><br><span class="line"><span class="comment">         public String getProperty() &#123; ... &#125;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中注释1中创建了一个变量，那它就只是创建了一个变量而已；但是注释2中创建了一个属性，而它的作用则相当于接下来三行注释中的代码，即创建了一个private的同名的变量，以及public的setter与public的getter方法。尽管两种声明的方式原理不一样，但是我们访问这两者的方式却是可以一样的，如下所示:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> a = <span class="keyword">new</span> A()</span><br><span class="line">println a.field             	<span class="comment">//1</span></span><br><span class="line">println a.property        	<span class="comment">//2</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中第一行没有疑问，因为field变量是public的，但是第二行中property却是private，那为什么可以这样去访问到它呢？因为实际上当调用<code>a.property</code>时，调用的是<code>a.getProperty()</code>或者是<code>setProperty(String property)</code>。<br>下面再讲一个特殊的情况，就是使用final关键词来修饰的属性(property)是<code>只读</code>的，也就是说他只有getter方法没有setter方法，来看下面的实例：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    <span class="keyword">final</span> String name                   </span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> age                       </span><br><span class="line">    Person(String name, <span class="keyword">int</span> age) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name                </span><br><span class="line">        <span class="keyword">this</span>.age = age                  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> p = <span class="keyword">new</span> Person(<span class="string">'TOM'</span>,<span class="number">13</span>)</span><br><span class="line"><span class="keyword">assert</span> p.name == <span class="string">'TOM'</span>        	<span class="comment">//1</span></span><br><span class="line">p.name=<span class="string">'TONY'</span>                 	<span class="comment">//2</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中注释1处中的<code>p.name</code>实际上是调用了p.getName()函数，但是注释2处却会报<code>groovy.lang.ReadOnlyPropertyException</code>异常，因为被final修饰的属性是不会生成setter方法的，因此当我们要设置这个变量的值时就会报错。</p>
+<p>接下来最后一个需要注意的点是Groovy很贴心的一个功能，即只要我们按照Java Bean的规范声明了属性的getter和setter方法，那么我们就不需要再去声明这个变量了，我们就可以直接用<code>对象.属性</code>的方法来访问这个属性了，具体的方法我们看下面的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class PseudoProperties &#123;</span><br><span class="line">    // 属性&quot;name&quot;可读可写</span><br><span class="line">    void setName(String name) &#123;&#125;</span><br><span class="line">    String getName() &#123;&apos;Foo&apos;&#125;</span><br><span class="line"></span><br><span class="line">    // 属性&quot;age&quot;只可读</span><br><span class="line">    int getAge() &#123; 42 &#125;</span><br><span class="line"></span><br><span class="line">    // 属性&quot;groovy&quot;只可写</span><br><span class="line">    void setGroovy(boolean groovy) &#123;  &#125;</span><br><span class="line">&#125;</span><br><span class="line">def p = new PseudoProperties()</span><br><span class="line">p.name = &apos;Foo&apos;           //1    </span><br><span class="line">assert p.name == &apos;Foo&apos;   //2    </span><br><span class="line">assert p.age == 42       //3           </span><br><span class="line">p.groovy = true          //4</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中其实声明了三个变量，只是这三个变量的访问权限不一样而已，在注释1处我们可以设置name的值，注释2可以访问name的值，但是我们却只能访问age的值并不能设置它的值，同理我们也只能设置groovy的值但是不能访问。</p>
+<h2 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h2><p>在Groovy中变量是有作用域的，普通的Groovy类与JAVA类的变量作用域一致，但是有的时候我们也可以直接写Groovy脚本，即不用定义类直接写代码，这个时候的作用域就不太一样了。下面我们来看看实例：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> groovy.transform.Field   <span class="comment">//不导入则无法使用Field注解</span></span><br><span class="line"></span><br><span class="line">String hello = <span class="string">"hello"</span>          	<span class="comment">//定义变量，作用域是本地域</span></span><br><span class="line"><span class="keyword">def</span> world = <span class="string">"world"</span>             	<span class="comment">//定义变量，作用域是本地域</span></span><br><span class="line">helloworld = <span class="string">"hello world"</span>      	<span class="comment">//全局变量，作用域是绑定域</span></span><br><span class="line"><span class="meta">@Field</span> a = <span class="string">'I am A'</span>             	<span class="comment">//定义一个全局变量a</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> check() &#123;</span><br><span class="line">    println hello                         		<span class="comment">//1报错</span></span><br><span class="line">    println world                         		<span class="comment">//2报错</span></span><br><span class="line">    <span class="keyword">assert</span> helloworld == <span class="string">"hello world"</span>                         		<span class="comment">//3</span></span><br><span class="line">    <span class="keyword">assert</span> a == <span class="string">"I am A"</span>                         		<span class="comment">//4</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">check()</span><br></pre></td></tr></table></figure></p>
+<p>解释上面的代码之前我们需要了解一下在Groovy脚本中定义的变量有两种作用域，分别是<strong>绑定域(Binding Scope)</strong>和<strong>本地域(Local Scope)</strong>。<br><strong>本地域</strong><br>本地域是脚本中使用 def 定义的动态类型变量或用特定类型定义的静态类型变量的作用域。<br><strong>绑定域</strong><br>绑定域为没有任何前缀修饰的变量的作用域。<br>例如在上面的代码中，<code>hello</code>与<code>world</code>变量的作用域就是本地域，而<code>helloworld</code>的作用域为绑定域。<br>两者的区别是什么呢？因为Groovy脚本会被编译成一个类，类名为文件名，该类继承自<code>groovy.lang.Script</code>类，我们刚才讲到的<code>本地域</code>变量会被声明在该类的run()方法内部作为临时变量，它只能在定义它的代码块中被调用，而不能在其他代码块(其他方法)中被调用；绑定域其实也是被声明在run()方法内部的，但是他会被当做参数传递给调用它的方法，所以实际上的我们就可以理解为我们可以在其他方法中调用绑定域的变量。</p>
+<p>通过上面的解释，我们可以清楚的看到上面的代码中注释1处和注释2处之所以会报错就是因为访问不到变量，而注释3则是可以访问到的。<br>还有最后一个就是注释4，首先a变量定义前先导入了Field注解，并在使用的时候显示的引用注解，这个时候a变量就变成了一个全局变量，这是因为a变量在编译之后被声明在了类的层级中，即我们在JAVA中所说的<code>全局变量</code>，既然是全局变量，那么所有的方法都是可以访问到他的。<br>这里需要注意的就是使用<code>@Field</code>注解与使用绑定域的结果尽管是一致的但是原理却是不同的，我们可以使用<code>jd-gui</code>这个可以将class字节码转换为java代码的软件查看上述代码编译之后的情况来验证我们上面的说法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">field_scope</span> <span class="keyword">extends</span> <span class="title">Script</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  Object a;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">field_scope</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    String str = <span class="string">"I am A"</span>;</span><br><span class="line">    <span class="keyword">this</span>.a = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">field_scope</span><span class="params">(Binding context)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(context);</span><br><span class="line">    String str = <span class="string">"I am A"</span>;</span><br><span class="line">    <span class="keyword">this</span>.a = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    CallSite[] arrayOfCallSite = $getCallSiteArray();</span><br><span class="line">    arrayOfCallSite[<span class="number">0</span>].call(InvokerHelper.class, field_scope.class, args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    CallSite[] arrayOfCallSite = $getCallSiteArray(); </span><br><span class="line">    String hello = <span class="string">"hello"</span>;</span><br><span class="line">    Object world = <span class="string">"world"</span>;</span><br><span class="line">    String str1 = <span class="string">"hello world"</span>; </span><br><span class="line">    ScriptBytecodeAdapter.setGroovyObjectProperty(str1, field_scope.class, <span class="keyword">this</span>, (String)<span class="string">"helloworld"</span>);</span><br><span class="line">    <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((__$stMC) || (BytecodeInterface8.disabledStandardMetaClass())) </span><br><span class="line">    &#123; </span><br><span class="line">      <span class="keyword">return</span> arrayOfCallSite[<span class="number">1</span>].callCurrent(<span class="keyword">this</span>); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123; </span><br><span class="line">      check(); </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">check</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    CallSite[] arrayOfCallSite = $getCallSiteArray(); </span><br><span class="line">    arrayOfCallSite[<span class="number">2</span>].callCurrent(<span class="keyword">this</span>, arrayOfCallSite[<span class="number">3</span>].callGroovyObjectGetProperty(<span class="keyword">this</span>));</span><br><span class="line">    arrayOfCallSite[<span class="number">4</span>].callCurrent(<span class="keyword">this</span>, arrayOfCallSite[<span class="number">5</span>].callGroovyObjectGetProperty(<span class="keyword">this</span>));</span><br><span class="line">    ValueRecorder localValueRecorder1 = <span class="keyword">new</span> ValueRecorder();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">      Object tmp64_59 = arrayOfCallSite[<span class="number">6</span>].callGroovyObjectGetProperty(<span class="keyword">this</span>); </span><br><span class="line">      localValueRecorder1.record(tmp64_59, <span class="number">8</span>);</span><br><span class="line">      Object tmp73_64 = tmp64_59; </span><br><span class="line">      localValueRecorder1.record(tmp73_64, <span class="number">8</span>);</span><br><span class="line">      <span class="keyword">boolean</span> tmp87_84 = ScriptBytecodeAdapter.compareEqual(tmp73_64, <span class="string">"hello world"</span>); </span><br><span class="line">      localValueRecorder1.record(Boolean.valueOf(tmp87_84), <span class="number">19</span>); </span><br><span class="line">      <span class="keyword">if</span> (tmp87_84) </span><br><span class="line">        localValueRecorder1.clear(); </span><br><span class="line">      <span class="keyword">else</span> </span><br><span class="line">        ScriptBytecodeAdapter.assertFailed(AssertionRenderer.render(<span class="string">"assert helloworld == \"hello world\"    //3"</span>, localValueRecorder1), <span class="keyword">null</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> &#123; localValueRecorder1.clear(); <span class="keyword">throw</span> <span class="keyword">finally</span>; &#125;</span><br><span class="line">    ValueRecorder localValueRecorder2 = <span class="keyword">new</span> ValueRecorder();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">      Object tmp139_136 = <span class="keyword">this</span>.a; localValueRecorder2.record(tmp139_136, <span class="number">8</span>);</span><br><span class="line">      Object tmp148_139 = tmp139_136; localValueRecorder2.record(tmp148_139, <span class="number">8</span>);</span><br><span class="line">      <span class="keyword">boolean</span> tmp162_159 = ScriptBytecodeAdapter.compareEqual(tmp148_139, <span class="string">"I am A"</span>); </span><br><span class="line">      localValueRecorder2.record(Boolean.valueOf(tmp162_159), <span class="number">10</span>); </span><br><span class="line">      <span class="keyword">if</span> (tmp162_159) </span><br><span class="line">        localValueRecorder2.clear(); </span><br><span class="line">      <span class="keyword">else</span> </span><br><span class="line">        ScriptBytecodeAdapter.assertFailed(AssertionRenderer.render(<span class="string">"assert a == \"I am A\"                  //4"</span>, localValueRecorder2), <span class="keyword">null</span>);  </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">finally</span> &#123; localValueRecorder2.clear(); <span class="keyword">throw</span> <span class="keyword">finally</span>;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><p>上面说到Groovy其实是可以不用定义类的，这也符合脚本语言的特性。不过如果是比较复杂的工程，为了能够系统的管理代码，我们还是需要为其定义类。定义类的方法与JAVA类似，但是不需要使用<code>public</code>关键字，因为在Groovy中默认就是public，不仅仅是类，方法与变量也是这样的。我们先用下面的代码来看看Groovy语言的特点。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Language</span>&#123;</span></span><br><span class="line">    <span class="keyword">def</span> name</span><br><span class="line">    <span class="keyword">def</span> difficulty</span><br><span class="line">    </span><br><span class="line">    String toString()&#123;</span><br><span class="line">        <span class="string">"$name,$difficulty"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> java_lan =<span class="keyword">new</span> Language()</span><br><span class="line">java_lan.setName <span class="string">"JAVA"</span></span><br><span class="line">java_lan.difficulty = <span class="number">5</span></span><br><span class="line">println java_lan</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码相信大家现在是可以看得懂的啦，下面我们再讲一下关于Groovy中的类其他需要注意的事项：</p>
+<ul>
+<li>类中无须定义构造方法</li>
+</ul>
+<p>在Groovy的类中，其实有两个默认的构造方法，一个是无参的，一个是带有map参数的构造函数，所以实际上我们有什么函数只需要通过这个带有map参数的函数传递即可，请看下面的实例：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> java_lan =<span class="keyword">new</span> Language()</span><br><span class="line">java_lan.setName <span class="string">"JAVA"</span></span><br><span class="line">java_lan.difficulty = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> groovy_lan = <span class="keyword">new</span> Language([<span class="string">"name"</span>:<span class="string">"Groovy"</span>,<span class="string">"difficulty"</span>:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>import的用法</li>
+</ul>
+<p>import语句与JAVA很相似，但是也增加了一些新的特点<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//包声明</span></span><br><span class="line"><span class="keyword">package</span> com.bob.groovy.test</span><br><span class="line"></span><br><span class="line"><span class="comment">//import语句1</span></span><br><span class="line"><span class="keyword">import</span> groovy.json.JsonBuilder</span><br><span class="line"><span class="keyword">def</span> json1 = <span class="keyword">new</span> JsonBuilder()</span><br><span class="line"></span><br><span class="line"><span class="comment">//import语句2</span></span><br><span class="line"><span class="keyword">import</span> groovy.json.*</span><br><span class="line"><span class="keyword">def</span> json2 = <span class="keyword">new</span> JsonBuilder()</span><br><span class="line"></span><br><span class="line"><span class="comment">//import语句3，使用as关键字取别名</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> Calendar.getInstance <span class="keyword">as</span> now</span><br><span class="line"><span class="keyword">assert</span> now().<span class="keyword">class</span> == Calendar.getInstance().<span class="keyword">class</span></span><br></pre></td></tr></table></figure></p>
+<p>不过要特别注意，Groovy与Java类似，已经帮我们默认导入了一些常用的包，所以在我们使用这些包的类时就不用再像上面那样导入了，如下是自动导入的包列表：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.*</span><br><span class="line"><span class="keyword">import</span> java.util.*</span><br><span class="line"><span class="keyword">import</span> java.io.*</span><br><span class="line"><span class="keyword">import</span> java.net.*</span><br><span class="line"><span class="keyword">import</span> groovy.lang.*</span><br><span class="line"><span class="keyword">import</span> groovy.util.*</span><br><span class="line"><span class="keyword">import</span> java.math.BigInteger</span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.784Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2018/03/16/gradle2/" target="_blank" rel="external">http://www.wensibo.top/2018/03/16/gradle2/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2018/03/16/gradle2/&title=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2018/03/16/gradle2/&title=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&source=上一篇文章我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。需要说明的是这篇文章大部分内容是..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2018/03/16/gradle2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&url=http://www.wensibo.top/2018/03/16/gradle2/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2018/03/16/gradle2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/02/07/gradle1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一口一口吃掉Gradle（一）：初识Gradle</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="gradle2"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2018/03/16/gradle2/&title=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2018/03/16/gradle2/&title=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&source=上一篇文章我们从整体上初步认识了Gradle，也说了Gradle的学习曲线，这篇文章我们就按照顺序来讲解Groovy语言。需要说明的是这篇文章大部分内容是..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2018/03/16/gradle2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Gradle（二）：深入学习Groovy》 — 温斯渤&url=http://www.wensibo.top/2018/03/16/gradle2/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2018/03/16/gradle2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvElEQVR42u3aS27DMAwFwNz/0ukBAtuPpCW7wGgVNB+NuyCoR30+8fr+rPN3fz9z9PnPioWLizvmfk9XvsHRt5JHSgy4uLj7uUfbn78+hyYrN+Di4r6fmzc0vX8BLi7u/+Lm55Hz9ggXF/f93LwFKRxUxsURFxf3Ke5drcnk9ZJ8FxcXt8X9FlfyGNXIo7A7Li7uFm5eUOYNTW/IiouL+xQ3H4f0QpBeqHrxLVxc3MXchNgsNysuYeDi4i7m5gOPSdCZfDfaERcXdws3ejtug5LSljRD0VkNFxd3MXcSX+ZFrdowXUQ2uLi4G7m9q1TVZqX3d1xc3Ke4eVMyP+TkUSkuLu5O7jmuN7+YjGwvChkuLu4W7uRHq8WrGoiUr3Xi4uLeyq2WnuoGSSRazndxcXE3cntlq3clqzqwwcXFfYpbDToLw494XfwCLi7uYm5vsNoLPavxCi4u7lPcanEpTGbGh6JyYIqLi3srdxKM3nU5ozCSwcXF3cjtbZ9HKncdjXBxcd/PzSPXJE6N2iZcXNxXcqshafOi1ZEQFxd3I7dXdKoHm+qD4eLiPsWtlpL58CMfoozyXVxc3A73DwAdUsGYlxiWAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

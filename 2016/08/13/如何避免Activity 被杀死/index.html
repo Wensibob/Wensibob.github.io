@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/08/13/如何避免Activity 被杀死/">
+    
+    
+    <title>如何避免Activity 被杀死 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="避免Activity 被杀死">
+    <meta name="description" content="我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都会面临被关闭的可能。">
+<meta name="keywords" content="避免Activity 被杀死">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何避免Activity 被杀死">
+<meta property="og:url" content="http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都会面临被关闭的可能。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927927/201608/927927-20160813141237281-477502318.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何避免Activity 被杀死">
+<meta name="twitter:description" content="我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都会面临被关闭的可能。">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/927927/201608/927927-20160813141237281-477502318.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">如何避免Activity 被杀死</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">如何避免Activity 被杀死</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-08-13T06:15:05.000Z" itemprop="datePublished" class="page-time">
+  2016-08-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-如何避免Activity 被杀死" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">如何避免Activity 被杀死</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-08-13 14:15:05" datetime="2016-08-13T06:15:05.000Z" itemprop="datePublished">2016-08-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都会面临被关闭的可能。<br><a id="more"></a></p>
+<p>Android系统之所以采用这个机制，而不是像ios系统一样采用墓碑式的管理方式，是因为这样可以在一定程度上加快应用的响应速度，但是由于以前的android手机的性能比较落后，手机运行内存RAM基本上处于2G以内，所以就会导致一些不在前台的Activity有可能被回收，但是现在的智能手机性能已经足够强悍，拿我现在的这部手机——一加手机3（6GRAM）来说，但是之前官方表示为了手机的续航，将内存机制进行修改，使得当用户打开的应用超过一定数量的时候，系统就会对一些Activity进行回收，所以重新打开这些Activity的时候，就会出现重新加载的情况，这在打开大型游戏的时候比较常见。</p>
+<p>那我们在开发的时候如何在系统资源吃紧的时候将一些必要的数据进行及时的存储保护，避免数据的丢失呢？</p>
+<p>我们来看官方API中给出的一个关于Activity的生命周期的图解：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/927927/201608/927927-20160813141237281-477502318.png" alt="Activity生命周期" title="">
+                </div>
+                <div class="image-caption">Activity生命周期</div>
+            </figure></p>
+<p>如果Activity在onPause()后被杀掉，那么onStop()和onDestroy()方法就不会被调用，所以如果在onPause()方法内更多的释放Activity资源，就会让Activity在后台被系统杀掉的几率降低。</p>
+<p>但是杀死一个Activity并不会导致它从Activity堆栈中移除，相反如果Activity实现并使用了onSaveInstanceState()方法用来自定义的保存数据，那么Activity的状态就会被保存到Bundle中，这样当Activity被重新返回的时候，onCreate()方法会被再次调用，这样刚才保存有数据的Bundle对象就会被调用，将数据重新读取；但是该方法并不能保证在任何时候都能被调用。因此我们应该在onPause()方法中保存重要的数据到永久存储(即手机硬件内存中)而用onSaveInstanceState()来保存一些可以从当前屏幕快速恢复的数据(相对不重要的数据)。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.104Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/08/13/如何避免Activity 被杀死/" target="_blank" rel="external">http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/避免Activity-被杀死/">避免Activity 被杀死</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&title=《如何避免Activity 被杀死》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&title=《如何避免Activity 被杀死》 — 温斯渤&source=我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《如何避免Activity 被杀死》 — 温斯渤&url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/09/03/【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【原创+译文】官方文档中声明的如何创建抽屉导航栏(Navigation Drawer)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/29/SharePreference是如何实现的——序列化XML文件/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SharePreference是如何实现的——序列化XML文件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="如何避免Activity 被杀死"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&title=《如何避免Activity 被杀死》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&title=《如何避免Activity 被杀死》 — 温斯渤&source=我们都知道，在android系统中，内存不足的时候，系统是可以杀死任何暂停、停止或者销毁的Activity。这就意味着基本上没有在前台的Activity都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《如何避免Activity 被杀死》 — 温斯渤&url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/08/13/如何避免Activity 被杀死/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3aQXLbMBAEQP3/0/I5FVOe2SUYV6p5ckk0icYBWM3i9Yqv98X197fJc5LPr97yOnHh4eHh3TT0BJC/8mqg7+Bq/wsPDw/vGV4+oOTOfCJaRrvB4OHh4f0G3ueF+PN/tcs6Hh4e3v/Ky0vhJLzIS2o8PDy8f8vbBAGbacpDjeNZCx4eHl7M24ewz/99pL+Hh4eHt+6q56HD50A2/3wztm+eiYeHh3eA15azbcy6KbuTplo0Tjw8PLxbecmD8hZXsmEkE7H59o8x4OHh4R3gJW2wFrYvzWcHFH4YPx4eHt5NvLzRlUxBMqBNAFFvS3h4eHjHeO2Rpg1jM335poWHh4d3mpcfZkpq8za0nQXH0XTj4eHhHePdFdfmrbJ7N5vLe/Dw8PAe5OVBwGxS8g1jE3/g4eHhneC1P++T4c7a/+1W0RboeHh4ePfyZuXsLFBot4T95oSHh4d3Ly9vR7WlcxLv5gOdHczCw8PDO8HLDwdsoocNu52aurzGw8PDG/GGM7Foes0W/WGki4eHh3crry1V2/i1vTN5TtG0w8PDwzvAa4vdWctq9nfbtWvDETw8PLwZb3Y4YHbnbHvIow08PDy8Z3gnDgHkccNs6HV8jIeHh3eM1/7Ib4eeN9XaZliUUuPh4eEd4+2PCMyek5fj7TTh4eHhneZtyujkzvYQQL454eHh4T3Paz9vX5Ys6G3TKxozHh4e3q28d3ltCvF24vJpvXw+Hh4e3gFeu+Bu2vyb7eTekh0PDw9vz2uL3Xa5b5f+NpL44e14eHh4x3htLJsfKcgnax9MDLMWPDw8vEd4s3BhdkgreePl/Xh4eHi/gLcPCPKjV/mhq9ds7vHw8PAWvCSMyA+tbraB/BBYtJHg4eHhHeANf+QHy/om0s2naX9UCw8PDy/+9gvVYV6TVjMjtQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/04/13/2017Tencent_review/">
+    
+    
+    <title>2017腾讯实习生Android客户端开发面试总结 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="面经">
+    <meta name="description" content="本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只是皮毛中的皮毛，相比起很多大神我自己只有负责仰望的权利，所以如果可以的话请在本篇文章的最后留下你对我的建议，记住是建议！ 先做个自我介绍，本人大三狗一枚，就读的是广州一个普通的一本大学(非985、211)，专业是比较尴尬的电子商务(非计算机学院，">
+<meta name="keywords" content="面经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2017腾讯实习生Android客户端开发面试总结">
+<meta property="og:url" content="http://www.wensibo.top/2017/04/13/2017Tencent_review/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只是皮毛中的皮毛，相比起很多大神我自己只有负责仰望的权利，所以如果可以的话请在本篇文章的最后留下你对我的建议，记住是建议！ 先做个自我介绍，本人大三狗一枚，就读的是广州一个普通的一本大学(非985、211)，专业是比较尴尬的电子商务(非计算机学院，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-4-14Tencent/20170411_130751.jpg">
+<meta property="og:image" content="http://wensibo.com.cn/file/img/2017-4-14Tencent/20170412_094221.jpg">
+<meta property="og:updated_time" content="2018-10-21T08:26:20.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2017腾讯实习生Android客户端开发面试总结">
+<meta name="twitter:description" content="本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只是皮毛中的皮毛，相比起很多大神我自己只有负责仰望的权利，所以如果可以的话请在本篇文章的最后留下你对我的建议，记住是建议！ 先做个自我介绍，本人大三狗一枚，就读的是广州一个普通的一本大学(非985、211)，专业是比较尴尬的电子商务(非计算机学院，">
+<meta name="twitter:image" content="http://wensibo.com.cn/file/img/2017-4-14Tencent/20170411_130751.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">2017腾讯实习生Android客户端开发面试总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">2017腾讯实习生Android客户端开发面试总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-13T15:49:25.000Z" itemprop="datePublished" class="page-time">
+  2017-04-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/腾讯面经/">腾讯面经</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#伏笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">伏笔</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一面"><span class="post-toc-number">2.</span> <span class="post-toc-text">一面</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二面"><span class="post-toc-number">3.</span> <span class="post-toc-text">二面</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#推荐"><span class="post-toc-number">5.</span> <span class="post-toc-text">推荐</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#书籍"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">书籍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网站"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">网站</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">其他</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#后记"><span class="post-toc-number">6.</span> <span class="post-toc-text">后记</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2017Tencent_review" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">2017腾讯实习生Android客户端开发面试总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-13 23:49:25" datetime="2017-04-13T15:49:25.000Z" itemprop="datePublished">2017-04-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/腾讯面经/">腾讯面经</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><strong>本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布</strong></p>
+<p><strong>或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只是皮毛中的皮毛，相比起很多大神我自己只有负责仰望的权利，所以如果可以的话请在本篇文章的最后留下你对我的建议，记住是建议！</strong></p>
+<p>先做个自我介绍，本人大三狗一枚，就读的是广州一个普通的一本大学(非985、211)，专业是比较尴尬的电子商务(非计算机学院，连C的课程都没有就只有Java)，但是一切的尴尬并没有阻挡我对Android开发的热爱，自学一年多了，基础以及开发的技术也掌握的相对成熟了。在即将要变身大四狗的关键节点看到了腾讯爸爸暑期实习生的招聘，便刻不容缓地参加笔试，很开心顺利收到面试通知，可惜最终止步二面，以下是我此次面试的整个过程，希望对大家有所帮助。</p>
+
+			<script>
+				console.error("Error: [hexo-tag-aplayer] Unrecognized tag argument(2): autoplay=ture");
+			</script>
+<a id="more"></a>
+<h1 id="伏笔"><a href="#伏笔" class="headerlink" title="伏笔"></a>伏笔</h1><p>一面的时间是11号下午2点钟，因为对酒店的位置不熟悉，所以提前了两个小时出发，下公车过马路的时候下起了小小雨，所以撑起了雨伞，这时站在我前方的一个中年女士回头看着我的雨伞，我似乎看到了她眼神中对雨伞的渴望，所以走上前去给她撑伞，她愣了一下说她不是想要撑伞，只是想到今天自己忘记带雨伞了不知该怎么办。送她走过马路的过程中，我告知她要去参加腾讯的面试，她说面试所在酒店的老板是她朋友(蜜汁剧情😂)，后来告别的时候她说祝我好运并叫我记得跟面试官说我今天运气很好哟(尴尬连 😳)。其实面试结束之后觉得此事很蹊跷，但也被她说中我一面运气很好，所以也很感激这位陌生的中年女士吧！</p>
+<h1 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-4-14Tencent/20170411_130751.jpg" alt="手持OP3拍一面" title="">
+                </div>
+                <div class="image-caption">手持OP3拍一面</div>
+            </figure>
+<p>来一面的人很多，等候的会议厅里显得有点嘈杂，不过很意外的是来面试的学生中男女比例相当，更可以说女生稍稍比男生多一丢丢，看来程序媛也很努力啊！<br>2点过几分钟，系统发短信提醒我可以面试了，腾讯的高效可见一斑，以下是正文。<br><strong>我：</strong>敲门，问好，深深鞠躬并双手递上简历。一面的面试官有些许腼腆，偏瘦偏黑，坐得很直，第一感觉很Nice。<br><strong>面试官：</strong>你好，先做个自我介绍吧。<br><strong>我：</strong>将自己准备了许久的自我介绍顺利地讲了一遍，面试官很认真的听并逐点看我的简历。<br><strong>面试官：</strong>听完自我介绍之后，问道：你是自学Android还是学校里有相关的课程。<br><strong>我：</strong>苦逼的我当然是自学的啦，大一的时候学校教的是Java，老师很好，也是我在大学期间觉得唯一的一个好老师了。讲自己从一开始通过看郭霖的《第一行代码》入门，到中间走了许多弯路去看了一些补习机构的教程视频，再到后来自己总结出了一个学习路线图，并开始专注于看优秀的图书和勤打代码，并且做了一些比较拿得出手的项目和维护着一个<a href="http://wensibo.com.cn" target="_blank" rel="noopener">个人博客</a> 。<br><strong>面试官：</strong>频频点头，似乎很同意我的学习历程并且对我目前的状态表示满意。接着问，知道Android中的ANR吗？解释一下。<br><strong>我：</strong>知道，ANR就是Application Not Responding ，即应用程序未响应，之所以会造成这种异常是因为Android是在主线程即UI线程中更新界面的，但是如果在UI线程中进行过多的耗时操作就会堵塞主线程从而造成ANR，具体造成ANR的原因有三个：Activity耗时操作超过5s，Broadcast Receiver 超过10s，Service超过15s。<br><strong>面试官：</strong>似乎很满意，接着问道，那Android中是如何避免ANR的？<br><strong>我：</strong>这些问题因为都是很基础的，并且面试前复习过了，所以对答如流。我说我举一种方法吧，例如AsyncTask，具体介绍了他的doInBackground和updateProgress以及postExecute三个方法的使用以及参数的类型转换，还分析了AsyncTask的缺点，就是它所维护的线程池大小为128，同一时刻只能有5个工作线程和一个缓存线程，如果耗时操作工作量巨大就会导致线程池大小不够用，这就是它的缺点，另外我还介绍了它的解决方式，就是由一个控制线程来处理AsyncTask的调用，判断线程池是否已经满了，如果满的话就停止处理。<br><strong>面试官：</strong>一番回答下来面试官从看着简历到一直看着我并且频频点头，似乎对我的回答十分满意，我也暗自窃喜。接着他就问除了AsyncTask之外，有用过Handler吗？具体解释一下它的实现过程。<br><strong>我：</strong>这种问题可以说是每次面试必问的，并且自己也研究过源码，对Looper的实现机理十分熟悉，所以又是讲了一大堆。<br><strong>面试官：</strong>对我的回答十分满意，并问我是不是经常看源码？<br><strong>我：</strong>还好，毕竟也不是什么源码都看，如果被问到没看过的就尴尬了，还是谦虚点。<br><strong>面试官：</strong>Android应用程序之间是通过哪些方式共享数据的？<br><strong>我：</strong>File，Sqlite，Content Provider，Service，BroadCast Receiver，Intent，同个Application内部的话还可以通过静态变量共享数据。<br><strong>面试官：</strong>点点头，这个面试官很喜欢点头。那能不能说说Content Provider的生命周期？<br><strong>我：</strong>感觉有点懵逼，四大组件中似乎很少接触到Content Provider的生命周期，自己也不是很确定，就说生命周期不是很懂，但是我可以说一下它的实现机理，就说了Content Provider，Content Resolver之间的使用规则，具体到程序间的URI。后来回学校之后查了一下，发现Content Provider并没有生命周期这一说法，不知道面试官是问错了还是故意挖坑给我跳的，好在没往里面跳。<br><strong>面试官：</strong>开始问到简历上面的项目，先问了Volley的实现机理。<br><strong>我：</strong>因为之前写过四篇文章来介绍Volley，所以Volley的实现机理很清楚，便给他详细的介绍了起来，具体的可以看我的<a href="http://wensibo.com.cn/2017/02/17/%E4%B8%80%E5%8F%A3%E4%B8%80%E5%8F%A3%E5%90%83%E6%8E%89Volley%EF%BC%88%E5%9B%9B%EF%BC%89/" target="_blank" rel="noopener">这篇Volley源码分析</a> 。<br><strong>面试官：</strong>你刚才对Volley的实现机理讲的十分详细，调理也很清晰，很不错，那你知道为什么线程池里面是有5个线程在循环呢？为什么不是6个7个或者8个呢？<br><strong>我：</strong>哎呀，这个问题倒是没有细细去想，但是当初也很奇怪为什么会定5作为全局常量呢？会不会因为5是开发者的幸运数字呢(黑人问号)，后来想了一下对面试官说，可能是因为Volley面向的网络请求是请求量比较小但是请求比较频繁的操作，所以5应该是刚好能够处理得来的，又或许5是一个经过大量的数据实验之后得到的一个相对符合的数量吧！<br><strong>面试官：</strong>笑了笑，其实我也不是很清楚。(尴尬 😧 ，面试官好像想逗我一下)。接着问：说道网络请求方面，你能不能说说像QQ这种IM的通讯机理是怎么样的？<br><strong>我：</strong>有点紧张 😰 ，因为复习时间比较短，所以还没仔细看网络方面的知识，所以就大概说了一下4层结构还有3次握手。<br><strong>面试官：</strong>似乎觉得还可以，继续点头。接着问：Volley网络请求了哪些数据类型？<br><strong>我：</strong>String字符串，图片，XML，JSON。<br><strong>面试官：</strong>服务器是自己搭的吗？<br><strong>我：</strong>尴尬了一下，不，不是自己搭的，是用到了一些天气和全国城市的接口数据，因为当时在做调试，所以没有心思去搭建一个服务器，不过在大二的时候学过WEB开发，对Tomcat比较熟悉，并且简历上的第二个项目就是我当初做的Blog项目，所以对服务器的搭建还是有一些心得的，接着就跟他说了一些搭建的步骤。<br><strong>面试官：</strong>对我的回答很满意，毕竟学Android的如果能够对服务器端有比较深的认识的话在做数据测试的时候是可以省去团队的很多开支的。接着问：说说XML、JSON、GSON有什么样的联系？<br><strong>我：</strong>这个很简单了，有接触过的应该都知道，XML全称叫做可扩展标记语言，它的结构相对简单，可读性强，但是对于一些比较复杂的数据结构就很难存储，JSON的话刚好弥补了XML的这些缺点，至于GSON的话，是因为Google的一个开源库而得名的，这个开源库可以很方便地将JSON数组转换为对象，这在开发中简化了将JSON的字段转换为属性的步骤。<br><strong>面试官：</strong>看着简历问了我的便签项目是如何实现的？<br><strong>我：</strong>因为我做过的很多项目都是会写一些文章来介绍里面实现的机理，如果你对此感兴趣，可以看我这篇<a href="http://wensibo.com.cn/2017/03/08/%E5%86%99%E4%B8%80%E4%B8%AA%E5%B0%8F%E4%BE%BF%E7%AD%BE/" target="_blank" rel="noopener">写一个小便签</a> 。<br><strong>面试官：</strong>数据库的操作用到的是什么类型的数据库？<br><strong>我：</strong>用到的普通的Sqlite。其实我还可以多扩展点的，例如用过GreenDAO框架，所以还可以说说用了GreenDAO与用传统的Sqlite的操作的区别。<br><strong>面试官：</strong>说说你用Github做了些什么？<br><strong>我：</strong>有点不太清楚面试官问这个问题的意思 😮 ，就说经常push项目，订阅了代码家的邮箱推送，每天会推送一些Github的好项目，所以会fork一些优秀的项目，并且在Indigo项目中积极地发issue。<br><strong>面试官：</strong>点点头，似乎觉得还可以。学过C/C++吗？<br><strong>我：</strong>很尴尬，作为一个<code>电子商务</code>专业的学生很怕被问到这个问题，不过还是如实地向他说明情况，没学过C/C++，但是学过JAVA，数据结构、算法、计算机网络，并且我在自学操作系统。<br><strong>面试官：</strong>显然很惊讶没有学过C，但是考虑到是Android开发，所以也就没多为难我，并且了解到我自学操作系统露出了笑容，接着让我说一下算法。<br><strong>我：</strong>咳，算法准备的不是很充分，所以鸡贼的向他讲了最简单的冒泡排序，还没讲完他就频频点头。舒了一口气。<br><strong>面试官：</strong>经常写博客对吧！说说自己写得最好的一篇博客吧。<br><strong>我：</strong>很欣喜，向他讲起了写Volley源码的那四篇文章，他也听得津津有味，感觉自己坚持做的一些事情终于得到别人的认可了，很开心 😊 。<br><strong>面试官：</strong>有没有觉得自己做得比较自豪的事情但是我还没有问到的？<br><strong>我：</strong>写博客啊！向他说道一开始是用的博客园的第三方博客，但是后来很想有自己可以DIY的个人博客，并且很喜欢<code>Material Design</code>所以就花了很多时间来建站，从博客程序的安装，到域名购买、服务器维护、网站推广，自己都用了很多的时间和心思，还说了自己很喜欢MarkDown，真心觉得Word可以仍掉了。他边听边笑。<br><strong>面试官：</strong>听到我写博客的这个过程很是满意，对我露出了笑容。看了看时间，说道：面试快结束了，有什么问题想要问我的吗？<br><strong>我：</strong>面试前就准备好问题了，所以像个小孩子一样问他我可以问您两个问题吗？右手比起了剪刀手。<br><strong>面试官：</strong>当然可以。<br><strong>我：</strong>第一个问题是让他对我的此次面试做一个评价，第二个的话是想问一下面试官的邮箱，以便在往后的学习工作中请教。<br><strong>面试官：</strong>“HR团队有规定，面试官不能与学生们私下交流，所以这个请求我可能无法实现，如果接下来的面试有机会的话我再跟你联系，希望你见谅。至于第一个问题的话，我觉得你挺优秀的，作为一个不是计算机专业的学生能够在大一的时候就清楚自己未来在Android开发的方向，并且为此而努力着，你说到你写博客的时候我也很喜欢。” 他讲起他与他的同事们在工作中也累计了很多的经验与知识，但是分享的群体也就局限于他们团队，他说像我这样把我学到的知识分享给更多的人，这种也是开源精神的一种体现，希望我继续葆有这样的热情，另外就是我对源码的研究十分的仔细，回答问题的时候逻辑十分清晰，看来对源码的理解是十分的到位的，希望我能够继续保持这个习惯，这样我才能够学到更多的知识。</p>
+<p><strong>不出意料，当天晚上接到了二面的通知，第二天早上10点20的面试，似乎觉得自己运气挺不错的，也好像应了那位女士说的。</strong></p>
+<h1 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://wensibo.com.cn/file/img/2017-4-14Tencent/20170412_094221.jpg" alt="手持OP3拍二面" title="">
+                </div>
+                <div class="image-caption">手持OP3拍二面</div>
+            </figure>
+<p>二面前天晚上，因为想到二面可能是总监面，所以抓紧时间复习数据结构、算法还有网络方面的知识，因为就差这两块没有复习了，记得那天晚上躺在床上看到了一点多😖 ，第二天早早起床也是提前两个多小时出发，因为适逢上班高峰期，所以过了好多辆公车还是挤不上，好不容易来了一辆，挤上去又被挤下来了😒 ，好在最后终于上了公车，在公车上看到一个好消息，我的<a href="http://wensibo.com.cn/2017/03/12/GitOnAS/" target="_blank" rel="noopener">上一篇文章</a>被<a href="http://mp.weixin.qq.com/s?timestamp=1492142119&amp;src=3&amp;ver=1&amp;signature=*VhrLZu6lG9ft*sn7Btxc-dwlgXhNHqZPffeCQnUFoJJljgYyOlXtbVKdnW7aRwJiAdhY9D-8VInyXLBC-kqO40JRGOQ9SbPXSXhy5SFXtY5CYVUjoWjZOw7ICG5jHFsqhvMlfqwoSz20Gxikwdsd-LbQM3w7nUcbRxGZfn*o1s=" target="_blank" rel="noopener">郭霖的公众号</a>收录啦！心里是十分的开心啊，因为与郭霖大神也交流了一段时间，并且一直将其视为自己学习的目标，所以自己写的文章能够通过他的审核也是十分的开心。也在期待着今天的二面能有好结果。<br>短信通知进入房间面试，二面的面试官有点胖胖，跟一面的瘦瘦面试官一看就不是同种类型的，似乎更难对付，暗自捏了一把汗。<br><strong>我：</strong>敲门，问好，深深鞠躬并双手呈上简历。<br><strong>面试官：</strong>你好请坐，先做个自我介绍吧！<br><strong>我：</strong>跟一面一样，把自我介绍顺利的说了一遍，当然相比一面也适当加了一些内容，因为涉及隐私，所以就不方便写出来啦。<br><strong>面试官：</strong>绩点很高哦(本人专业课学霸)，Android是自学的对吧？学习多久了？<br><strong>我：</strong>跟一面一样，如是回答。<br><strong>面试官：</strong>印象似乎很深刻，觉得我自学能力不错，并且学习成绩好，应该还是个比较有追求的少年。电子商务专业有哪些课程？(又是这个问题，已经麻痹了😒)<br><strong>我：</strong>像上面的一面回答那样，我很真诚的回答面试官的问题，面试官边听边点点头，听到自己在自学操作系统，就抬起头向我微微笑(有点开心😊)。<br><strong>面试官：</strong>说一下你这个Volley项目吧！讲讲你学到了什么？<br><strong>面试官：</strong>像一面一样，我详细地讲解了Volley的实现机理，并且加上一面面试官问到的为什么是5个线程的问题，阐述了自己对这个问题的看法，面试官从看着简历到双眼凝视我。<br><strong>我：</strong>感觉很有戏，不过也预感总监会问一些比较难的问题，所以还是心有余悸。<br><strong>面试官：</strong>在自己做项目的时候是怎么优化代码的？<br><strong>我：</strong>感觉总监面问的就不是一般的问题，因为过了一面所以底子怎么样他应该是心里有数了，所以就问一些宏观上面的问题，考察我开发的一些习惯，这点对于团队合作开发是至关重要的，没有哪个头想招一些编程习惯不好的孩子吧！所以我就向他介绍了Lint，以及日常经常使用的DDMS里面的traceview，heap，allocation tracker，并且分别介绍他们的功能是怎么样的。说完一大堆之后自己舒了一口气，也没有一开始的怯场了。<br><strong>面试官：</strong>应该觉得我的回答不错，我介绍每个工具的用途的时候他就点点头。接着问，如果你来腾讯实习，是想做UI，业务逻辑，还是网络方面的？<br><strong>我：</strong>很开心能够被问到这种问题，因为我对UI很感兴趣，所以我向面试官说到我对UI的敏锐性比较强，并且向他介绍了Google的Material Design设计规范，因为考虑到腾讯旗下的许多产品并没有遵循这个设计规范，所以我也就没有展开比较腾讯的产品(要是说的产品是面试官负责的，不就GG了)，而是将MD设计扯到了我<a href="http://wensibo.com.cn/" target="_blank" rel="noopener">的博客网站</a>，向他说我的网站使用的是Indigo的主题，这个主题充分利用了MD的设计规范，所以我一开始见到它的时候就喜欢上了，并且花了几天几夜的时间开始搭建并且从<a href="http://www.cnblogs.com/ghylzwsb/" target="_blank" rel="noopener">博客园</a>迁移到Hexo。后来因为过于激动，向面试官说起今天郭霖收录了我的文章。(这个细节处理的不是很好，直接向面试官说起了这件事，感觉十分突兀，可能面试官会觉得我有些许轻狂😴)<br><strong>面试官：</strong>礼貌性的笑了笑并且点点头，并且用MBP打开了我的网站，应该有看到吧！问我怎么看Android的UI中的动画？<br><strong>我：</strong>有点懵逼，不知道面试官想问哪方面？就说了Android的三种动画：Tween，Frame，Property(3.0之后推出的)，还说了Activity的进入退出的动画的实现方式，例如使用style定义Activity的淡出淡入效果，还有可以复写Activity的overridePendingTransition方法实现这个效果。<br><strong>面试官：</strong>似乎觉得我说得不错，让我说说我的博客。<br><strong>我：</strong>很开心的向他介绍起整个搭建的过程，并且积极地为Indigo的主题发Issue，解决Bug。<br><strong>面试官：</strong>使用的是Android Studio对吧(因为简历上写了擅长使用Android Studio)，以前用过Eclipse吗？<br><strong>我：</strong>对这方面有很深的体会，因为一开始使用Eclipse很成熟的时候，发现现在很多开发者都是使用AS，但是自己电脑配置又跟不上，并且因为天朝的关系，编译速度巨慢，Gradle的下载就是隔靴搔痒,但是为了解决这一系列的问题，自己读了很多文章，并且看了一本十分不错的书<code>《Android Studio实战 快速、高效地构建Android应用》</code>，向其介绍起书上的内容。<br><strong>面试官：</strong>很满意的看着我，问我平常逛什么网站。<br><strong>我：</strong>平时喜欢逛Github，并且喜欢网络红人<a href="http://gank.io/" target="_blank" rel="noopener">代码家</a>，订阅了邮箱推送，每天会推送一些Github的优秀项目，所以会Fork别人的好项目，另外的话喜欢看<a href="https://developer.android.google.cn/index.html" target="_blank" rel="noopener">Android的中文开发者网站</a>，还向面试官表达了Google推出中文开发者网站的时候自己激动的心情，他很理解的点点头表示赞同。<br><strong>面试官：</strong>绩点很高哦(6/175)，有没有想过要考研啊？<br><strong>我：</strong>跟面试官聊到后来，感觉他都不想问我技术问题了，于是就有点开始得瑟起来，也有点High，这点可能是二面被刷的一个原因吧。于是就说自己对考研兴趣不大，自己更想在兴趣方面(Android开发)有所发展，想早点有立足之地。<br><strong>面试官：</strong>习惯性的还是点点头，可能心里觉得我这个人不太靠谱吧！接着问，如果公司给你提供实习机会，同时学校给你提供保研机会，那你会怎么选择？<br><strong>我：</strong>当然会选择来腾讯实习，因为对考研兴趣不大，想尽快抱住腾讯爸爸的大腿，结交更多的良师益友，让自己更加强大。(现在想起来，觉得回答的有点单薄，也有点让人觉得自己势力心很强，唉😴)<br><strong>面试官：</strong>什么时候可以来实习呢？可以实习多久？<br><strong>我：</strong>我在官网的招聘信息中看到，官方要求是6月~8月，我说6月已经学期结束了，我可以随时到公司实习，实习时间2~3个月都是可以的，听从公司的安排。<br><strong>面试官：</strong>点点头，似乎没什么问题想问了，就问我有什么问题想问我的吗？<br><strong>我：</strong>跟一面一样，我想请面试官评价一下我此次的面试。谢谢！<br><strong>面试官：</strong>说了我的一些好话，什么学习成绩优秀，有项目经验，经常写博客，说要我继续保持下去，如果有下一轮的话，会安排领导的面试和一轮HR的面试，说了很多。<br><strong>我：</strong>心想面试官觉得我还是不错的，不过实际上是不是这样觉得的我就不得而知了，有可能面试官只是不想打击我而已😂。<br><strong>面试官：</strong>还有什么问题吗？<br><strong>我：</strong>愣了一下，心想为什么面试官为什么一直要问我问题？也就没想太多，随便说，我想请问一下面试官在腾讯工作了这么多年了有什么感受吗？<br><strong>面试官：</strong>很慷慨的向我描述他在腾讯的一些经历和感悟，具体的就不方便写出来了。最后还继续问我，还有什么问题想问我的吗？<br><strong>我：</strong>很尴尬的笑了笑，觉得面试官很想我问他问题欸，不过自己实在没有准备其他问题，就说大概就是这两个问题了，谢谢面试官。(现在想想，面试官是在试探我吧，看看我有没有胆量问他问题，因为大部分学生都是处于比较怯场的状态，只会问一些比较平常的问题，既然面试官这么坚要我问他问题，那就是想考验我与其他人有没有不同的地方啊，唉，怪自己太年轻！)</p>
+<p><strong>最后面试官说：“那我把你的简历留下咯！” 我很开心的说好的，非常感谢面试官对我的面试，深深鞠躬然后离开。回到学校之后一直在等待三面的通知，以为会像一面一样晚上8点多发短信通知，但是直到第二天中午还是没有消息，自己还是很着急的。第二天下午上课的时候查了一下简历的状态，显示自己的此次面试已经结束了。</strong></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>得知自己错过三面的时候突然间觉得有点懵和失望，不过也还是接受了这个结果。可能是二面的时候自己有一些表达上面需要更加斟酌，并且在向面试官提问上面需要更加大胆一点吧！主要有下面几点吧：</p>
+<blockquote>
+<ul>
+<li>更加深厚的底子，同等实力看学校，同等水平看颜值(微笑脸，自己两者都沾不到边)。</li>
+<li>就我个人而言，我对比较新的开源框架接触较少，不过这段时间有在认真刻苦学习了，过些日子会写一些文章总结；另外本人项目经验几乎为0，唉！好学校好专业还是重要的，不过我最近也在做一个稍微复杂的项目，希望下次面试的时候能派上用场。</li>
+<li>面试过程中需要更加沉稳，好好回答每个问题，不能够轻浮。越简单的问题越应该引起注意，而不是自我感觉良好，整个人要飘起来了。</li>
+<li>多发挥自己的优势（我的话是博客可能写的好一点，当然说自己的优势时不要太得瑟！切忌！)。</li>
+<li>面试官想你问他问题的时候，应该表现得跟其他面试者不一样，记住每个问题都是展现自己与众不同的机会，好好把握。</li>
+<li>不要因为一次的失败就停滞不前，可以不开心一阵，但是要重整旗鼓，对下次面试发起挑战！</li>
+</ul>
+</blockquote>
+<h1 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h1><p>我想向大家推荐一下一个非计算机专业的学生是如何自学Android的，不过这仅仅代表我个人的学习方式，绝不是最好的。</p>
+<h2 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h2><blockquote>
+<ul>
+<li><a href="https://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.4M6BQ4&amp;id=542237674970&amp;user_id=1664456249&amp;cat_id=2&amp;is_b=1&amp;rn=fd2416db11514d651ffe9d4c6a38202a" target="_blank" rel="noopener">《第一行代码》(第二版)</a></li>
+<li><a href="https://item.jd.com/11939710.html?dist=jd" target="_blank" rel="noopener">《Android编程权威指南》（第2版）</a></li>
+<li><a href="https://item.jd.com/11791229.html?dist=jd" target="_blank" rel="noopener">《App研发录》</a></li>
+<li><a href="https://item.jd.com/10831235.html?dist=jd" target="_blank" rel="noopener">《深入理解Android》（卷1）</a></li>
+<li><a href="https://item.jd.com/11760209.html?dist=jd" target="_blank" rel="noopener">《Android开发艺术探索》</a></li>
+<li><a href="http://item.jd.com/12001016.html?dist=jd" target="_blank" rel="noopener">《Android Studio实战 快速、高效地构建Android应用》</a></li>
+<li><a href="https://item.jd.com/10057319.html?dist=jd" target="_blank" rel="noopener">《设计模式：可复用面向对象软件的基础》</a></li>
+<li><a href="https://item.jd.com/10058902.html?dist=jd" target="_blank" rel="noopener">《Effective Java》</a></li>
+<li><a href="http://item.jd.com/11733256.html?dist=jd" target="_blank" rel="noopener">《GitHub入门与实践》</a></li>
+</ul>
+</blockquote>
+<h2 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h2><blockquote>
+<ul>
+<li><a href="https://developer.android.google.cn/index.html" target="_blank" rel="noopener">Android开发者中文网站</a></li>
+<li><a href="http://blog.csdn.net/guolin_blog" target="_blank" rel="noopener">郭霖的专栏</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791" target="_blank" rel="noopener">鸿洋博客</a></li>
+<li><a href="https://github.com/github" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><blockquote>
+<ul>
+<li>勤奋打码</li>
+<li>勤奋打码</li>
+<li>勤奋打码</li>
+<li>重要的事情说三遍</li>
+</ul>
+</blockquote>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>这篇文章是我第一次面试后记录的，这只能是我个人的经验总结，并不一定全部对，也不一定适合所有人，所以如果大家觉得我有哪些讲得不好的请给我<a href="http://wensibo.com.cn/" target="_blank" rel="noopener">留言</a>，希望我们能够继续交流。也祝大家在面试工作中好运！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:20.496Z" itemprop="dateUpdated">2018-10-21 16:26:20</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/04/13/2017Tencent_review/" target="_blank" rel="external">http://www.wensibo.top/2017/04/13/2017Tencent_review/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&title=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&title=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&source=本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布
+或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/04/13/2017Tencent_review/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/16/birthday/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">给21岁的自己</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/12/GitOnAS/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">或许是介绍Android Studio使用Git最详细的文章</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="2017Tencent_review"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&title=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&title=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&source=本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布
+或许你已经看过这篇文章，但我想告诉大家的是其实我并没有大家说的那么厉害，本人学到的还只..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/04/13/2017Tencent_review/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《2017腾讯实习生Android客户端开发面试总结》 — 温斯渤&url=http://www.wensibo.top/2017/04/13/2017Tencent_review/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/04/13/2017Tencent_review/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aQZKDMAwEwPz/0+wDdoEZm2wVdnNKJQHcPqgkS59PfB2/rrNfr785e/LZXQ9fGBgYr2Ucl9c1I7krWWL7/D+eg4GBsQEjCYXJK/Mw3W7EzZoxMDAwJtLBs3vzgIuBgYExFnCvSfmik63BwMDAyIvYZHF5AM0/P1yLY2BgvJCRn7r//+ev9DcwMDBexTjKK0nX8v+34fV0VRgYGEsz8gD37VZlUlTflMEYGBhLM8YC30zbsi2Mk39iYGDsxsi/ma8024ZoEXAxMDAWYuR/zZudY2nfVAMAAwNjUcZTAbRtQ7YDHDdPw8DAWJrRJmHtcFi7TW2CWO8rBgbGaxltczFPE/MlJoDBsQwMDIwlGDOPy+/NW5ttgoiBgbE2Iy8p26UnrYWZgF60BDAwMJZg5C/Oj/7bUDuWbmJgYOzDmB+2uF5uPnA2dgiIgYGxNiMPrO0Ex9j4RX7X6bZiYGBswJg/OGsP0WbuxcDA2I2Rh7y2O9omfw+McWBgYCzHmB/kmt+CPMTfDFtgYGAszbh+RI6ZL03bNBEDA2NPRhuI2xK3zliTVWFgYCzKOMprbNiiDcFRIpjPd2BgYLycMZactSMabVI4hsfAwFibUR9sxeng/HBG3dPAwMBYmlFUvUOYJB1swRgYGBhjKeBYOvjAGzEwMDDKYa887RvbjtMiFgMDY2lG2wzIy862/dkWuhgYGDswZo7Dnuoh5ingVFMTAwPjfYwf/jjk8yDPN+IAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

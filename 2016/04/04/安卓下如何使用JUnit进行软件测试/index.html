@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/">
+    
+    
+    <title>安卓下如何使用JUnit进行软件测试 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JUnit测试">
+    <meta name="description" content="软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android下利用eclipse进行开发时如何使用JUnit进行单元测试。">
+<meta name="keywords" content="JUnit测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓下如何使用JUnit进行软件测试">
+<meta property="og:url" content="http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android下利用eclipse进行开发时如何使用JUnit进行单元测试。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安卓下如何使用JUnit进行软件测试">
+<meta name="twitter:description" content="软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android下利用eclipse进行开发时如何使用JUnit进行单元测试。">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">安卓下如何使用JUnit进行软件测试</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">安卓下如何使用JUnit进行软件测试</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-04T14:56:04.000Z" itemprop="datePublished" class="page-time">
+  2016-04-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试的分类（仅举例其中一些方法）"><span class="post-toc-number">1.</span> <span class="post-toc-text">测试的分类（仅举例其中一些方法）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#根据测试是否知道代码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">根据测试是否知道代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#根据测试的粒度"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">根据测试的粒度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#根据测试的次数"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">根据测试的次数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#举例对其中的JUnit测试进行讲解"><span class="post-toc-number">2.</span> <span class="post-toc-text">举例对其中的JUnit测试进行讲解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-安卓下如何使用JUnit进行软件测试" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">安卓下如何使用JUnit进行软件测试</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-04 22:56:04" datetime="2016-04-04T14:56:04.000Z" itemprop="datePublished">2016-04-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android下利用eclipse进行开发时如何使用JUnit进行单元测试。<br><a id="more"></a></p>
+<h2 id="测试的分类（仅举例其中一些方法）"><a href="#测试的分类（仅举例其中一些方法）" class="headerlink" title="测试的分类（仅举例其中一些方法）"></a>测试的分类（仅举例其中一些方法）</h2><h3 id="根据测试是否知道代码"><a href="#根据测试是否知道代码" class="headerlink" title="根据测试是否知道代码"></a>根据测试是否知道代码</h3><blockquote>
+<p>1、黑盒测试(测试的时候不知道具体代码):指的是把被测的软件看作是一个黑盒子，我们不去关心盒子里面的结构是什么样子的，只关心软件的输入数据和输出结果。它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数据而产生正确的输出信息。黑盒测试着眼于程序外部结构，不考虑内部逻辑结构，主要针对软件界面和软件功能进行测试。 </p>
+</blockquote>
+<blockquote>
+<p>2、白盒测试(测试的时候需要了解具体的代码):指的是把盒子盖子打开，去研究里面的源代码和程序结果。是按照程序内部的结构测试程序，通过测试来检测产品内部动作是否按照设计规格说明书的规定正常进行，检验程序中的每条通路是否都能按预定要求正确工作。</p>
+</blockquote>
+<blockquote>
+<p>3、灰盒测试(灰盒测试介于黑盒测试与白盒测试之间):可以这样理解，灰盒测试关注输出对于输入的正确性，同时也关注内部表现，但这种关注不象白盒那样详细、完整，只是通过一些表征性的现象、事件、标志来判断内部的运行状态，有时候输出是正确的，但内部其实已经错误了，这种情况非常多，如果每次都通过白盒测试来操作，效率会很低，因此需要采取这样的一种灰盒的方法。 </p>
+</blockquote>
+<h3 id="根据测试的粒度"><a href="#根据测试的粒度" class="headerlink" title="根据测试的粒度"></a>根据测试的粒度</h3><blockquote>
+<p>1、方法测试(function test)：验证模块的功能。</p>
+</blockquote>
+<blockquote>
+<p>2、单元测试(unit test):在最低的功能/参数上验证程序的准确性,比如测试一个函数的正确性。</p>
+</blockquote>
+<blockquote>
+<p>3、集成测试(intergration test):验证几个互相有依赖关系的模块的功能。</p>
+</blockquote>
+<h3 id="根据测试的次数"><a href="#根据测试的次数" class="headerlink" title="根据测试的次数"></a>根据测试的次数</h3><blockquote>
+<p>1、冒烟测试(smoke test)：指的是测试人员在同一时间对软件进行大量的点击或者功能测试，测试软件遭到这样的压力时是否能够扛得住，关键在于同一个用户在极短的时间内对软件进行大量重复的测试。</p>
+</blockquote>
+<blockquote>
+<p>2、压力测试(pressure test):指的是软件或者网站在同一时间内被大量的用户访问，突出的是软件或者网站被大量客户访问时的抗压能力，一般运用于大型网站的测试。</p>
+</blockquote>
+<h2 id="举例对其中的JUnit测试进行讲解"><a href="#举例对其中的JUnit测试进行讲解" class="headerlink" title="举例对其中的JUnit测试进行讲解"></a>举例对其中的JUnit测试进行讲解</h2><p>这里我们想要对安卓应用程序中AppService类中的randomArray()方法进行单元测试。</p>
+<p><strong>注：试直接使用java的JUnit是无效的，应为java应用程序时在java虚拟机(JVM)运行的，而安卓程序则是在终端的Dalvik虚拟机运行的，所以直接对其进行JUnit测试会报错，故我们可以使用以下方法进行测试。</strong></p>
+<blockquote>
+<p>1、创建一个包，并在包下新建一个测试类(TestService)用来测试该方法，具体代码如下。</p>
+</blockquote>
+<ul>
+<li>TestService类：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.app.wolf;</span><br><span class="line"></span><br><span class="line"><span class="comment">//AppService 的randomArray方法：</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppService</span> </span>&#123;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 随机指定范围内N个不重复的数 在初始化的无重复待选数组中随机产生一个数放入结果中，</span></span><br><span class="line"><span class="comment">     * 将待选数组被随机到的数，用待选数组(len-1)下标对应的数替换 然后从len-2里随机产生下一个随机数，如此类推</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> max</span></span><br><span class="line"><span class="comment">     *            指定范围最大值</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> min</span></span><br><span class="line"><span class="comment">     *            指定范围最小值</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> n</span></span><br><span class="line"><span class="comment">     *            随机数个数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> int[] 随机数结果集</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] randomArray(<span class="keyword">int</span> min, <span class="keyword">int</span> max, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span> len = max - min + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (max &lt; min || n &gt; len) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化给定范围的待选数组</span></span><br><span class="line">        <span class="keyword">int</span>[] source = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = min; i &lt; min + len; i++) &#123;</span><br><span class="line">            source[i - min] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        Random rd = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//这个算法666，我理解的步骤应该是这样的</span></span><br><span class="line">        <span class="comment">//1、首先初始化一个数组source，这个数组的长度是用户选择要开始游戏的人数，接着将数组中的元素分别是0~数组长度-1；</span></span><br><span class="line">        <span class="comment">//2、接着借用一个一个随机变量index,这个变量产生的随机数范围是0~数组长度-1；</span></span><br><span class="line">        <span class="comment">//3、最后将每一个index对应的source的内容对应到最后返回的result数组中；</span></span><br><span class="line">        <span class="comment">//最厉害的地方就是首先用index索引取得source数组中的内容，此时数组的长度减1，接着用数组的最后一个元素来代替之，</span></span><br><span class="line">        <span class="comment">//这样就不会出现数组中元素被重复使用的情况了。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; result.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 待选数组0到(len-2)随机一个下标</span></span><br><span class="line">            index = Math.abs(rd.nextInt() % len--);</span><br><span class="line">            <span class="comment">// 将随机到的数放入结果集</span></span><br><span class="line">            result[i] = source[index];</span><br><span class="line">            <span class="comment">// 将待选数组中被随机到的数，用待选数组(len-1)下标对应的数替换</span></span><br><span class="line">            source[index] = source[len];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:result)&#123;</span><br><span class="line">            System.out.print(i+<span class="string">"\t"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>TestService类：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.app.wolf.testService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.app.wolf.AppService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.R.integer;</span><br><span class="line"><span class="keyword">import</span> android.test.AndroidTestCase;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService</span> <span class="keyword">extends</span> <span class="title">AndroidTestCase</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用JUnit测试randomArray方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRandomArray</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        AppService service=<span class="keyword">new</span> AppService();</span><br><span class="line">        <span class="keyword">int</span>[] resultArray=service.randomArray(<span class="number">2</span>, <span class="number">7</span>, <span class="number">6</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> result:resultArray)&#123;</span><br><span class="line">            System.out.print(result+<span class="string">"\t"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>2、如果直接在outline中对 testRandomArray()方法右击进行Android JUnit Test ，则会曝出以下异常：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WolfApp does not specify a android.test.InstrumentationTestRunner </span><br><span class="line">instrumentation or does not declare uses-library android.test.runner in its AndroidManifest.xml`</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>这是因为在AndroidManifest.xml中没有对 InstrumentationTestRunner 以及 uses-library 进行配置。</p>
+</blockquote>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</p>
+<blockquote>
+<p>3、对于上面的错误，我们可以在AndroidManifest.xml文件加上以下的代码进行配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用该行语句对instrumentation进行配置，但是值得注意的是targetPackage应该选择你想要测试的方法所在的包 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">instrumentation</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.test.InstrumentationTestRunner"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:targetPackage</span>=<span class="string">"com.app.wolf"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">instrumentation</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 使用改行代码可以对uses-library进行配置，但是必须放在application节点下 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">uses-library</span> <span class="attr">android:name</span>=<span class="string">"android.test.runner"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>对AndroidManifest.xml进行配置好了之后就回到第2步对该方法进行Android JUnit Test就能够成功执行了。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在测试的过程中应该适当地使用断言assert对程序进行测试，这对于检验程序的运行以及检查出错地方具有很有效的用处，但是本测试实验由于输出的为数组，要判断的话应该检查数组中的元素是否为要求的元素，这样检验起来会比较麻烦，所以笔者选择了打印输出的方式进行检验。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.044Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2016/04/04/安卓下如何使用JUnit进行软件测试/" target="_blank" rel="external">http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUnit测试/">JUnit测试</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&title=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&title=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&source=软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/10/如何实现微信5.0的滑动效果/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何实现微信5.0的滑动效果</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/03/将一个数组进行随机再排列/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">将一个数组进行随机再排列</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="安卓下如何使用JUnit进行软件测试"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&title=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&title=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&source=软件测试作为程序员必备的一项技能是决定软件开发周期长短以及软件运行成败的关键，可以说好的软件不是代码写得好而是有效的测试决定的。本文将介绍在Android..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安卓下如何使用JUnit进行软件测试》 — 温斯渤&url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2016/04/04/安卓下如何使用JUnit进行软件测试/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3ay47qMBAE0Pn/n+Zu7whNqOqOgcXJCqE8fIwUN+X++YmPx3/H9TnPn6/PzJ+YXDU88PDw8BZDfz6Sc67Pv8Y/Dzq/2/UY8PDw8E7z8hf9Nen6DndNRDJmPDw8vG/j5dXsfoLy8hoPDw/vm3n5UDbRxofXPTw8PLxLXhIutDFrshi003cwa8HDw8OLefvi+P2fj+zv4eHh4a131fNXeV4Et2XxY3Hg4eHhneDNWqDaQnlfCuflMh4eHt57eDmmjWuTR7aLR9t8gIeHh3cvrx16W1gnE9F+X5yDh4eH90bebBOrvU8yKS3pxX8FPDw8vDVvA8g3yfJSe7OD9+e1eHh4eAd4m+A12e5KAoVZWV+Hwnh4eHhrXtIk2i4Dsw3+lhRNCh4eHt5bePmmVB4WzBq5ZgtD8Qvg4eHh3cSbhRF5oDBrO2i/wcPDwzvN28cKeSybLzObtoZfJTUeHh7eAd7mb38bzs5e8e2zhv0LeHh4eOXufx65tkFGO9B8sSmaD/Dw8PBu5SWF9aYs3rcXtOHFrzPx8PDwbuUlD5vFB0mYu5/EF+PHw8PDO8ZLXrubwrqNKuqgoU2p8fDw8Ba8tpkgj1zzOGN2fzw8PLzP8tqXch5eJItB25TQBrt4eHh4J3ib7agkesgL9NlRBL54eHh4N/HaF24b9e5bpmZtCnh4eHjv4c2aCfIYN792M54/FwY8PDy8A7w8jJhtleWxQl6sv7gKDw8P71beozz2D96EGskPEP1ueHh4eAvePnidBRCzSZw1ueLh4eGd4LXFbts+tQksboiG8fDw8I7xZttO7fZYvhjMiuMXPWV4eHh4H+IlW1abFoF2i+vF+Xh4eHhfyWuRSWtX3kbwYhLx8PDwjvHysnizeOQb/5uSGg8PD+80b3bZbFKSKburEQEPDw/vAO8fnZE/pNpyPlwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

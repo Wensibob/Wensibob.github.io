@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/">
+    
+    
+    <title>一口一口吃掉Hexo（二）【新增配置404】 | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="使用Hexo建立个人博客网站">
+    <meta name="description" content="本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考官方文档，理论上来说会比windows简单。">
+<meta name="keywords" content="使用Hexo建立个人博客网站">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一口一口吃掉Hexo（二）【新增配置404】">
+<meta property="og:url" content="http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考官方文档，理论上来说会比windows简单。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-01-12T08-13-12.446Z.png">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-01-12T08-13-12.446Z.png">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-01-12T08-29-11.323Z.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一口一口吃掉Hexo（二）【新增配置404】">
+<meta name="twitter:description" content="本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考官方文档，理论上来说会比windows简单。">
+<meta name="twitter:image" content="http://www.wensibo.top/file/img/2017-01-12T08-13-12.446Z.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一口一口吃掉Hexo（二）【新增配置404】</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一口一口吃掉Hexo（二）【新增配置404】</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-12T09:34:25.000Z" itemprop="datePublished" class="page-time">
+  2017-01-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Hexo/">一口一口吃掉Hexo</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地安装Hexo"><span class="post-toc-number">1.</span> <span class="post-toc-text">本地安装Hexo</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装Git"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">安装Git</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装Node-js"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">安装Node.js</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装Hexo"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">安装Hexo</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#搭建网站"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">搭建网站</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地调试Hexo"><span class="post-toc-number">2.</span> <span class="post-toc-text">本地调试Hexo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地更换主题"><span class="post-toc-number">3.</span> <span class="post-toc-text">本地更换主题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装主题"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">安装主题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#依赖安装"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">依赖安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Less"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">Less</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Feed"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">Feed</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Json-content"><span class="post-toc-number">3.2.3.</span> <span class="post-toc-text">Json-content</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#QRCode"><span class="post-toc-number">3.2.4.</span> <span class="post-toc-text">QRCode</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开启标签页"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">开启标签页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开启分类页"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">开启分类页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大坑之404页面配置"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">大坑之404页面配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开心地浏览吧！"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">开心地浏览吧！</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-一口一口吃掉Hexo（二）【新增配置404】" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一口一口吃掉Hexo（二）【新增配置404】</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-12 17:34:25" datetime="2017-01-12T09:34:25.000Z" itemprop="datePublished">2017-01-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Hexo/">一口一口吃掉Hexo</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">官方文档</a>，理论上来说会比windows简单。<br><a id="more"></a></p>
+<h2 id="本地安装Hexo"><a href="#本地安装Hexo" class="headerlink" title="本地安装Hexo"></a>本地安装Hexo</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><ul>
+<li>下载并安装<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a>。</li>
+<li>如果你已经在本地使用过Git，并且绑定了你的Github账号，那么请看<a href="#安装Node.js">下一步</a>吧!如果你是首次使用Git，那么你应当帮顶一下你的Github账号，在<a href="https://github.com/" target="_blank" rel="noopener">这里</a>注册你的Github账号。</li>
+<li><p>使用下面的命令创建SSH Key。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有<strong>id_rsa</strong>和<strong>id_rsa.pub8</strong>两个文件，这两个就是SSH Key的秘钥对，<strong>id_rsa</strong>是私钥，不能泄露出去，<strong>id_rsa.pub</strong>是公钥，可以放心地告诉任何人。</p>
+</li>
+<li>登陆GitHub，打开“Account settings”，“SSH Keys”页面，然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容，点“Add Key”，你就应该看到已经添加的Key。</li>
+</ul>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>到<a href="http://nodejs.org/" target="_blank" rel="noopener">这里</a>下载并安装程序。</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>所有的环境搭建好之后就可以打开git bash，并使用下面的命令进行安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<h3 id="搭建网站"><a href="#搭建网站" class="headerlink" title="搭建网站"></a>搭建网站</h3><p>安装 Hexo 完成后，执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
+<p>这个过程需要一定的时间，请耐心等待。<br>建成之后的目录结构大致如下，可能会有所差异，并无大碍。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>_config.yml</strong> 是网站的配置信息，大部分时候你会使用到他。</li>
+<li><strong>source</strong> 目录下面存放的是你编写的博客文章，在 <strong>_posts</strong> 目录下为你已经发表的文章，在 <strong>_drafts</strong> 目录下为你存放的草稿文章，当然你可能没有这个文件夹，因为一开始你还没有新建草稿文章。</li>
+<li><strong>themes</strong> 目录为你的博客网站使用的主题，程序默认的主题landscape，他长这样：</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-01-12T08-13-12.446Z.png" alt="landscape" title="">
+                </div>
+                <div class="image-caption">landscape</div>
+            </figure>
+<hr>
+<h2 id="本地调试Hexo"><a href="#本地调试Hexo" class="headerlink" title="本地调试Hexo"></a>本地调试Hexo</h2><p>###启动你的网站</p>
+<ul>
+<li><p>使用如下命令进入你的博客网站目录，例如我的目录为/e/blog。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /e/blog</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行如下命令启动Hexo服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line">或者</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果幸运的话，执行完上面的命令之后你将可以通过浏览器访问localhost:4000看到博客网站的主页，他大概长这样，你已经看过了对吧。</p>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-01-12T08-13-12.446Z.png" alt="landscape" title="">
+                </div>
+                <div class="image-caption">landscape</div>
+            </figure>
+<ul>
+<li>如果你出现的问题,请联系我或者自行google。</li>
+</ul>
+<hr>
+<h2 id="本地更换主题"><a href="#本地更换主题" class="headerlink" title="本地更换主题"></a>本地更换主题</h2><p>如果你不喜欢默认主题的话，那就在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">这里</a>找到你喜欢的吧！相信总有一款适合你。<br><br><strong>我这个系列的教程将会使用<a href="http://www.wensibo.top">Indigo</a>这个主题，基本来说设置大同小异，他长这样：</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-01-12T08-29-11.323Z.png" alt="Indigo" title="">
+                </div>
+                <div class="image-caption">Indigo</div>
+            </figure></p>
+<h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><p>确认你的Hexo版本在3.0以上，以及Node版本为6.x以上，进入Hexo根目录（例如我的为/e/blog），执行以下命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:yscoder/hexo-theme-indigo.git themes/indigo</span><br></pre></td></tr></table></figure></p>
+<h3 id="依赖安装"><a href="#依赖安装" class="headerlink" title="依赖安装"></a>依赖安装</h3><p>在Hexo的根目录下安装下面的依赖，如果你已经安装过了，那就不用再次安装。</p>
+<h4 id="Less"><a href="#Less" class="headerlink" title="Less"></a>Less</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-renderer-less --save</span><br></pre></td></tr></table></figure>
+<h4 id="Feed"><a href="#Feed" class="headerlink" title="Feed"></a>Feed</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+<h4 id="Json-content"><a href="#Json-content" class="headerlink" title="Json-content"></a>Json-content</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-json-content --save</span><br></pre></td></tr></table></figure>
+<h4 id="QRCode"><a href="#QRCode" class="headerlink" title="QRCode"></a>QRCode</h4><p>用于生成分享二维码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-helper-qrcode --save</span><br></pre></td></tr></table></figure></p>
+<h3 id="开启标签页"><a href="#开启标签页" class="headerlink" title="开启标签页"></a>开启标签页</h3><p><strong>当初就是在这里没有开启，所以最后点击“标签“的时候是会出现异常的</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></p>
+<p>修改blog/source/tags/index.md</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">layout: tags</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<h3 id="开启分类页"><a href="#开启分类页" class="headerlink" title="开启分类页"></a>开启分类页</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+<p>修改blog/source/categories/index.md<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">layout: categories</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<h3 id="大坑之404页面配置"><a href="#大坑之404页面配置" class="headerlink" title="大坑之404页面配置"></a>大坑之404页面配置</h3><p>新建一个404.html文件，具体的样式你可以自己写，网上应该也挺多的，记得将它放在<strong>blog/public</strong>下，就放这里就行了，网上很多人说放在source下，亲试不可用！</p>
+<h3 id="开心地浏览吧！"><a href="#开心地浏览吧！" class="headerlink" title="开心地浏览吧！"></a>开心地浏览吧！</h3><p>同样是打开浏览器，访问localhost:4000，就可以看到亲切的Indigo主题了。<br><strong>如果你发现遇到了问题，请你来到<a href="https://github.com/yscoder/hexo-theme-indigo/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">这里</a>查看解决方法，如果这里不能满足你，请像作者发Issues，或者站内留言or给我发邮件<a href="mailto:Wensibob@gmail.com" target="_blank" rel="noopener">Wensibob@gmail.com</a></strong></p>
+<p>下回见!!!</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.216Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/" target="_blank" rel="external">http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/使用Hexo建立个人博客网站/">使用Hexo建立个人博客网站</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&title=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&title=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&source=本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考官方文档，理论上来说会比w..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/01/12/一口一口吃掉Hexo(三)/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一口一口吃掉Hexo（三）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/01/11/一口一口吃掉Hexo(一)/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一口一口吃掉Hexo（一）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="一口一口吃掉Hexo（二）【新增配置404】"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&title=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&title=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&source=本次系列教程的第二篇文章我会介绍如何在本地安装Hexo，请注意我使用的Windows系统，如果你是Mac或者Ubuntu，请参考官方文档，理论上来说会比w..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Hexo（二）【新增配置404】》 — 温斯渤&url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/01/12/一口一口吃掉Hexo（二）【新增配置404】/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJElEQVR42u3aQZIiMQwEQP7/afYFDVVy7wSI7BMBg+3UHIQlPR7x83z5vP5WsnK++2yF4YONjY39JeyEdLVxvmVy6Kv1X+9+dc43/x5sbGzsdez8QMlmrxlJikowSeAu38fGxsb+YXZ+3JaUrzA7JzY2Njb2XUHJC1J54sTGxsbGzn/u52mpLfe37/xRLQ0bGxv749ltcf+TX/+X/jY2Njb2B7Of5XNXkShJSLPzRN/CxsbGXsTOE0BbDDopReWhmZ0fGxsbexP73gvAXeDzoZ83ocHGxsZexD7ZrC3En5fyZ+2KN3hsbGzsFex8uWT4ZnbBOC/610kXGxsbewU7SQP50sXgY3khOd/xsqiEjY2NvYLdXiHa92fjkrMQRIHAxsbGXsTOU1deJGpLPHcl0SKBYWNjYy9i58MueQgSTFKQyhvM+XmwsbGx97HbhHRe1j8ZnZy1BOq8jY2Njf1V7LagMyPl6SRPbEenxcbGxl7Kzgs9syZrm5ZaWDF8iY2Njb2Ife+YziwttW2Gk2JW0Q/BxsbG/ip2W+6ZjekkocmvNPm3jmpp2NjY2B/Pzgs3eSLJLxXtcfMUGzV3sbGxsVew2wQzez9p5c5S3dHIDjY2NvYKdt64fR255NNZypkVmN6EHhsbG3spux1/SUKQN3HbS07bWo6KStjY2NhfyG4LNLOC0cnrJDSzuUpsbGzsHew8MZyX7E8avbMbxGXgsLGxsRex2yvH7Od+2zYu8m05MPRoo4iNjY39hey2bZCX+NtPT64ukQgbGxt7HfukAZAnp1k5KU9vxTrY2NjY69jnzd28QJ/3Ltr0lnwXGxsbeys7STl5ozc5XLvCSRvjsj2AjY2NvZQ9+6GfF6fa0lIeguLBxsbGXsF+ls8M0/5N3oSejRBhY2Njb2Lfm+TqVuut7HY1bGxs7E3sWdJqB33aAtbJ0E+0LzY2NvY6dpsY2iPOivgnRaU3/xhsbGzsH2bPxiLb60obiDpw2NjY2D/MTrb/+9Dk/VxsbGzsrey8cHPX5eTeNkAebmxsbOx97LZAk7d777re5Ont9V7Y2NjY69j/AFikpYH5PrNUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

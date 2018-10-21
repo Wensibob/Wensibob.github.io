@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-90095743-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <link rel="canonical" href="http://wensibo.top/2017/02/17/一口一口吃掉Volley（三）/">
+    
+    
+    <title>一口一口吃掉Volley（三） | 温斯渤 | To Be A Better Man.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Volley,Android">
+    <meta name="description" content="学习了一口一口吃掉Volley（二）之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或者你想使用Google的gson，那么当Volley不能直接提供给我们这些功能的时候就需要我们进行自定义了，第一节我也向大家讲过Volley面向接口编程，使得其很容易扩展，那么这节课我们就一起来学习自定义的Request吧！">
+<meta name="keywords" content="Volley,Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一口一口吃掉Volley（三）">
+<meta property="og:url" content="http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/index.html">
+<meta property="og:site_name" content="温斯渤">
+<meta property="og:description" content="学习了一口一口吃掉Volley（二）之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或者你想使用Google的gson，那么当Volley不能直接提供给我们这些功能的时候就需要我们进行自定义了，第一节我也向大家讲过Volley面向接口编程，使得其很容易扩展，那么这节课我们就一起来学习自定义的Request吧！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-2-17volley/5.png">
+<meta property="og:image" content="http://www.wensibo.top/file/img/2017-2-17volley/6.png">
+<meta property="og:updated_time" content="2018-10-21T08:26:21.448Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一口一口吃掉Volley（三）">
+<meta name="twitter:description" content="学习了一口一口吃掉Volley（二）之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或者你想使用Google的gson，那么当Volley不能直接提供给我们这些功能的时候就需要我们进行自定义了，第一节我也向大家讲过Volley面向接口编程，使得其很容易扩展，那么这节课我们就一起来学习自定义的Request吧！">
+<meta name="twitter:image" content="http://www.wensibo.top/file/img/2017-2-17volley/5.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">温斯渤</h5>
+          <a href="mailto:Wensibob@gmail.com" title="Wensibob@gmail.com" class="mail">Wensibob@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Wensibob" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/ghylzwsb/" target="_blank">
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">一口一口吃掉Volley（三）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">一口一口吃掉Volley（三）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-02-17T07:23:25.000Z" itemprop="datePublished" class="page-time">
+  2017-02-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Volley/">一口一口吃掉Volley</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#从StringRequest开始讲讲思路"><span class="post-toc-number">1.</span> <span class="post-toc-text">从StringRequest开始讲讲思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义XMLRequest"><span class="post-toc-number">2.</span> <span class="post-toc-text">自定义XMLRequest</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义GsonRequest"><span class="post-toc-number">3.</span> <span class="post-toc-text">自定义GsonRequest</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-一口一口吃掉Volley（三）" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">一口一口吃掉Volley（三）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-02-17 15:23:25" datetime="2017-02-17T07:23:25.000Z" itemprop="datePublished">2017-02-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/一口一口吃掉Volley/">一口一口吃掉Volley</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>学习了<a href="http://wensibo.top/2017/02/17/%E4%B8%80%E5%8F%A3%E4%B8%80%E5%8F%A3%E5%90%83%E6%8E%89Volley%EF%BC%88%E4%BA%8C%EF%BC%89/" target="_blank" rel="noopener">一口一口吃掉Volley（二）</a>之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或者你想使用Google的gson，那么当Volley不能直接提供给我们这些功能的时候就需要我们进行自定义了，第一节我也向大家讲过Volley面向接口编程，使得其很容易扩展，那么这节课我们就一起来学习自定义的Request吧！<br><a id="more"></a></p>
+<h2 id="从StringRequest开始讲讲思路"><a href="#从StringRequest开始讲讲思路" class="headerlink" title="从StringRequest开始讲讲思路"></a>从StringRequest开始讲讲思路</h2><p>先上最基本的StringRequest源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringRequest</span> <span class="keyword">extends</span> <span class="title">Request</span>&lt;<span class="title">String</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Response.Listener&lt;String&gt; mListener;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 根据给定的METHOD设置对应的request. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StringRequest</span><span class="params">(<span class="keyword">int</span> method, String url, Response.Listener&lt;String&gt; listener,</span></span></span><br><span class="line"><span class="function"><span class="params">                         Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(method, url, errorListener);</span><br><span class="line">        mListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 默认为GET请求的request. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StringRequest</span><span class="params">(String url, Response.Listener&lt;String&gt; listener,</span></span></span><br><span class="line"><span class="function"><span class="params">                         Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(Method.GET, url, listener, errorListener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 将HTTP请求结果转换为String. */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Response&lt;String&gt; <span class="title">parseNetworkResponse</span><span class="params">(NetworkResponse response)</span> </span>&#123;</span><br><span class="line">        String parsed;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            parsed = <span class="keyword">new</span> String(response.data, HttpHeaderParser.parseCharset(response.headers));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            parsed = <span class="keyword">new</span> String(response.data);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 将解析的String结果传递给用户的回调接口. */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">deliverResponse</span><span class="params">(String response)</span> </span>&#123;</span><br><span class="line">        mListener.onResponse(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们应该可以提炼出如下几点：</p>
+<ul>
+<li>StringRequest继承自Request类，并制定其泛型为String，那么当我们自定义XMLRequest时就应该指定类型为XmlPullParser。</li>
+<li>有两个构造函数，默认使用的GET请求。</li>
+<li>由于Request类中的deliverResponse()和parseNetworkResponse()是两个抽象方法，因此自定义Request中需要对这两个方法进行实现。</li>
+<li>deliverResponse()方法中仅仅是调用了mListener中的onResponse()方法，并将response内容传入即可，这样就可以将服务器响应的数据进行回调。</li>
+<li>parseNetworkResponse()方法中则是对服务器响应的数据进行解析，其中数据是以字节的形式存放在NetworkResponse的response变量中的，这里将数据取出然后组装成一个String，并传入Response的success()方法中即可。<br>既然知道内部实现的逻辑，那就开始动手吧！</li>
+</ul>
+<h2 id="自定义XMLRequest"><a href="#自定义XMLRequest" class="headerlink" title="自定义XMLRequest"></a>自定义XMLRequest</h2><p><strong>① 直接上代码啦！</strong><br>按照刚才我们解析StringRequest得到的几点结论，我们应该不难得到XMLRequest：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XMLRequest</span> <span class="keyword">extends</span> <span class="title">Request</span>&lt;<span class="title">XmlPullParser</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Response.Listener&lt;XmlPullParser&gt; mListener;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XMLRequest</span><span class="params">(<span class="keyword">int</span> method, String url, Response.Listener&lt;XmlPullParser&gt; listener, Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(method, url, errorListener);</span><br><span class="line">        mListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XMLRequest</span><span class="params">( String url, Response.Listener&lt;XmlPullParser&gt; listener, Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(Method.GET, url, listener, errorListener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Response&lt;XmlPullParser&gt; <span class="title">parseNetworkResponse</span><span class="params">(NetworkResponse response)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.headers.put(<span class="string">"HTTP.CONTENT_TYPE"</span>, <span class="string">"utf-8"</span>);</span><br><span class="line">            String xmlString = <span class="keyword">new</span> String(response.data,<span class="string">"utf-8"</span>);</span><br><span class="line">            <span class="comment">//加上这两行可以解决乱码的问题，尤其是对于中文的xml接口，由于每个xml的编码格式不同，所以获取原编码格式之后再转换为utf-8，即可。</span></span><br><span class="line">            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();</span><br><span class="line">            XmlPullParser xmlPullParser = factory.newPullParser();</span><br><span class="line">            xmlPullParser.setInput(<span class="keyword">new</span> StringReader(xmlString));</span><br><span class="line">            Log.d(<span class="string">"SUCCESS"</span>, <span class="string">"xmlString的内容为"</span> + xmlString);</span><br><span class="line">            <span class="keyword">return</span> Response.success(xmlPullParser, HttpHeaderParser.parseCacheHeaders(response));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">deliverResponse</span><span class="params">(XmlPullParser response)</span> </span>&#123;</span><br><span class="line">        mListener.onResponse(response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这里需要注意的一点我在<a href="http://wensibo.top/2017/02/17/%E4%B8%80%E5%8F%A3%E4%B8%80%E5%8F%A3%E5%90%83%E6%8E%89Volley%EF%BC%88%E4%BA%8C%EF%BC%89/" target="_blank" rel="noopener">上一篇</a>文章中也已经提到了，就是在解析数据的时候如果出现乱码应该转换编码为utf-8。</p>
+</blockquote>
+<p><strong>② 测试接口</strong><br>作为测试，我使用的XML接口是：<a href="http://flash.weather.com.cn/wmaps/xml/guangdong.xml" target="_blank" rel="noopener">http://flash.weather.com.cn/wmaps/xml/guangdong.xml</a> ，它返回的是广东省各个城市的天气预报，你也可以将<code>guangdong</code>改为你所在的省份就可以显示其他数据了：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">guangdong</span> <span class="attr">dn</span>=<span class="string">"day"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"137.7"</span> <span class="attr">cityY</span>=<span class="string">"385.95"</span> <span class="attr">cityname</span>=<span class="string">"湛江"</span> <span class="attr">centername</span>=<span class="string">"湛江"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"zhanjiang"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"23"</span> <span class="attr">tem2</span>=<span class="string">"16"</span> <span class="attr">temNow</span>=<span class="string">"24"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东南风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"50%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281001"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"170.65"</span> <span class="attr">cityY</span>=<span class="string">"317.55"</span> <span class="attr">cityname</span>=<span class="string">"茂名"</span> <span class="attr">centername</span>=<span class="string">"茂名"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"maoming"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"西南风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"47%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101282001"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"225"</span> <span class="attr">cityY</span>=<span class="string">"245"</span> <span class="attr">cityname</span>=<span class="string">"云浮"</span> <span class="attr">centername</span>=<span class="string">"云浮"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"yunfu"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"13"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"43%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281401"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"226.55"</span> <span class="attr">cityY</span>=<span class="string">"304.5"</span> <span class="attr">cityname</span>=<span class="string">"阳江"</span> <span class="attr">centername</span>=<span class="string">"阳江"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"yangjiang"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴转多云"</span> <span class="attr">tem1</span>=<span class="string">"24"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"23"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东南风"</span> <span class="attr">windPower</span>=<span class="string">"3级"</span> <span class="attr">humidity</span>=<span class="string">"63%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281801"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"275.35"</span> <span class="attr">cityY</span>=<span class="string">"214.65"</span> <span class="attr">cityname</span>=<span class="string">"肇庆"</span> <span class="attr">centername</span>=<span class="string">"肇庆"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"zhaoqing"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"西北风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"43%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280901"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"291"</span> <span class="attr">cityY</span>=<span class="string">"285"</span> <span class="attr">cityname</span>=<span class="string">"江门"</span> <span class="attr">centername</span>=<span class="string">"江门"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"jiangmen"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"38%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281101"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"313.3"</span> <span class="attr">cityY</span>=<span class="string">"160.45"</span> <span class="attr">cityname</span>=<span class="string">"清远"</span> <span class="attr">centername</span>=<span class="string">"清远"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"qingyuan"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"南风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"44%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281301"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"308.7"</span> <span class="attr">cityY</span>=<span class="string">"225"</span> <span class="attr">cityname</span>=<span class="string">"佛山"</span> <span class="attr">centername</span>=<span class="string">"佛山"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"foshan"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴转多云"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"北风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"42%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280800"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"342.7"</span> <span class="attr">cityY</span>=<span class="string">"255"</span> <span class="attr">cityname</span>=<span class="string">"中山"</span> <span class="attr">centername</span>=<span class="string">"中山"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"zhongshan"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"西北风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"41%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281701"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"340.55"</span> <span class="attr">cityY</span>=<span class="string">"300"</span> <span class="attr">cityname</span>=<span class="string">"珠海"</span> <span class="attr">centername</span>=<span class="string">"珠海"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"zhuhai"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"23"</span> <span class="attr">tem2</span>=<span class="string">"17"</span> <span class="attr">temNow</span>=<span class="string">"23"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"48%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280701"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"352.6"</span> <span class="attr">cityY</span>=<span class="string">"80"</span> <span class="attr">cityname</span>=<span class="string">"韶关"</span> <span class="attr">centername</span>=<span class="string">"韶关"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"shaoguan"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"27"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"西风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"34%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280201"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"353"</span> <span class="attr">cityY</span>=<span class="string">"196"</span> <span class="attr">cityname</span>=<span class="string">"广州"</span> <span class="attr">centername</span>=<span class="string">"广州"</span> <span class="attr">fontColor</span>=<span class="string">"FFFF00"</span> <span class="attr">pyName</span>=<span class="string">"guangzhou"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"南风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"40%"</span> <span class="attr">time</span>=<span class="string">"15:20"</span> <span class="attr">url</span>=<span class="string">"101280101"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"377"</span> <span class="attr">cityY</span>=<span class="string">"234"</span> <span class="attr">cityname</span>=<span class="string">"东莞"</span> <span class="attr">centername</span>=<span class="string">"东莞"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"dongguan"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴转多云"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"北风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"37%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281601"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"409"</span> <span class="attr">cityY</span>=<span class="string">"257"</span> <span class="attr">cityname</span>=<span class="string">"深圳"</span> <span class="attr">centername</span>=<span class="string">"深圳"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"shenzhen"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴"</span> <span class="attr">tem1</span>=<span class="string">"24"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"24"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"南风"</span> <span class="attr">windPower</span>=<span class="string">"3级"</span> <span class="attr">humidity</span>=<span class="string">"49%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280601"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"423.85"</span> <span class="attr">cityY</span>=<span class="string">"214.65"</span> <span class="attr">cityname</span>=<span class="string">"惠州"</span> <span class="attr">centername</span>=<span class="string">"惠州"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"huizhou"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云转晴"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"13"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"南风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"38%"</span> <span class="attr">time</span>=<span class="string">"15:20"</span> <span class="attr">url</span>=<span class="string">"101280301"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"442.55"</span> <span class="attr">cityY</span>=<span class="string">"141.6"</span> <span class="attr">cityname</span>=<span class="string">"河源"</span> <span class="attr">centername</span>=<span class="string">"河源"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"heyuan"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴转多云"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"15"</span> <span class="attr">temNow</span>=<span class="string">"27"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"西南风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"37%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281201"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"492"</span> <span class="attr">cityY</span>=<span class="string">"217"</span> <span class="attr">cityname</span>=<span class="string">"汕尾"</span> <span class="attr">centername</span>=<span class="string">"汕尾"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"shanwei"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云转晴"</span> <span class="attr">tem1</span>=<span class="string">"24"</span> <span class="attr">tem2</span>=<span class="string">"14"</span> <span class="attr">temNow</span>=<span class="string">"24"</span> <span class="attr">windState</span>=<span class="string">"东南风3-4级转微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"45%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101282101"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"522.55"</span> <span class="attr">cityY</span>=<span class="string">"110.45"</span> <span class="attr">cityname</span>=<span class="string">"梅州"</span> <span class="attr">centername</span>=<span class="string">"梅州"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"meizhou"</span> <span class="attr">state1</span>=<span class="string">"1"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"多云转晴"</span> <span class="attr">tem1</span>=<span class="string">"27"</span> <span class="attr">tem2</span>=<span class="string">"12"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"1级"</span> <span class="attr">humidity</span>=<span class="string">"36%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280401"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"526.8"</span> <span class="attr">cityY</span>=<span class="string">"182"</span> <span class="attr">cityname</span>=<span class="string">"揭阳"</span> <span class="attr">centername</span>=<span class="string">"揭阳"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"jieyang"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴"</span> <span class="attr">tem1</span>=<span class="string">"26"</span> <span class="attr">tem2</span>=<span class="string">"13"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"34%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281901"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"579"</span> <span class="attr">cityY</span>=<span class="string">"137.45"</span> <span class="attr">cityname</span>=<span class="string">"潮州"</span> <span class="attr">centername</span>=<span class="string">"潮州"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"chaozhou"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"0"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴"</span> <span class="attr">tem1</span>=<span class="string">"25"</span> <span class="attr">tem2</span>=<span class="string">"12"</span> <span class="attr">temNow</span>=<span class="string">"26"</span> <span class="attr">windState</span>=<span class="string">"微风"</span> <span class="attr">windDir</span>=<span class="string">"东南风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"38%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101281501"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">city</span> <span class="attr">cityX</span>=<span class="string">"566.45"</span> <span class="attr">cityY</span>=<span class="string">"179.25"</span> <span class="attr">cityname</span>=<span class="string">"汕头"</span> <span class="attr">centername</span>=<span class="string">"汕头"</span> <span class="attr">fontColor</span>=<span class="string">"FFFFFF"</span> <span class="attr">pyName</span>=<span class="string">"shantou"</span> <span class="attr">state1</span>=<span class="string">"0"</span> <span class="attr">state2</span>=<span class="string">"1"</span> <span class="attr">stateDetailed</span>=<span class="string">"晴转多云"</span> <span class="attr">tem1</span>=<span class="string">"24"</span> <span class="attr">tem2</span>=<span class="string">"13"</span> <span class="attr">temNow</span>=<span class="string">"24"</span> <span class="attr">windState</span>=<span class="string">"东北风转东风小于3级"</span> <span class="attr">windDir</span>=<span class="string">"东风"</span> <span class="attr">windPower</span>=<span class="string">"2级"</span> <span class="attr">humidity</span>=<span class="string">"54%"</span> <span class="attr">time</span>=<span class="string">"15:30"</span> <span class="attr">url</span>=<span class="string">"101280501"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">guangdong</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>③ 调用XMLRequest，并加入RequestQueue</strong><br>代码中我将解析XML数据的城市展示在List View中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">XMLRequest xmlRequest = <span class="keyword">new</span> XMLRequest(</span><br><span class="line">               <span class="string">"http://flash.weather.com.cn/wmaps/xml/guangdong.xml"</span>,</span><br><span class="line">               <span class="keyword">new</span> Response.Listener&lt;XmlPullParser&gt;() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(XmlPullParser response)</span> </span>&#123;</span><br><span class="line">                       <span class="keyword">try</span> &#123;</span><br><span class="line">                           <span class="keyword">int</span> eventType = response.getEventType();</span><br><span class="line">                           <span class="keyword">while</span> (eventType != XmlPullParser.END_DOCUMENT) &#123;</span><br><span class="line">                               <span class="keyword">switch</span> (eventType) &#123;</span><br><span class="line">                                   <span class="keyword">case</span> XmlPullParser.START_TAG:</span><br><span class="line">                                       String nodeName = response.getName();</span><br><span class="line">                                       <span class="keyword">if</span> (<span class="string">"city"</span>.equals(nodeName)) &#123;</span><br><span class="line">                                           String pname = response.getAttributeValue(<span class="number">2</span>);</span><br><span class="line">                                           Log.d(<span class="string">"CITY"</span>, <span class="string">"PName is"</span> + pname);</span><br><span class="line">                                           citys.add(pname);</span><br><span class="line">                                       &#125;</span><br><span class="line">                                       <span class="keyword">break</span>;</span><br><span class="line">                               &#125;</span><br><span class="line">                               eventType = response.next();</span><br><span class="line">                           &#125;</span><br><span class="line"></span><br><span class="line">                           ArrayAdapter&lt;String&gt; arrayAdapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(XMLRequestActivity.<span class="keyword">this</span>, android.R.layout.simple_list_item_1, citys);</span><br><span class="line">                           lv_xml_request.setAdapter(arrayAdapter);</span><br><span class="line">                       &#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</span><br><span class="line">                           e.printStackTrace();</span><br><span class="line">                       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                           e.printStackTrace();</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;,</span><br><span class="line">               <span class="keyword">new</span> Response.ErrorListener() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError error)</span> </span>&#123;</span><br><span class="line">                       lv_xml_request.setVisibility(View.GONE);</span><br><span class="line">                       mTextView.setVisibility(View.VISIBLE);</span><br><span class="line">                       Log.d(<span class="string">"ERROR"</span>, <span class="string">"返回XMLRequest失败"</span>);</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">       );</span><br><span class="line">       mQueue.add(xmlRequest);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>人品爆发，看截图</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-2-17volley/5.png" alt="XMLRequest" title="">
+                </div>
+                <div class="image-caption">XMLRequest</div>
+            </figure></p>
+<h2 id="自定义GsonRequest"><a href="#自定义GsonRequest" class="headerlink" title="自定义GsonRequest"></a>自定义GsonRequest</h2><p>虽然Volley提供了JsonRequest为我们解析Json，但是使用JSONObject还是太麻烦了，还有很多方法可以让JSON数据解析变得更加简单，比如说GSON，所以何不如自定义一个GsonRequest呢？思路也是大同小异！</p>
+<p><strong>① 直接上代码啦！</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GsonRequest</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Request</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Response.Listener&lt;T&gt; mListener;</span><br><span class="line">    <span class="keyword">private</span> Gson mGson;</span><br><span class="line">    <span class="keyword">private</span> Class&lt;T&gt; mClazz;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GsonRequest</span><span class="params">(<span class="keyword">int</span> method, String url, Class&lt;T&gt; clazz, Response.Listener&lt;T&gt; listener, Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(method, url, errorListener);</span><br><span class="line">        mGson = <span class="keyword">new</span> Gson();</span><br><span class="line">        mClazz = clazz;</span><br><span class="line">        mListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GsonRequest</span><span class="params">(String url, Class&lt;T&gt; clazz, Response.Listener&lt;T&gt; listener, Response.ErrorListener errorListener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(Method.GET, url, clazz, listener, errorListener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Response&lt;T&gt; <span class="title">parseNetworkResponse</span><span class="params">(NetworkResponse response)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.headers.put(<span class="string">"HTTP.CONTENT_TYPE"</span>, <span class="string">"utf-8"</span>);</span><br><span class="line">            String jsonString = <span class="keyword">new</span> String(response.data,<span class="string">"utf-8"</span>);</span><br><span class="line">            <span class="comment">//加上这两行可以解决乱码的问题，尤其是对于中文的json接口，由于每个网页的编码格式不同，所以获取原编码格式之后再转换为utf-8，即可。</span></span><br><span class="line">            <span class="keyword">return</span> Response.success(mGson.fromJson(jsonString, mClazz),</span><br><span class="line">                    HttpHeaderParser.parseCacheHeaders(response)</span><br><span class="line">            );</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">deliverResponse</span><span class="params">(T response)</span> </span>&#123;</span><br><span class="line">        mListener.onResponse(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>同样需要注意编码的问题。在parseNetworkResponse()方法中，先是将服务器响应的数据解析出来，然后通过调用Gson的fromJson方法将数据组装成对象。在deliverResponse方法中仍然是将最终的数据进行回调。  </p>
+</blockquote>
+<ul>
+<li>记得为工程加入gson库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.google.code.gson:gson:2.8.0&apos;</span><br></pre></td></tr></table></figure>
+<p><strong>② json接口</strong><br>使用之前使用的json接口：<a href="http://www.weather.com.cn/data/sk/101010100.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/sk/101010100.html</a> ，它返回的数据是一个叫做weatherinfo的jsonObject：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;weatherinfo&quot;:&#123;&quot;city&quot;:&quot;北京&quot;,&quot;cityid&quot;:&quot;101010100&quot;,&quot;temp&quot;:&quot;19&quot;,&quot;WD&quot;:&quot;南风&quot;,&quot;WS&quot;:&quot;2级&quot;,&quot;SD&quot;:&quot;43%&quot;,&quot;WSE&quot;:&quot;2&quot;,&quot;time&quot;:&quot;19:45&quot;,&quot;isRadar&quot;:&quot;1&quot;,&quot;Radar&quot;:&quot;JC_RADAR_AZ9010_JB&quot;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>③ 新建bean类</strong><br>由于返回的jsonObject名字叫做weatherinfo，所以我们新建一个WeatherInfo类，定义了几个最基本的属性就行了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherInfo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String city;</span><br><span class="line">    <span class="keyword">private</span> String temp;</span><br><span class="line">    <span class="keyword">private</span> String time;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCity</span><span class="params">(String city)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.city = city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTemp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTemp</span><span class="params">(String temp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.temp = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">gettime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">settime</span><span class="params">(String time)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.time = time;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外还需要再定义一个Weather类，来获取WeatherInfo对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Weather</span> </span>&#123;</span><br><span class="line">    <span class="comment">//此处的weatherinfo不可以修改为weatherInfo，因为从json获取的数据格式为</span></span><br><span class="line">    <span class="comment">// &#123;"weatherinfo":&#123;"city":"北京","cityid":"101010100","temp":"19","WD":"南风","WS":"2级","SD":"43%","WSE":"2","time":"19:45","isRadar":"1","Radar":"JC_RADAR_AZ9010_JB"&#125;&#125;</span></span><br><span class="line">    <span class="keyword">private</span> WeatherInfo weatherinfo;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> WeatherInfo <span class="title">getWeatherInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> weatherinfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWeatherInfo</span><span class="params">(WeatherInfo weatherinfo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.weatherinfo = weatherinfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">&gt;**此处的weatherinfo不可以修改为weatherInfo**</span><br><span class="line"></span><br><span class="line">**④调用GsonRequest**   </span><br><span class="line">我们将获取的数据显示在Text View上就行了。</span><br><span class="line">```java</span><br><span class="line">GsonRequest&lt;Weather&gt; gsonRequest=<span class="keyword">new</span> GsonRequest&lt;Weather&gt;(<span class="string">"http://www.weather.com.cn/data/sk/101010100.html"</span></span><br><span class="line">                , Weather.class,</span><br><span class="line">                <span class="keyword">new</span> Response.Listener&lt;Weather&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Weather weather)</span> </span>&#123;</span><br><span class="line">                        WeatherInfo weatherInfo = weather.getWeatherInfo();</span><br><span class="line">                        <span class="keyword">if</span> (weatherInfo != <span class="keyword">null</span>) &#123;</span><br><span class="line">                            StringBuffer str = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">                            str.append(<span class="string">"城市："</span> + weatherInfo.getCity() + <span class="string">"\n"</span>);</span><br><span class="line">                            str.append(<span class="string">"温度："</span> + weatherInfo.getTemp() + <span class="string">"\n"</span>);</span><br><span class="line">                            str.append(<span class="string">"时间："</span> + weatherInfo.gettime());</span><br><span class="line">                            tv_gson_request.setText(str);</span><br><span class="line">                            Log.d(<span class="string">"SUCCESS"</span>, <span class="string">"成功返回GsonRequest  "</span> + str.toString());</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            Log.d(<span class="string">"ERROR"</span>, <span class="string">"weatherinfo对象为空"</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                , <span class="keyword">new</span> Response.ErrorListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError error)</span> </span>&#123;</span><br><span class="line">                Log.d(<span class="string">"ERROR"</span>, <span class="string">"返回GsonRequest失败"</span>);</span><br><span class="line">                tv_gson_request.setText(getResources().getString(R.string.error_message));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">mQueue.add(gsonRequest);</span><br></pre></td></tr></table></figure></p>
+<p><strong>看截图啦！</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.wensibo.top/file/img/2017-2-17volley/6.png" alt="GsonRequest" title="">
+                </div>
+                <div class="image-caption">GsonRequest</div>
+            </figure></p>
+<p>这一节只是向大家介绍了如何自定义Request，其实都是大同小异的，例如你觉得Gson不能满足你，那你也可以改为FastJson或者其他的功能，但是请一定要注意编码问题！<a href="http://wensibo.top/2017/02/17/%E4%B8%80%E5%8F%A3%E4%B8%80%E5%8F%A3%E5%90%83%E6%8E%89Volley%EF%BC%88%E5%9B%9B%EF%BC%89/" target="_blank" rel="noopener">最后一节</a>我们将一起通过阅读源码来分析Volley的工作流程！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-21T08:26:21.448Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+</span><br>
+
+
+        
+        如需转发请与我联系，获得允许之后请注明出处：<a href="/2017/02/17/一口一口吃掉Volley（三）/" target="_blank" rel="external">http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.wensibo.top">
+            <img src="/img/avatar.jpg" alt="温斯渤">
+            温斯渤
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Volley/">Volley</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&title=《一口一口吃掉Volley（三）》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&title=《一口一口吃掉Volley（三）》 — 温斯渤&source=学习了一口一口吃掉Volley（二）之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Volley（三）》 — 温斯渤&url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/02/17/一口一口吃掉Volley（四）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一口一口吃掉Volley（四）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/02/17/一口一口吃掉Volley（二）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一口一口吃掉Volley（二）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div id="SOHUCS" sid="一口一口吃掉Volley（三）"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cysVTLUcO',
+conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大佬
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>温斯渤 &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&title=《一口一口吃掉Volley（三）》 — 温斯渤&pic=http://www.wensibo.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&title=《一口一口吃掉Volley（三）》 — 温斯渤&source=学习了一口一口吃掉Volley（二）之后，你应该已经学会了如何使用Volley自带的Request，但是有的时候我们需要解析的数据多种多样，例如XML又或..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一口一口吃掉Volley（三）》 — 温斯渤&url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/&via=http://www.wensibo.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.wensibo.top/2017/02/17/一口一口吃掉Volley（三）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3cQXJiMQwFQO5/6cx2UgzMe5JNsui/ogIxbi8sRVLl8YifrxfP87t//+T9Cq8+ma957MHDw8M7tPVXgOd3n7/+PS//9ldrJp/Hw8PDu817daPml/ImMLRHk+wZDw8P77fxiqu5DD/7RBwPDw/vN/M2IeT9J5OUGg8PD+9neW0hYJbs7g/lYq0FDw8Pr8t4H+3SP/v6Sn8PDw8Pb91VnxVeD1zTix1++148PDy8C7xN+SBntIeVlD+KMgceHh7eZd4mJLQFiLZIkafaeHh4eD/Fyy/35EI/0MqKm3NR9RcPDw/vEK9tO222eOr4hpMReHh4eCPerBCQBJKWdKWDh4eHh/eR4YAENivabtbJA9XLNfHw8PAO8fKGVjKE2ibf7bcnqfY/JiPw8PDwLvPycYE88rTjXJsgVNR68fDw8Na82cXdpuD7dDwPFXh4eHj3eEmSukmIN82zdkDh22s8PDy8y7w22c2T73adTQAr4gweHh7eIV47DpVQT71bp+x4eHh4H+Hll/i+eLE51mjgAA8PD+8ybzP2tL/c81JIcaB4eHh4F3hJU2o2FJWzE0by/CexxsPDwzvE24w0Jel4vsWkpFuHMTw8PLwLvFkxdx8S2oNoh8Pw8PDwbvNmF/S+QZVsOjmIouCLh4eHd4iXDF3lB7FJjts2WxRa8PDw8D7Cm6XayUjWLJy06TseHh7eZ3g5dd9zy4+jHrTKTw4PDw9vxPsqnySxbptnsxZXtB88PDy8C7z2ij/b7mpDRZKszwIYHh4eXstLtt5e1nkra/9bq8QaDw8Pb8FrSwmz4DEr7M4CGB4eHt7v4c0GAvICcX6UVwIDHh4e3rWc832y2xYv8jGCOuTg4eHhXePNru/8Qt+snKfaq1oLHh4e3sm/8Yf/UK8t1CbFhcNDA3h4eHgd7w8pIn2CRijL/gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
