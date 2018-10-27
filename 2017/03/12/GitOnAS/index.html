@@ -771,14 +771,6 @@ ga('send', 'pageview');
 
     
 
-<div id="SOHUCS" sid="GitOnAS"></div>
-<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
-<script type="text/javascript">
-window.changyan.api.config({
-appid: 'cysVTLUcO',
-conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
-});
-</script>
 
 
 
@@ -789,6 +781,29 @@ conf: 'prod_b1c3ae71ea1c8bc27704176ee6d17112'
 
 
 
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Aodt81128SCXJUnnLslGa4iK-gzGzoHsz",
+            appKey: "jTC69F4vc0LYMuI5VkzDsvEM",
+            avatar: "mm",
+            placeholder: "留下你的评论",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
