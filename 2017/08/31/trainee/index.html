@@ -42,7 +42,7 @@ ga('send', 'pageview');
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wensibo.top/file/img/2017-8-31trainee/trainee.jpg">
 <meta property="og:image" content="http://ojec5ddd5.bkt.clouddn.com/read%20mode.png">
-<meta property="og:updated_time" content="2018-10-21T08:26:21.020Z">
+<meta property="og:updated_time" content="2018-10-21T14:53:47.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实习总结">
 <meta name="twitter:description" content="距离上篇文章已经过去一个多月了，这段时间之所以没有更新文章不是因为偷懒，而是因为在实习。7月份的时候来到了目前的这家公司实习，当初笔试的时候自己做的不是很好，后来面试时也有些地方变现地也不尽如人意，不过最后还是很感激我老大给我来公司实习的机会。在实习的一个多月时间内自己也学到了很多，今天这篇文章就记录一下我的学习过程。">
@@ -50,13 +50,15 @@ ga('send', 'pageview');
     
         <link rel="alternate" type="application/atom+xml" title="温斯渤" href="/atom.xml">
     
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 
     <!-- custom head -->
     
 
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
 
 <body>
@@ -215,9 +217,26 @@ ga('send', 'pageview');
             </figure></p>
 <a id="more"></a>
 
-			<script>
-				console.error("Error: [hexo-tag-aplayer] Unrecognized tag argument(2): autoplay=ture");
-			</script>
+        <div id="aplayer-ezIUjowE" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-ezIUjowE"),
+            narrow: false,
+            autoplay: true,
+            showlrc: false,
+            music: {
+              title: "告白气球",
+              author: "周杰伦",
+              url: "http://wensibo.top/file/img/2017-8-31trainee/balloon.mp3",
+              pic: "http://wensibo.top/file/img/2017-8-31trainee/balloon.jpg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
 <h1 id="学校-amp-公司的区别"><a href="#学校-amp-公司的区别" class="headerlink" title="学校&amp;公司的区别"></a>学校&amp;公司的区别</h1><p>来到公司实习，其实自己已然不是一个学生了，别人也不会当你是学生，所以很多事情上需要自己去跟上团队的节奏。学校里学到的东西不能说没用，但是与实际的公司其实是有许多不匹配的，我们更需要将自己学到的知识运用在实践中，而不是单纯地纸上谈兵；从另外一个角度上来讲这也是为什么企业招员工时很喜欢招那些有一定的项目经验的学生。很幸运的是自己之前有过一定的项目经验，虽然谈不上是多大的项目，但是这些经历足以培养一个人独立完成工作、独立解决问题的能力，这点也恰恰是在课本上很难学到，但是在实践中却又很有必要积累的。<br>上面的道理大家都懂，但是没什么卵用，我举个例子向大家说明一下这个问题。<br><strong>我有一个工作内容是阅读之前的一个eclipse工程，并将这个工程移植到Android Studio平台上</strong><br>大家或许觉得这个工作内容很简单啊，Android Studio本身就很强大，完全可以解决这个问题。实不相瞒，我一开始也是这样想的，但是当我阅读这个旧的工程的时候，我觉得自己回到了”远古时代”，之所以会有这样的感叹，不是因为代码写的不好，而是整个工程缺乏一定的架构思想，导致一个Activity文件动不动就600~700行，有的甚至到了1000行，尽管逻辑不复杂，但是性能肯定是大打折扣的，并且如果工程日后是别人接手，或者日后需要扩展功能，那么将会彻底地违背了开闭原则（对扩展开放，对修改关闭）。也是基于这样的理由，我就打算将整个项目进行重构，而重构使用的方法则是我经常在项目中使用的MVP设计架构，尽管这种架构仍然有他诟病的地方（代码量不少反增，逻辑也会更加的复杂），但是这仍然不失为一个较好的选择。确定了目标，我也就开始干了，也正因为有了之前项目的积累，所以重构起来也才得心应手。</p>
 <h1 id="需要慢慢培养的技能和规范"><a href="#需要慢慢培养的技能和规范" class="headerlink" title="需要慢慢培养的技能和规范"></a>需要慢慢培养的技能和规范</h1><h2 id="技能"><a href="#技能" class="headerlink" title="技能"></a>技能</h2><p>做程序开发，经验是需要慢慢积累的，而技能也不是一下子就炉火纯青的，需要经历项目的考验才能慢慢成为巨人，在这里我列举一下个人觉得比较重要的开发技能。</p>
 <h3 id="文档阅读能力"><a href="#文档阅读能力" class="headerlink" title="文档阅读能力"></a>文档阅读能力</h3><p>许多大公司都有维护文档的习惯，并且文档的数量和质量也都是顶呱呱的，作为进入团队的新人，对于业务不熟悉的时候，第一时间并不是问老大问同事，而应该自己阅读文档，当然不得不承认的一点就是我一开始是比较笨的，遇到问题就问我老大问我同事，到了后来我才悟到这点，也算是积累吧！</p>
@@ -252,7 +271,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-21T08:26:21.020Z" itemprop="dateUpdated">2018-10-21 16:26:21</time>
+    最后更新时间：<time datetime="2018-10-21T14:53:47.696Z" itemprop="dateUpdated">2018-10-21 22:53:47</time>
 </span><br>
 
 
@@ -530,26 +549,9 @@ lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1261131866&web_id=1261131866')
 
 
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
 
 
 
